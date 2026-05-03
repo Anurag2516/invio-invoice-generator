@@ -1,18 +1,3 @@
-export interface Invoice {
-  id: string;
-  invoiceNumber: string;
-  sender: User;
-  client: User;
-  issueDate: string;
-  dueDate: string;
-  lineItems: LineItem[];
-  currency: "INR" | "USD" | "EUR";
-  invoiceTotal: InvoiceTotal;
-  createdAt: string;
-  updatedAt: string;
-  notes: string;
-}
-
 export interface User {
   companyName: string;
   address: string;
@@ -37,6 +22,23 @@ export interface InvoiceTotal {
   total: number;
 }
 
+export type Currencies = "INR" | "USD" | "EUR";
+
+export interface Invoice {
+  id: string;
+  invoiceNumber: string;
+  sender: User;
+  client: User;
+  issueDate: string;
+  dueDate: string;
+  lineItems: LineItem[];
+  currency: Currencies;
+  invoiceTotal: InvoiceTotal;
+  createdAt: string;
+  updatedAt: string;
+  notes: string;
+}
+
 export interface InvoiceStore {
   invoices: Invoice[];
   activeInvoice: Invoice;
@@ -44,7 +46,7 @@ export interface InvoiceStore {
   saveInvoice: () => void;
   deleteInvoice: (id: string) => void;
   loadInvoice: (id: string) => void;
-  updateInvoice: (invoice: Invoice) => void;
+  updateActiveInvoice: (invoice: Invoice) => void;
   addLineItem: () => void;
   removeLineItem: (id: string) => void;
 }
