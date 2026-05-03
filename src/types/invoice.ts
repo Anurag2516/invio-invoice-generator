@@ -22,11 +22,14 @@ export interface InvoiceTotal {
   total: number;
 }
 
+export type Status = "Draft" | "Paid" | "Sent" | "Overdue";
+
 export type Currencies = "INR" | "USD" | "EUR";
 
 export interface Invoice {
   id: string;
   invoiceNumber: string;
+  status: Status;
   sender: User;
   client: User;
   issueDate: string;

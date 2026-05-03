@@ -35,6 +35,7 @@ export const invoiceTotalSchema = z.object({
 export const invoice = z.object({
   id: z.string(),
   invoiceNumber: z.string(),
+  status: z.enum(["Draft" , "Paid" , "Sent" , "Overdue"]),
   sender: userSchema,
   client: userSchema,
   issueDate: z.string(),

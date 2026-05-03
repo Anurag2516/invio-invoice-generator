@@ -30,6 +30,7 @@ export const createEmptyInvoice = (
 ): Invoice => ({
   id: generateId(),
   invoiceNumber: generateInvoiceNumber(existingNumbers),
+  status: "Draft",
   sender: defaultUser(),
   client: defaultUser(),
   issueDate: new Date().toLocaleDateString(),
