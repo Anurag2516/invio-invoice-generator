@@ -1,3 +1,9 @@
+import type z from "zod";
+import type { invoice } from "../schema/invoice.schema";
+import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+
+export type InvoiceFormValues = z.infer<typeof invoice>;
+
 export interface User {
   companyName: string;
   address: string;
@@ -40,6 +46,12 @@ export interface Invoice {
   createdAt: string;
   updatedAt: string;
   notes: string;
+}
+
+export interface InvoiceFormProps {
+  register: UseFormRegister<InvoiceFormValues>;
+  control: Control<InvoiceFormValues>;
+  errors: FieldErrors<InvoiceFormValues>;
 }
 
 export interface InvoiceStore {
