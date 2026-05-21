@@ -1,5 +1,5 @@
 export const currencyOptions = [
-  { value: "INR", label: "₹ INR" },
-  { value: "USD", label: "$ USD" },
-  { value: "EUR", label: "€ EUR" },
+  { value: "INR", label: "₹ INR", sign: "₹" },
+  { value: "USD", label: "$ USD", sign: "$" },
+  { value: "EUR", label: "€ EUR", sign: "€" },
 ];
