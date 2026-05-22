@@ -17,7 +17,7 @@ import DatePicker from "../ui/DatePicker";
 
 const InvoiceMeta = ({ register,control, errors }: InvoiceFormProps) => {
   return (
-    <div className="flex flex-col gap-6 justify-between items-start">
+    <div className="flex flex-col gap-6 justify-between items-start border-b border-stone-300">
       <SectionHeader label="Invoice Header" />
       <div className="grid grid-cols-2 gap-6 ">
         <Input
@@ -53,7 +53,7 @@ const InvoiceMeta = ({ register,control, errors }: InvoiceFormProps) => {
           )}
         />
       </div>
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-3 gap-5 mb-5">
         <Controller
           name="issueDate"
           control={control}
