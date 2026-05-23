@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import type { Invoice, InvoiceTotal, LineItem, User } from "../types/invoice";
 import { generateId, generateInvoiceNumber } from "./generateId";
 
@@ -25,16 +26,14 @@ export const defaultInvoiceTotal = (): InvoiceTotal => ({
   total: 0,
 });
 
-export const createEmptyInvoice = (
-  existingNumbers: string[] = [],
-): Invoice => ({
+export const createEmptyInvoice = (existingNumbers: string[] = []): Invoice => ({
   id: generateId(),
   invoiceNumber: generateInvoiceNumber(existingNumbers),
   status: "Draft",
   sender: defaultUser(),
   client: defaultUser(),
-  issueDate: new Date().toLocaleDateString(),
-  dueDate: "",
+  issueDate: format(new Date(), "yyyy-MM-dd"),
+  dueDate: format(new Date(), "yyyy-MM-dd"),
   lineItems: [defaultLineItem(1)],
   currency: "INR",
   invoiceTotal: defaultInvoiceTotal(),
