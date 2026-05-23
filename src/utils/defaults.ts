@@ -26,7 +26,9 @@ export const defaultInvoiceTotal = (): InvoiceTotal => ({
   total: 0,
 });
 
-export const createEmptyInvoice = (existingNumbers: string[] = []): Invoice => ({
+export const createEmptyInvoice = (
+  existingNumbers: string[] = [],
+): Invoice => ({
   id: generateId(),
   invoiceNumber: generateInvoiceNumber(existingNumbers),
   status: "Draft",
@@ -34,7 +36,7 @@ export const createEmptyInvoice = (existingNumbers: string[] = []): Invoice => (
   client: defaultUser(),
   issueDate: format(new Date(), "yyyy-MM-dd"),
   dueDate: format(new Date(), "yyyy-MM-dd"),
-  lineItems: [defaultLineItem(1)],
+  lineItems: [defaultLineItem()],
   currency: "INR",
   invoiceTotal: defaultInvoiceTotal(),
   createdAt: new Date().toISOString(),

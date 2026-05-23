@@ -63,14 +63,12 @@ export const useInvoiceStore = create<InvoiceStore>()(
       addLineItem: () => {
         const { activeInvoice } = get();
 
-        const nextLine = activeInvoice.lineItems.length + 1;
-
-        const newItem = defaultLineItem(nextLine);
+        const newItem = defaultLineItem();
 
         set({
           activeInvoice: {
             ...activeInvoice,
-          lineItems: [...activeInvoice.lineItems, newItem],
+            lineItems: [...activeInvoice.lineItems, newItem],
           },
         });
       },
@@ -78,7 +76,9 @@ export const useInvoiceStore = create<InvoiceStore>()(
       removeLineItem: (id) => {
         const { activeInvoice } = get();
 
-        const newItems = activeInvoice.lineItems.filter((item) => item.id !== id);
+        const newItems = activeInvoice.lineItems.filter(
+          (item) => item.id !== id,
+        );
 
         const totals = calculateInvoiceTotal(
           newItems,
