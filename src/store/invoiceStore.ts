@@ -80,13 +80,8 @@ export const useInvoiceStore = create<InvoiceStore>()(
 
         const newItems = activeInvoice.lineItems.filter((item) => item.id !== id);
 
-        const reindexedItems = newItems.map((item, index) => ({
-          ...item,
-          serialNumber: index + 1,
-        }));
-
         const totals = calculateInvoiceTotal(
-          reindexedItems,
+          newItems,
           activeInvoice.invoiceTotal.appliedTax,
           activeInvoice.invoiceTotal.appliedDiscount,
         );
@@ -94,7 +89,7 @@ export const useInvoiceStore = create<InvoiceStore>()(
         set({
           activeInvoice: {
             ...activeInvoice,
-            lineItems: reindexedItems,
+            lineItems: newItems,
             invoiceTotal: totals,
           },
         });

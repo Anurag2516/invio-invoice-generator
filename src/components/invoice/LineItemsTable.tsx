@@ -97,7 +97,7 @@ const LineItemsTable = ({ register, control }: InvoiceFormProps) => {
 
       <button
         type="button"
-        onClick={() => append(defaultLineItem(fields.length + 1))}
+        onClick={() => append(defaultLineItem())}
         className="mt-5 flex h-10 w-10 items-center justify-center
              rounded-sm bg-stone-800 text-white
              hover:bg-stone-700 hover:cursor-pointer transition-all duration-300"

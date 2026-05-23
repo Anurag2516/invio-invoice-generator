@@ -11,9 +11,8 @@ export const defaultUser = (): User => ({
   website: "",
 });
 
-export const defaultLineItem = (serialNumber: number): LineItem => ({
+export const defaultLineItem = (): LineItem => ({
   id: generateId(),
-  serialNumber,
   description: "",
   quantity: 1,
   rate: 0,

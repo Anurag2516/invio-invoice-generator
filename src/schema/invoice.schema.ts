@@ -11,7 +11,6 @@ export const userSchema = z.object({
 
 export const lineItemSchema = z.object({
   id: z.string(),
-  serialNumber: z.number(),
   description: z.string().min(1, "Description is required"),
   quantity: z
     .number({ message: "Must be a number" })
