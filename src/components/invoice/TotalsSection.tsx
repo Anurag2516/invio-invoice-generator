@@ -1,16 +1,13 @@
 import { useInvoiceStore } from "@/store/invoiceStore";
 import type { InvoiceFormProps } from "../../types/invoice";
 import Input from "../ui/Input";
-import { currencyOptions } from "@/constants/currencies";
 import SectionHeader from "../ui/SectionHeader";
+import { useCurrencySign } from "@/hooks/useCurrencySign";
 
 const TotalsSection = ({ register }: InvoiceFormProps) => {
+  const invoiceTotal = useInvoiceStore((state) => state.activeInvoice.invoiceTotal);
 
- const { invoiceTotal, currency } = useInvoiceStore(
-   (state) => state.activeInvoice,
- );
-
-  const currencies = currencyOptions.find((c)=> c.value === currency)?.sign
+  const currency = useCurrencySign();
 
   return (
     <>
@@ -21,7 +18,7 @@ const TotalsSection = ({ register }: InvoiceFormProps) => {
               Subtotal
             </div>
             <span className="text-sm font-semibold text-stone-600">
-              {currencies}
+              {currency}
               {invoiceTotal.subtotal}
             </span>
           </div>
@@ -59,7 +56,7 @@ const TotalsSection = ({ register }: InvoiceFormProps) => {
               Total due
             </span>
             <span className="text-lg font-semibold">
-              {currencies}
+              {currency}
               {invoiceTotal.total}
             </span>
           </div>

@@ -3,8 +3,8 @@ import type { InvoiceFormProps } from "../../types/invoice";
 import Input from "../ui/Input";
 import { defaultLineItem } from "@/utils/defaults";
 import { useInvoiceStore } from "@/store/invoiceStore";
-import { currencyOptions } from "@/constants/currencies";
 import { Plus, Trash2 } from "lucide-react";
+import { useCurrencySign } from "@/hooks/useCurrencySign";
 
 const LineItemsTable = ({ register, control }: InvoiceFormProps) => {
   const { fields, append, remove } = useFieldArray({
@@ -14,9 +14,8 @@ const LineItemsTable = ({ register, control }: InvoiceFormProps) => {
 
   const lineItems = useInvoiceStore((state) => state.activeInvoice.lineItems);
   const removeLineItem = useInvoiceStore((state) => state.removeLineItem);
-  const currency = useInvoiceStore((state) => state.activeInvoice.currency);
 
-  const currencySign = currencyOptions.find((c) => c.value === currency)?.sign;
+  const currency = useCurrencySign()
 
   return (
     <div className="w-full">
@@ -86,7 +85,7 @@ const LineItemsTable = ({ register, control }: InvoiceFormProps) => {
               </td>
 
               <td className="py-2 text-right text-sm font-medium text-stone-900">
-                {currencySign}
+                {currency}
                 {(lineItems[index]?.amount ?? 0).toFixed(2)}
               </td>
 
