@@ -14,8 +14,9 @@ import {
 } from "../ui/Select";
 import { Controller } from "react-hook-form";
 import DatePicker from "../ui/DatePicker";
+import { format } from "date-fns";
 
-const InvoiceMeta = ({ register,control, errors }: InvoiceFormProps) => {
+const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
   return (
     <div className="flex flex-col gap-6 justify-between items-start border-b border-stone-300">
       <SectionHeader label="Invoice Header" />
@@ -61,7 +62,9 @@ const InvoiceMeta = ({ register,control, errors }: InvoiceFormProps) => {
             <DatePicker
               label="Issue Date"
               value={field.value ? new Date(field.value) : undefined}
-              onChange={field.onChange}
+              onChange={(date) =>
+                field.onChange(date ? format(date, "yyyy-MM-dd") : undefined)
+              }
               error={errors.issueDate?.message}
             />
           )}
@@ -74,7 +77,9 @@ const InvoiceMeta = ({ register,control, errors }: InvoiceFormProps) => {
             <DatePicker
               label="Due Date"
               value={field.value ? new Date(field.value) : undefined}
-              onChange={field.onChange}
+              onChange={(date) =>
+                field.onChange(date ? format(date, "yyyy-MM-dd") : undefined)
+              }
               error={errors.dueDate?.message}
             />
           )}
