@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const userSchema = z.object({
+  name: z.string(),
   companyName: z.string(),
   address: z.string(),
   email: z.email({ message: "Invalid email" }).or(z.literal("")),

@@ -5,6 +5,7 @@ import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
 export type InvoiceFormValues = z.infer<typeof invoice>;
 
 export interface User {
+  name: string;
   companyName: string;
   address: string;
   email: string;

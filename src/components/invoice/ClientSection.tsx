@@ -17,6 +17,12 @@ const PartyFields = ({
   return (
     <div className="flex flex-col gap-2 ">
       <Input
+        {...register(`${party}.name`)}
+        label="Name"
+        error={error?.name?.message}
+        placeholder="John Doe"
+      />
+      <Input
         {...register(`${party}.companyName`)}
         label="Company Name"
         error={error?.companyName?.message}

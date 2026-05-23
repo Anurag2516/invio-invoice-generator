@@ -3,6 +3,7 @@ import type { Invoice, InvoiceTotal, LineItem, User } from "../types/invoice";
 import { generateId, generateInvoiceNumber } from "./generateId";
 
 export const defaultUser = (): User => ({
+  name: "",
   companyName: "",
   address: "",
   email: "",
