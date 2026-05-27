@@ -18,7 +18,7 @@ const PartyFields = ({
     <div className="flex flex-col gap-2 ">
       <Input
         {...register(`${party}.name`)}
-        label="Name"
+        label={party === "sender" ? "Your Name" : "Client Name"}
         error={error?.name?.message}
         placeholder="John Doe"
       />
@@ -57,7 +57,7 @@ const ClientSection = ({ register, errors }: InvoiceFormProps) => {
         <div className="flex flex-col gap-3">
           <div className="flex gap-2 items-center">
             <SectionHeader label="From" />
-            <span className="text-sm text-stone-500 tracking-wide">
+            <span className="text-xs text-stone-500 tracking-wide">
               (Your Details)
             </span>
           </div>
@@ -67,7 +67,7 @@ const ClientSection = ({ register, errors }: InvoiceFormProps) => {
         <div className="flex flex-col gap-3">
           <div className="flex gap-2 items-center">
             <SectionHeader label="Bill To" />
-            <span className="text-sm text-stone-500 tracking-wide">
+            <span className="text-xs text-stone-500 tracking-wide">
               (Client Details)
             </span>
           </div>

@@ -32,7 +32,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-semibold uppercase tracking-wide text-stone-600">
+              <label className="text-sm font-semibold uppercase tracking-wide text-stone-600">
                 Status
               </label>
               <Select onValueChange={field.onChange} defaultValue={field.value} >
@@ -90,7 +90,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-semibold uppercase tracking-wide text-stone-600">
+              <label className="text-sm font-semibold uppercase tracking-wide text-stone-600">
                 Currency
               </label>
               <Select onValueChange={field.onChange} defaultValue={field.value}>

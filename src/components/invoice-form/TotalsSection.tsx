@@ -1,7 +1,6 @@
 import { useInvoiceStore } from "@/store/invoiceStore";
 import type { InvoiceFormProps } from "../../types/invoice";
 import Input from "../ui/Input";
-import SectionHeader from "../ui/SectionHeader";
 import { useCurrencySign } from "@/hooks/useCurrencySign";
 
 const TotalsSection = ({ register }: InvoiceFormProps) => {
@@ -12,7 +11,7 @@ const TotalsSection = ({ register }: InvoiceFormProps) => {
   return (
     <>
       <div className="flex justify-end border-t border-stone-300">
-        <div className="flex flex-col gap-3.5 w-75 pr-6 mt-4">
+        <div className="flex flex-col gap-3.5 w-75 pr-6 pt-6">
           <div className="flex items-center justify-between">
             <div className="text-sm font-semibold uppercase tracking-wide text-stone-600">
               Subtotal
@@ -61,13 +60,6 @@ const TotalsSection = ({ register }: InvoiceFormProps) => {
             </span>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-2">
-        <SectionHeader label="Notes" />
-        <textarea
-          className="border border-stone-200 rounded-lg px-3.5 py-3 text-sm text-stone-800 placeholder:text-stone-400 resize-y min-h-20 outline-none w-full hover:border-stone-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/10"
-          placeholder="Payment terms, bank details, UPI ID, thank you note…"
-        />
       </div>
     </>
   );

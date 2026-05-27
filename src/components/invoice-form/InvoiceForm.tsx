@@ -13,20 +13,26 @@ import InvoiceMeta from "./InvoiceMeta";
 import ClientSection from "./ClientSection";
 import LineItemsTable from "./LineItemsTable";
 import TotalsSection from "./TotalsSection";
+import InvoiceAdditionalInfo from "./InvoiceAdditionalInfo";
 
 const InvoiceForm = () => {
   const activeInvoice = useInvoiceStore((s) => s.activeInvoice);
   const updateActiveInvoice = useInvoiceStore((s) => s.updateActiveInvoice);
 
-  const { register, watch, reset, control, formState:{errors} } = useForm<InvoiceFormValues>({
+  const {
+    register,
+    watch,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<InvoiceFormValues>({
     resolver: zodResolver(invoice),
     defaultValues: activeInvoice,
   });
 
   function toLineItems(lineItems: LineItem[] | any[]): LineItem[] {
-    return lineItems.map((item, index) => ({
+    return lineItems.map((item) => ({
       id: item.id ?? generateId(),
-      serialNumber: item.serialNumber ?? index + 1,
       description: item.description ?? "",
       quantity: Number.isFinite(Number(item.quantity))
         ? Number(item.quantity)
@@ -58,16 +64,22 @@ const InvoiceForm = () => {
     return () => subscription.unsubscribe();
   }, [watch, updateActiveInvoice]);
 
-  useEffect(()=>{
-    reset(activeInvoice)
-  }, [activeInvoice.id])
+  useEffect(() => {
+    reset(activeInvoice);
+  }, [activeInvoice.id]);
 
   return (
-    <div className="flex flex-col gap-6 p-6 overflow-y-auto h-full">
+    <div className="flex flex-col gap-6 p-6 overflow-y-auto h-full w-3/5">
+      <h1 className="text-2xl font-bold">New Invoice</h1>
       <InvoiceMeta register={register} control={control} errors={errors} />
       <ClientSection register={register} control={control} errors={errors} />
       <LineItemsTable register={register} control={control} errors={errors} />
       <TotalsSection register={register} control={control} errors={errors} />
+      <InvoiceAdditionalInfo
+        register={register}
+        control={control}
+        errors={errors}
+      />
     </div>
   );
 };
