@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import type { Invoice, InvoiceTotal, LineItem, User } from "../types/invoice";
+import type { Invoice, InvoiceTotal, LineItem, PaymentInfo, User } from "../types/invoice";
 import { generateId, generateInvoiceNumber } from "./generateId";
 
 export const defaultUser = (): User => ({
@@ -26,6 +26,12 @@ export const defaultInvoiceTotal = (): InvoiceTotal => ({
   total: 0,
 });
 
+export const paymentInfo = (): PaymentInfo => ({
+  bankName: "",
+  accountholderName: "",
+  accountNumber: "",
+});
+
 export const createEmptyInvoice = (
   existingNumbers: string[] = [],
 ): Invoice => ({
@@ -41,5 +47,6 @@ export const createEmptyInvoice = (
   invoiceTotal: defaultInvoiceTotal(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  paymentInfo: paymentInfo(),
   notes: "",
 });

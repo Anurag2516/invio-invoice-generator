@@ -32,10 +32,20 @@ export const invoiceTotalSchema = z.object({
   total: z.number(),
 });
 
+export const paymentInfo = z.object({
+  bankName: z.string,
+  accountholderName: z.string,
+  accountNumber: z
+    .string()
+    .min(8, "Account number must be at least 8 digits")
+    .max(17, "Account number cannot exceed 17 digits")
+    .regex(/^\d+$/, "Account number must contain only digits"),
+});
+
 export const invoice = z.object({
   id: z.string(),
   invoiceNumber: z.string(),
-  status: z.enum(["Draft" , "Paid" , "Sent" , "Overdue"]),
+  status: z.enum(["Draft", "Paid", "Sent", "Overdue"]),
   sender: userSchema,
   client: userSchema,
   issueDate: z.string(),
@@ -45,5 +55,6 @@ export const invoice = z.object({
   invoiceTotal: invoiceTotalSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
+  paymentInfo: paymentInfo,
   notes: z.string(),
 });

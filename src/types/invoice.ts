@@ -28,6 +28,12 @@ export interface InvoiceTotal {
   total: number;
 }
 
+export interface PaymentInfo {
+  bankName: string;
+  accountholderName: string;
+  accountNumber: string;
+}
+
 export type Status = "Draft" | "Paid" | "Sent" | "Overdue";
 
 export type Currencies = "INR" | "USD" | "EUR";
@@ -45,6 +51,7 @@ export interface Invoice {
   invoiceTotal: InvoiceTotal;
   createdAt: string;
   updatedAt: string;
+  paymentInfo: PaymentInfo;
   notes: string;
 }
 
