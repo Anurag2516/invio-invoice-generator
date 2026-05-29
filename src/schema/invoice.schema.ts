@@ -1,13 +1,17 @@
 import { z } from "zod";
 
 export const userSchema = z.object({
-  name: z.string(),
+  name: z.string().min(1, "Name is required"),
   companyName: z.string(),
-  address: z.string(),
-  email: z.email({ message: "Invalid email" }).or(z.literal("")),
-  phone: z.string(),
-  website: z.string()
-})
+  address: z.string().min(1, "Address is required"),
+  email: z.email({ message: "Invalid email" }),
+  phone: z
+    .string()
+    .min(10, "Phone must be at least 10 digits")
+    .max(10, "Phone cannot exceed 10 digits")
+    .regex(/^\d+$/, "Phone must contain only digits").or(z.literal("")),
+  website: z.string(),
+});
 
 export const lineItemSchema = z.object({
   id: z.string(),
@@ -44,7 +48,7 @@ export const paymentInfo = z.object({
     .string()
     .min(8, "Account number must be at least 8 digits")
     .max(17, "Account number cannot exceed 17 digits")
-    .regex(/^\d+$/, "Account number must contain only digits"),
+    .regex(/^\d+$/, "Account number must contain only digits").or(z.literal("")),
 });
 
 export const invoice = z.object({
