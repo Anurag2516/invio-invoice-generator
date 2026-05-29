@@ -9,8 +9,8 @@ export const calculateLineAmount = (
 
 export const calculateInvoiceTotal = (
   lineItems: LineItem[],
-  tax: number,
-  discount: number,
+  taxRate: number,
+  discountRate: number,
 ): InvoiceTotal => {
   const subtotal: number = Number(
     lineItems
@@ -18,15 +18,17 @@ export const calculateInvoiceTotal = (
       .toFixed(2),
   );
 
-  const appliedDiscount: number =
-    discount !== 0 ? Number((subtotal * (discount / 100)).toFixed(2)) : 0;
+  const discountAmount: number =
+    discountRate !== 0
+      ? Number((subtotal * (discountRate / 100)).toFixed(2))
+      : 0;
 
-  const taxableAmount = subtotal - appliedDiscount;
+  const taxableAmount = subtotal - discountAmount;
 
-  const appliedTax: number =
-    tax !== 0 ? Number((taxableAmount * (tax / 100)).toFixed(2)) : 0;
+  const taxAmount: number =
+    taxRate !== 0 ? Number((taxableAmount * (taxRate / 100)).toFixed(2)) : 0;
 
-  const total: number = Number((taxableAmount + appliedTax).toFixed(2));
+  const total: number = Number((taxableAmount + taxAmount).toFixed(2));
 
-  return { subtotal, appliedTax, appliedDiscount, total };
+  return { subtotal, taxRate, discountRate, taxAmount, discountAmount, total };
 };

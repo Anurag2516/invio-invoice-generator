@@ -2,7 +2,7 @@ import type z from "zod";
 import type { invoice } from "../schema/invoice.schema";
 import type { Control, FieldErrors, UseFormRegister } from "react-hook-form";
 
-export type InvoiceFormValues = z.infer<typeof invoice>;
+export type InvoiceFormValues = z.input<typeof invoice>;
 
 export interface User {
   name: string;
@@ -23,8 +23,10 @@ export interface LineItem {
 
 export interface InvoiceTotal {
   subtotal: number;
-  appliedTax: number;
-  appliedDiscount: number;
+  taxRate: number;
+  discountRate: number;
+  taxAmount: number;
+  discountAmount: number;
   total: number;
 }
 

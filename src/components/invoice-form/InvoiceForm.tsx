@@ -51,8 +51,8 @@ const InvoiceForm = () => {
 
       const invoiceTotal = calculateInvoiceTotal(
         lineItems,
-        Number(formValues.invoiceTotal?.appliedTax),
-        Number(formValues.invoiceTotal?.appliedDiscount),
+        Number(formValues.invoiceTotal?.taxRate),
+        Number(formValues.invoiceTotal?.discountRate),
       );
 
       updateActiveInvoice({
@@ -69,8 +69,8 @@ const InvoiceForm = () => {
   }, [activeInvoice.id]);
 
   return (
-    <div className="flex flex-col gap-6 p-6 overflow-y-auto h-full w-3/5">
-      <h1 className="text-2xl font-bold">New Invoice</h1>
+    <div className="flex flex-col gap-6 p-8 overflow-y-auto h-full w-3/5 bg-white">
+      <h1 className="text-3xl font-bold">New Invoice</h1>
       <InvoiceMeta register={register} control={control} errors={errors} />
       <ClientSection register={register} control={control} errors={errors} />
       <LineItemsTable register={register} control={control} errors={errors} />

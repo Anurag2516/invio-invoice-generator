@@ -12,11 +12,11 @@ export const userSchema = z.object({
 export const lineItemSchema = z.object({
   id: z.string(),
   description: z.string().min(1, "Description is required"),
-  quantity: z
+  quantity: z.coerce
     .number({ message: "Must be a number" })
     .int("Quantity must be a whole number")
     .min(1, "Quantity must be at least 1"),
-  rate: z
+  rate: z.coerce
     .number({ message: "Must be a number" })
     .min(0, "Rate cannot be negative"),
   amount: z.number(),
@@ -24,17 +24,22 @@ export const lineItemSchema = z.object({
 
 export const invoiceTotalSchema = z.object({
   subtotal: z.number(),
-  appliedTax: z
-    .number()
-    .min(0, "Tax must be at least at 0%")
-    .max(100, "Tax must be at most at 100%"),
-  appliedDiscount: z.number().min(0).max(100),
+  taxRate: z.coerce
+    .number({ message: "Must be a number" })
+    .min(0, "Tax must be at least 0%")
+    .max(100, "Tax must be at most 100%"),
+  discountRate: z.coerce
+    .number({ message: "Must be a number" })
+    .min(0, "Discount must be at least 0%")
+    .max(100, "Discount must be at most 100%"),
+  taxAmount: z.number(),
+  discountAmount: z.number(),
   total: z.number(),
 });
 
 export const paymentInfo = z.object({
-  bankName: z.string,
-  accountholderName: z.string,
+  bankName: z.string(),
+  accountholderName: z.string(),
   accountNumber: z
     .string()
     .min(8, "Account number must be at least 8 digits")

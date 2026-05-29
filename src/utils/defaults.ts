@@ -21,8 +21,10 @@ export const defaultLineItem = (): LineItem => ({
 
 export const defaultInvoiceTotal = (): InvoiceTotal => ({
   subtotal: 0,
-  appliedTax: 0,
-  appliedDiscount: 0,
+  taxRate: 0,
+  discountRate: 0,
+  taxAmount: 0,
+  discountAmount: 0,
   total: 0,
 });
 
