@@ -1,16 +1,20 @@
+import { Controller } from "react-hook-form";
 import type { InvoiceFormProps } from "../../types/invoice";
 import Input from "../ui/Input";
 import SectionHeader from "../ui/SectionHeader";
+import { phoneNumberFilter } from "@/utils/inputFilters";
 
 interface ClientSectionProps {
   party: "sender" | "client";
   register: InvoiceFormProps["register"];
+  control : InvoiceFormProps["control"];
   errors: InvoiceFormProps["errors"];
 }
 
 const PartyFields = ({
   party,
   register,
+  control,
   errors,
 }: ClientSectionProps) => {
   const error = party === "sender" ? errors.sender : errors.client;
@@ -34,44 +38,52 @@ const PartyFields = ({
         placeholder="New York City, New York"
         error={error?.address?.message}
       />
+      <Controller
+        name={`${party}.phone`}
+        control={control}
+        render={({ field }) => (
+          <Input
+            label="Phone"
+            placeholder="+91 98765 43210"
+            onChange={(e) => {
+              if (phoneNumberFilter(e)) field.onChange(e);
+            }}
+            className="font-mono"
+          />
+        )}
+      />
       <Input
         {...register(`${party}.email`)}
         label="Email"
         error={error?.email?.message}
         placeholder="johndoe@email.com"
       />
-      <Input
-        {...register(`${party}.phone`)}
-        label="Phone"
-        error={error?.phone?.message}
-        placeholder="+91 98765 43210"
-      />
     </div>
   );
 };
 
-const ClientSection = ({ register, errors }: InvoiceFormProps) => {
+const ClientSection = ({ register, control, errors }: InvoiceFormProps) => {
   return (
     <div>
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col gap-3">
-          <div className="flex gap-2 items-center">
-            <SectionHeader label="From" />
-            <span className="text-xs text-stone-500 tracking-wide">
-              (Your Details)
-            </span>
-          </div>
-          <PartyFields party="sender" register={register} errors={errors} />
+          <SectionHeader label="From" subLabel="(Your Details)" />
+          <PartyFields
+            party="sender"
+            register={register}
+            control={control}
+            errors={errors}
+          />
         </div>
 
         <div className="flex flex-col gap-3">
-          <div className="flex gap-2 items-center">
-            <SectionHeader label="Bill To" />
-            <span className="text-xs text-stone-500 tracking-wide">
-              (Client Details)
-            </span>
-          </div>
-          <PartyFields party="client" register={register} errors={errors} />
+          <SectionHeader label="Bill To" subLabel="(Client Details)" />
+          <PartyFields
+            party="client"
+            register={register}
+            control={control}
+            errors={errors}
+          />
         </div>
       </div>
     </div>
