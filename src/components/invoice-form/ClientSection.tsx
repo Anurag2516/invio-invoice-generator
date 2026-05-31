@@ -7,7 +7,7 @@ import { phoneNumberFilter } from "@/utils/inputFilters";
 interface ClientSectionProps {
   party: "sender" | "client";
   register: InvoiceFormProps["register"];
-  control : InvoiceFormProps["control"];
+  control: InvoiceFormProps["control"];
   errors: InvoiceFormProps["errors"];
 }
 
