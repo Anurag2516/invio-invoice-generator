@@ -21,21 +21,24 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
 
   return (
     <div className="w-full mt-4">
-      <SectionHeader label="LineItems" />
+      <div className="flex items-center gap-3 w-full">
+        <SectionHeader label="LineItems" />
+        <div className="flex-1 h-[1.5px] bg-stone" />
+      </div>
       <table className="w-full border-collapse mt-5">
         <thead>
           <tr>
             <th className="w-8" />
-            <th className="py-2 text-left text-sm font-semibold uppercase tracking-wide text-brand">
+            <th className="py-2 text-left text-sm font-semibold uppercase tracking-wide text-stone">
               Description
             </th>
-            <th className="py-2 text-left text-sm font-semibold uppercase tracking-wide text-brand w-24">
+            <th className="py-2 text-left text-sm font-semibold uppercase tracking-wide text-stone w-24">
               Rate
             </th>
-            <th className="py-2 text-left text-sm font-semibold uppercase tracking-wide text-brand w-24">
+            <th className="py-2 text-left text-sm font-semibold uppercase tracking-wide text-stone w-24">
               Qty
             </th>
-            <th className="py-2 text-right text-sm font-semibold uppercase tracking-wide text-brand w-20">
+            <th className="py-2 text-right text-sm font-semibold uppercase tracking-wide text-stone w-20">
               Amount
             </th>
           </tr>
@@ -55,7 +58,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                     removeLineItem(field.id);
                   }}
                   disabled={fields.length === 1}
-                  className="flex h-10.5 w-10.5 items-center justify-center rounded-lg text-brand border border-brand hover:bg-red-100 hover-border-200 hover:cursor-pointer transition-all duration-300 disabled:opacity-30"
+                  className="flex h-10.5 w-10.5 items-center justify-center rounded-lg text-stone border border-stone hover:bg-red-100 hover-border-200 hover:cursor-pointer transition-all duration-300 disabled:opacity-30"
                 >
                   <X size={18} />
                 </button>
@@ -65,6 +68,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                 <Input
                   {...register(`lineItems.${index}.description`)}
                   placeholder="Item Description"
+                  error={errors.lineItems?.[index]?.description?.message}
                 />
               </td>
 
