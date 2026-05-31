@@ -19,7 +19,10 @@ import { format } from "date-fns";
 const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
   return (
     <div className="flex flex-col gap-6 justify-between items-start border-b border-stone-300">
-      <SectionHeader label="Invoice Header" />
+      <div className="flex items-center gap-3 w-full">
+        <SectionHeader label="Invoice Header" />
+        <div className="flex-1 h-[1.6px] bg-stone" />
+      </div>
       <div className="grid grid-cols-2 gap-6 ">
         <Input
           {...register("invoiceNumber")}
@@ -32,7 +35,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-semibold uppercase tracking-wide text-stone-600">
+              <label className="text-sm font-semibold uppercase tracking-wide text-stone">
                 Status
               </label>
               <Select onValueChange={field.onChange} defaultValue={field.value} >
@@ -90,7 +93,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
           control={control}
           render={({ field }) => (
             <div className="flex flex-col gap-1">
-              <label className="text-sm font-semibold uppercase tracking-wide text-stone-600">
+              <label className="text-sm font-semibold uppercase tracking-wide text-stone">
                 Currency
               </label>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
