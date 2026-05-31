@@ -69,7 +69,7 @@ const InvoiceForm = () => {
   }, [activeInvoice.id]);
 
   return (
-    <div className="flex flex-col gap-6 p-8 overflow-y-auto h-full w-3/5 bg-white">
+    <form className="flex flex-col gap-6 p-8 overflow-y-auto h-full w-3/5 bg-paper">
       <h1 className="text-3xl font-bold">New Invoice</h1>
       <InvoiceMeta register={register} control={control} errors={errors} />
       <ClientSection register={register} control={control} errors={errors} />
@@ -80,7 +80,7 @@ const InvoiceForm = () => {
         control={control}
         errors={errors}
       />
-    </div>
+    </form>
   );
 };
 
