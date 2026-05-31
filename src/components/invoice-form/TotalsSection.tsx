@@ -12,8 +12,11 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
   const currency = useCurrencySign();
 
   return (
-    <div className="text-brand mt-4">
-      <SectionHeader label="Summary" />
+    <div className="text-stone mt-4">
+      <div className="flex items-center gap-3 w-full">
+        <SectionHeader label="Summary" />
+        <div className="flex-1 h-[1.5px] bg-stone" />
+      </div>
 
       <div className="flex items-center gap-8 mt-4 w-full">
         <div className="flex flex-col items-center justify-between w-full">
@@ -88,7 +91,7 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
             </span>
           </div>
 
-          <div className="flex items-center justify-between border-t border-brand">
+          <div className="flex items-center justify-between border-t border-stone">
             <span className="monotext-lg font-semibold uppercase mt-3">
               Total due
             </span>
