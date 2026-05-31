@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Playwrite+GB+S+Guides:ital@0;1&display=swap");
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
@@ -7,9 +7,26 @@
 @custom-variant dark (&:is(.dark *));
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Epilogue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+h1 {
+  font-family: "DM Serif Display", serif;
+}
+input {
+  font-family: "DM Sans", sans-serif;
+}
+.mono {
+  font-family: "font-mono", monospace;
+}
+
+@theme {
+  --color-paper: #fffefb;
+  --color-mist: #f5f7f2;
+  --color-stone: #8a8070;
+  --color-ink: #0f0e0c;
+  --color-terracotta: #c84b2f;
 }
 
 @theme inline {
@@ -130,8 +147,5 @@ body {
   }
   body {
     @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
   }
 }
