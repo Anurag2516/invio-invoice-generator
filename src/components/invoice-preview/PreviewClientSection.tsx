@@ -28,7 +28,7 @@ const PreviewClientSection = ({
           {sender.companyName && <p>{sender.companyName}</p>}
           {sender.address && <p>{sender.address}</p>}
           {sender.email && <p>{sender.email}</p>}
-          {sender.phone && <span className="mono">{sender.phone}</span>}
+          {sender.phone && <span className="font-numbers">{sender.phone}</span>}
         </div>
       </div>
       <div>
@@ -40,7 +40,9 @@ const PreviewClientSection = ({
           {client.companyName && <p>{client.companyName}</p>}
           {client.address && <p>{client.address}</p>}
           {client.email && <p>{client.email}</p>}
-          {client.phone && <span className="mono">{client.phone}</span>}
+          {client.phone && (
+            <span className="font-numbers">{client.phone}</span>
+          )}
         </div>
       </div>
     </div>

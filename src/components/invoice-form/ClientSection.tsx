@@ -48,7 +48,7 @@ const PartyFields = ({
             onChange={(e) => {
               if (phoneNumberFilter(e)) field.onChange(e);
             }}
-            className="font-mono"
+            className="font-numbers"
           />
         )}
       />

@@ -30,44 +30,46 @@ const PreviewTotals = ({
       <div className="flex justify-between items-start gap-6">
         <PreviewAdditionalInfo paymentInfo={paymentInfo} />
 
-        <div className="min-w-50 text-base text-stone">
-          <div className="flex justify-between">
-            <p className="text-sm">Subtotal</p>
-            <span className="mono font-semibold text-ink">
+        <div className="min-w-50 text-sm text-stone">
+          <div className="flex justify-between items-center">
+            <p>Subtotal</p>
+            <span className="font-normal text-ink font-numbers">
               {currency}
               {invoiceTotal.subtotal}
             </span>
           </div>
 
-          <div className="flex justify-between py-1.5">
-            <p className="text-sm">
+          <div className="flex justify-between items-center py-1.5">
+            <p>
               Tax{" "}
               {invoiceTotal.taxRate > 0 && (
-                <span className="mono">({invoiceTotal.taxRate}%)</span>
+                <span className="font-numbers">({invoiceTotal.taxRate}%)</span>
               )}
             </p>
-            <span className="mono font-semibold text-ink">
+            <span className="font-normal text-ink font-numbers">
               {currency}
               {invoiceTotal.taxAmount}
             </span>
           </div>
-          <div className="flex justify-between">
-            <p className="text-sm">
+          <div className="flex justify-between items-center">
+            <p>
               Discount{" "}
               {invoiceTotal.discountRate > 0 && (
-                <span className="mono">({invoiceTotal.discountRate}%)</span>
+                <span className="font-numbers">
+                  ({invoiceTotal.discountRate}%)
+                </span>
               )}
             </p>
-            <span className="mono font-semibold text-ink">
+            <span className="font-normal text-ink font-numbers">
               {currency}
               {invoiceTotal.discountAmount}
             </span>
           </div>
-          <div className="flex justify-between items-center bg-ink mt-2 px-3 py-2.5">
-            <h1 className="font-bold text-lg text-paper tracking-wider leading-tight italic">
+          <div className="flex justify-between items-center bg-ink mt-2 px-2 py-2.5">
+            <h1 className="font-normal text-lg text-paper tracking-wide leading-tight">
               Total Due
             </h1>
-            <span className="mono text-xl font-black text-terracotta">
+            <span className="text-lg font-semibold text-terracotta font-numbers tracking-wide">
               {currency}
               {invoiceTotal.total}
             </span>

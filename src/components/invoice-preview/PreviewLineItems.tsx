@@ -28,14 +28,14 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
               <td className="py-3 px-3 text-sm">
                 {item.description || "Item Description"}
               </td>
-              <td className="py-3 px-3 text-center font-mono">
+              <td className="py-3 px-3 text-center font-numbers">
                 {item.quantity}
               </td>
-              <td className="py-3 px-3 text-right font-mono">
+              <td className="py-3 px-3 text-right font-numbers">
                 {currency}
                 {item.rate}
               </td>
-              <td className="py-3 px-3 text-right font-semibold font-mono">
+              <td className="py-3 px-3 text-right font-semibold font-numbers">
                 {currency}
                 {item.amount}
               </td>

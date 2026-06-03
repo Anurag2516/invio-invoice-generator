@@ -110,7 +110,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                 />
               </td>
 
-              <td className="py-2 text-right text-base font-medium text-ink font-mono">
+              <td className="py-2 text-right text-base font-medium text-ink font-numbers">
                 {currency}
                 {(lineItems[index]?.amount ?? 0).toFixed(2)}
               </td>

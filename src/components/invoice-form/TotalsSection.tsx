@@ -65,7 +65,7 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
             <div className="text-sm font-semibold uppercase tracking-wide">
               Subtotal
             </div>
-            <span className="mono text-sm text-stone-800 font-semibold">
+            <span className="text-sm text-ink font-numbers">
               {currency}
               {invoiceTotal.subtotal}
             </span>
@@ -75,7 +75,7 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
             <div className="text-sm font-semibold uppercase tracking-wide">
               Discount
             </div>
-            <span className="mono text-sm text-stone-800 font-semibold">
+            <span className="text-sm text-ink font-numbers">
               {currency}
               {invoiceTotal.discountAmount}
             </span>
@@ -85,17 +85,17 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
             <div className="text-sm font-semibold uppercase tracking-wide">
               Tax Rate
             </div>
-            <span className="mono text-sm text-stone-800 font-semibold">
+            <span className="text-sm text-ink font-numbers">
               {currency}
               {invoiceTotal.taxAmount}
             </span>
           </div>
 
-          <div className="flex items-center justify-between border-t border-stone">
-            <span className="monotext-lg font-semibold uppercase mt-3">
+          <div className="flex items-center justify-between border-t border-stone text-base">
+            <span className="font-semibold uppercase font-numbers mt-2">
               Total due
             </span>
-            <span className="mono text-lg text-stone-800 font-semibold">
+            <span className="text-ink font-normal font-numbers mt-2">
               {currency}
               {invoiceTotal.total}
             </span>

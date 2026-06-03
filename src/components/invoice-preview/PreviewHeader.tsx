@@ -26,16 +26,16 @@ const PreviewHeader = ({
 }: PreviewHeaderProp) => {
   return (
     <div className="flex justify-between items-start border-b-2 border-stone-400 bg-ink pb-6 mb-6 px-10 py-14">
-      <h1 className="text-[40px] font-black text-paper italic tracking-wide leading-none mb-3">
+      <h1 className="text-[40px] font-normal text-paper italic tracking-wide leading-none mb-3">
         Invoice
       </h1>
       <div className="flex flex-col gap-2 text-sm text-stone">
-        <p className="font-normal text-[#a89e92] bg-[#ffffff14] w-fit px-2 py-1 border border-[#ffffff1a] rounded mono">
+        <p className="font-normal text-[#a89e92] bg-[#ffffff14] w-fit px-2 py-1 border border-[#ffffff1a] rounded font-numbers">
           #{invoiceNumber}
         </p>
         <p className="font-normal">
           ISSUE DATE
-          <span className="mono font-normal text-[#c4baae] pl-3">
+          <span className="font-normal text-[#c4baae] pl-3 font-numbers">
             {issueDate && isValid(parseISO(issueDate))
               ? format(parseISO(issueDate), "dd MMM yyyy").toUpperCase()
               : "No issue date"}
@@ -43,7 +43,7 @@ const PreviewHeader = ({
         </p>
         <p className="font-normal">
           DUE DATE
-          <span className="mono font-normal text-[#c4baae] pl-3">
+          <span className="font-normal text-[#c4baae] pl-3 font-numbers">
             {dueDate && isValid(parseISO(dueDate))
               ? format(parseISO(dueDate), "dd MMM yyyy").toUpperCase()
               : "No due date"}

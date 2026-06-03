@@ -36,7 +36,7 @@ const PreviewAdditionalInfo = ({ paymentInfo }: PreviewAdditionalInfoProps) => {
         {paymentInfo.accountNumber && (
           <label className="tracking-wide">
             Account Number:{" "}
-            <span className="mono font-normal text-ink">
+            <span className="font-normal text-ink font-numbers">
               {paymentInfo.accountNumber}
             </span>
           </label>
