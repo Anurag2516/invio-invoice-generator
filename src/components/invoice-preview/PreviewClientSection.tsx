@@ -3,50 +3,43 @@ import type { useInvoiceStore } from "@/store/invoiceStore";
 type Sender = ReturnType<
   typeof useInvoiceStore.getState
 >["activeInvoice"]["sender"];
-
 type Client = ReturnType<
   typeof useInvoiceStore.getState
 >["activeInvoice"]["client"];
+
+interface PartyInfoProps {
+  label: string;
+  data: Sender | Client;
+}
 
 interface PreviewClientSectionProps {
   sender: Sender;
   client: Client;
 }
 
+const PartyInfo = ({ label, data }: PartyInfoProps) => (
+  <div>
+    <p className="text-sm font-semibold uppercase tracking-wider text-stone mb-1">
+      {label}
+    </p>
+    <div className="text-[14px] text-stone leading-5.5">
+      <p className="font-bold text-lg text-ink">{data.name}</p>
+      {data.companyName && <p>{data.companyName}</p>}
+      {data.address && <p>{data.address}</p>}
+      {data.email && <p>{data.email}</p>}
+      {data.phone && <span className="font-numbers">{data.phone}</span>}
+    </div>
+  </div>
+);
+
 const PreviewClientSection = ({
   sender,
   client,
-}: PreviewClientSectionProps) => {
-  return (
-    <div className="grid grid-cols-2 gap-6 mb-7 px-10">
-      <div>
-        <p className="text-base font-bold uppercase tracking-wider text-stone mb-1">
-          Bill From:
-        </p>
-        <div className="text-[14px] text-stone leading-5.5">
-          <p className="font-bold text-lg text-ink">{sender.name}</p>
-          {sender.companyName && <p>{sender.companyName}</p>}
-          {sender.address && <p>{sender.address}</p>}
-          {sender.email && <p>{sender.email}</p>}
-          {sender.phone && <span className="font-numbers">{sender.phone}</span>}
-        </div>
-      </div>
-      <div>
-        <p className="text-base font-bold uppercase tracking-wider text-stone mb-1">
-          Bill To:
-        </p>
-        <div className="text-[14px] text-stone leading-5.5">
-          <p className="font-bold text-lg text-ink">{client.name}</p>
-          {client.companyName && <p>{client.companyName}</p>}
-          {client.address && <p>{client.address}</p>}
-          {client.email && <p>{client.email}</p>}
-          {client.phone && (
-            <span className="font-numbers">{client.phone}</span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+}: PreviewClientSectionProps) => (
+  <div className="grid grid-cols-2 gap-6 mb-7 px-10">
+    <PartyInfo label="Bill From:" data={sender} />
+    <PartyInfo label="Bill To:" data={client} />
+  </div>
+);
 
 export default PreviewClientSection;
