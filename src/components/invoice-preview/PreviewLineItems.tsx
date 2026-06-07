@@ -23,9 +23,9 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
           {lineItems.map((item) => (
             <tr
               key={item.id}
-              className="border-b border-[#f0ebe3] text-base text-ink"
+              className="border-b border-[#f0ebe3] text-sm text-ink"
             >
-              <td className="py-3 px-3 text-sm">
+              <td className="py-3 px-3">
                 {item.description || "Item Description"}
               </td>
               <td className="py-3 px-3 text-center font-numbers">
