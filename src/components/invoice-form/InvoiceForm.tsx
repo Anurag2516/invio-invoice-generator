@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { useInvoiceStore } from "../../store/invoiceStore";
 import type { Invoice, InvoiceFormValues, LineItem } from "../../types/invoice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { invoice } from "../../schema/invoice.schema";
-import { useEffect } from "react";
+import { useEffect, type RefObject } from "react";
 import { generateId } from "../../utils/generateId";
 import {
   calculateInvoiceTotal,
@@ -15,8 +15,14 @@ import LineItemsTable from "./LineItemsTable";
 import TotalsSection from "./TotalsSection";
 import InvoiceAdditionalInfo from "./InvoiceAdditionalInfo";
 
-const InvoiceForm = () => {
+interface InvoiceFormProps {
+  formRef: RefObject<HTMLFormElement | null>;
+  onSaveSuccessRef: RefObject<(() => void) | null>;
+}
+
+const InvoiceForm = ({ formRef, onSaveSuccessRef }: InvoiceFormProps) => {
   const activeInvoice = useInvoiceStore((s) => s.activeInvoice);
+  const saveInvoice = useInvoiceStore((s) => s.saveInvoice);
   const updateActiveInvoice = useInvoiceStore((s) => s.updateActiveInvoice);
 
   const {
@@ -24,6 +30,7 @@ const InvoiceForm = () => {
     watch,
     reset,
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm<InvoiceFormValues>({
     resolver: zodResolver(invoice),
@@ -68,9 +75,18 @@ const InvoiceForm = () => {
     reset(activeInvoice);
   }, [activeInvoice.id]);
 
+  const formSubmit: SubmitHandler<InvoiceFormValues> = () => {
+    saveInvoice();
+    onSaveSuccessRef.current?.();
+  };
+
   return (
-    <form className="flex flex-col gap-6 p-8 overflow-y-auto h-full w-3/5 bg-paper">
-      <h1 className="text-3xl font-bold">New Invoice</h1>
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit(formSubmit)}
+      className="flex flex-col gap-6 p-8 overflow-y-auto h-full w-3/5 bg-paper"
+    >
+      <h1 className="text-3xl font-bold tracking-wide">New Invoice</h1>
       <InvoiceMeta register={register} control={control} errors={errors} />
       <ClientSection register={register} control={control} errors={errors} />
       <LineItemsTable register={register} control={control} errors={errors} />
