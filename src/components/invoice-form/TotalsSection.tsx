@@ -6,7 +6,7 @@ import SectionHeader from "../ui/SectionHeader";
 import { percentageFilter } from "@/utils/inputFilters";
 import { Controller } from "react-hook-form";
 
-const TotalsSection = ({ control }: InvoiceFormProps) => {
+const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
   const invoiceTotal = useInvoiceStore((state) => state.activeInvoice.invoiceTotal);
 
   const currency = useCurrencySign();
@@ -34,6 +34,7 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
                 onChange={(e) => {
                   if (percentageFilter(e)) field.onChange(e);
                 }}
+                error={errors?.invoiceTotal?.taxRate?.message}
               />
             )}
           />
@@ -53,6 +54,7 @@ const TotalsSection = ({ control }: InvoiceFormProps) => {
                 onChange={(e) => {
                   if (percentageFilter(e)) field.onChange(e);
                 }}
+                error={errors.invoiceTotal?.discountRate?.message}
               />
             )}
           />
