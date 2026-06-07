@@ -86,6 +86,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                       onChange={(e) => {
                         if (positiveNumberFilter(e)) field.onChange(e);
                       }}
+                      error={errors?.lineItems?.[index]?.rate?.message}
                     />
                   )}
                 />
@@ -105,6 +106,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                       onChange={(e) => {
                         if (positiveNumberFilter(e)) field.onChange(e);
                       }}
+                      error={errors?.lineItems?.[index]?.quantity?.message}
                     />
                   )}
                 />
