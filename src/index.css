@@ -6,8 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: 'DM Mono';
-  src: url('./assets/fonts/DMMono-Regular.ttf') format('truetype');
+  font-family: 'IBM Plex 5Mono';
+  src: url('./assets/fonts/IBMPlexMono-Regular.ttf') format('truetype');
   font-display: swap;
 }
 
@@ -47,7 +47,8 @@ input {
   --color-stone: #8a8070;
   --color-ink: #0f0e0c;
   --color-terracotta: #c84b2f;
-  --font-numbers: "DM Mono", monospace;
+  --color-terracotta-dark: #b03e24;
+  --font-numbers: "IBM Plex Mono", monospace;
 }
 
 @theme inline {
