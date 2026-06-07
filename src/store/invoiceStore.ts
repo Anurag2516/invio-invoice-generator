@@ -82,8 +82,8 @@ export const useInvoiceStore = create<InvoiceStore>()(
 
         const totals = calculateInvoiceTotal(
           newItems,
-          activeInvoice.invoiceTotal.appliedTax,
-          activeInvoice.invoiceTotal.appliedDiscount,
+          activeInvoice.invoiceTotal.taxRate,
+          activeInvoice.invoiceTotal.discountRate,
         );
 
         set({
