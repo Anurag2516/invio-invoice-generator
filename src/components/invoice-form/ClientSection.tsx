@@ -45,9 +45,11 @@ const PartyFields = ({
           <Input
             label="Phone"
             placeholder="+91 98765 43210"
+            value={field.value as string}
             onChange={(e) => {
               if (phoneNumberFilter(e)) field.onChange(e);
             }}
+            error={error?.phone?.message}
             className="font-numbers"
           />
         )}
