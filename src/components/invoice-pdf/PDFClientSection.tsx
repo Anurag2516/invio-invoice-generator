@@ -27,20 +27,20 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 10,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     letterSpacing: 1.2,
     textTransform: "uppercase",
     marginBottom: 6,
   },
   name: {
     fontSize: 14,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#0f0e0c",
     marginBottom: 1,
   },
   detail: {
     fontSize: 10,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     marginBottom: 1,
     lineHeight: 1.5,
   },

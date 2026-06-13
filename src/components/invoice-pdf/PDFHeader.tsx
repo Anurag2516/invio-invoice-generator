@@ -22,9 +22,8 @@ const styles = StyleSheet.create({
   },
   invoiceTitle: {
     fontSize: 36,
-    fontFamily: "DM Serif Display Italic",
+    fontFamily: "IBM Plex Sans Italic",
     color: "#fffefb",
-    letterSpacing: 1,
     fontWeight: 400,
   },
   rightCol: {
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   },
   dateLabel: {
     fontSize: 8,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#8a8070",
     letterSpacing: 0.8,
     width: 60,

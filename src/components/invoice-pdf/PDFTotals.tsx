@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   paymentTitle: {
     fontSize: 10,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#8a8070",
     letterSpacing: 1.2,
     textTransform: "uppercase",
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
   },
   paymentLabel: {
     fontSize: 10,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#8a8070",
   },
   paymentValue: {
     fontSize: 10,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#0f0e0c",
   },
   paymentValueMono: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   totalLabel: {
     fontSize: 10,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#8a8070",
   },
   totalValue: {
@@ -103,14 +103,14 @@ const styles = StyleSheet.create({
   },
   totalDueLabel: {
     fontSize: 14,
-    fontFamily: "DM Serif Display",
+    fontFamily: "IBM Plex Sans",
     color: "#fffefb",
     letterSpacing: 1,
   },
   totalDueValue: {
     fontSize: 16,
     fontFamily: "IBM Plex Mono",
-    color: "#c84b2f",
+    color: "#fffefb",
   },
 
   notesCol: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   notesLabel: {
     fontSize: 9,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#8a8070",
     letterSpacing: 1.2,
     textTransform: "uppercase",
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   notesText: {
     fontSize: 9,
-    fontFamily: "Epilogue",
+    fontFamily: "IBM Plex Sans",
     color: "#0f0e0c",
     lineHeight: 1.6,
   },
