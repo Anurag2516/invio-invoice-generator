@@ -6,48 +6,34 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: 'IBM Plex 5Mono';
+  font-family: 'IBM Plex Mono';
   src: url('./assets/fonts/IBMPlexMono-Regular.ttf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'DM Sans';
-  src: url('./assets/fonts/DMSans_24pt-Regular.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'DM Serif Display';
-  src: url('./assets/fonts/DMSerifDisplay-Regular.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Epilogue';
-  src: url('./assets/fonts/Epilogue-Regular.ttf') format('truetype');
+  font-family: 'IBM Plex Sans';
+  src: url('./assets/fonts/IBMPlexSans-Regular.ttf') format('truetype');
   font-display: swap;
 }
 
 body {
-  font-family: "Epilogue";
+  font-family: "IBM Plex Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-h1 {
-  font-family: "DM Serif Display", serif;
-}
-input {
-  font-family: "DM Sans", sans-serif;
 }
 
 @theme {
   --color-paper: #fffefb;
-  --color-mist: #f5f7f2;
+  --color-mist: #f7f5f0;
+  --color-sand: #f0ede6;
   --color-stone: #8a8070;
   --color-ink: #0f0e0c;
-  --color-terracotta: #c84b2f;
-  --color-terracotta-dark: #b03e24;
+  --color-sage-green: #4a7c59;
+  --color-sage-green-dark: #3d6449;
   --font-numbers: "IBM Plex Mono", monospace;
 }
 
