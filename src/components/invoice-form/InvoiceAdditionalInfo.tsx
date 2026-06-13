@@ -33,7 +33,7 @@ const InvoiceAdditionalInfo = ({ register, errors }: InvoiceFormProps) => {
         <SectionHeader label="Notes" />
         <textarea
           {...register("notes")}
-          className="bg-mist border border-stone-200 rounded-lg px-3.5 py-3 text-sm text-stone-800 placeholder:text-stone-400 resize-y min-h-45 outline-none w-full hover:border-stone-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/10"
+          className="bg-mist border border-stone-200 rounded-lg px-3.5 py-3 text-sm text-stone-800 placeholder:text-stone/60 resize-y min-h-45 outline-none w-full hover:border-stone-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/10"
           placeholder="Payment terms, bank details, UPI ID, thank you note…"
         />
       </div>

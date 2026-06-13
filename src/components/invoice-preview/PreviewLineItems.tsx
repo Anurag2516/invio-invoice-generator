@@ -9,7 +9,7 @@ interface PreviewLineItemsProps {
 
 const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
   return (
-    <div className="px-10">
+    <div className="px-8">
       <table className="w-full border-collapse mb-6">
         <thead>
           <tr className="text-stone text-xs font-bold uppercase tracking-widest border-b border-stone">
@@ -35,7 +35,7 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
                 {currency}
                 {item.rate}
               </td>
-              <td className="py-3 px-3 text-right font-semibold font-numbers">
+              <td className="py-3 px-3 text-right font-numbers">
                 {currency}
                 {item.amount}
               </td>

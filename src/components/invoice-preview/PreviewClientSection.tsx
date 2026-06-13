@@ -19,9 +19,9 @@ interface PreviewClientSectionProps {
 
 const PartyInfo = ({ label, data }: PartyInfoProps) => (
   <div>
-    <p className="text-sm font-semibold uppercase tracking-wider text-stone mb-1">
+    <h3 className="text-sm uppercase tracking-wider text-stone mb-1">
       {label}
-    </p>
+    </h3>
     <div className="text-[14px] text-stone leading-5.5">
       <p className="font-bold text-lg text-ink">{data.name}</p>
       {data.companyName && <p>{data.companyName}</p>}
@@ -36,7 +36,7 @@ const PreviewClientSection = ({
   sender,
   client,
 }: PreviewClientSectionProps) => (
-  <div className="grid grid-cols-2 gap-6 mb-7 px-10">
+  <div className="grid grid-cols-2 gap-6 mb-7 px-8">
     <PartyInfo label="Bill From:" data={sender} />
     <PartyInfo label="Bill To:" data={client} />
   </div>

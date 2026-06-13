@@ -14,32 +14,32 @@ const PreviewAdditionalInfo = ({ paymentInfo }: PreviewAdditionalInfoProps) => {
       {(paymentInfo.bankName ||
         paymentInfo.accountholderName ||
         paymentInfo.accountNumber) && (
-        <label className="text-base tracking-wide font-bold uppercase">
+        <h3 className="text-sm tracking-wide font-bold uppercase">
           Payment Information
-        </label>
+        </h3>
       )}
-      <div className="flex flex-col gap-1 w-full text-sm ">
+      <div className="flex flex-col gap-1 w-full text-xs ">
         {paymentInfo.bankName && (
-          <label className="tracking-wide">
+          <p className="tracking-wide">
             Bank Name:{" "}
             <span className="font-normal text-ink">{paymentInfo.bankName}</span>
-          </label>
+          </p>
         )}
         {paymentInfo.accountholderName && (
-          <label className="tracking-wide">
+          <p className="tracking-wide">
             Accountholder Name:{" "}
             <span className="font-normal text-ink">
               {paymentInfo.accountholderName}
             </span>
-          </label>
+          </p>
         )}
         {paymentInfo.accountNumber && (
-          <label className="tracking-wide">
+          <p className="tracking-wide">
             Account Number:{" "}
             <span className="font-normal text-ink font-numbers">
               {paymentInfo.accountNumber}
             </span>
-          </label>
+          </p>
         )}
       </div>
     </div>

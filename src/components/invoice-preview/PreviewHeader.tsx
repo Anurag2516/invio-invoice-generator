@@ -25,8 +25,8 @@ const PreviewHeader = ({
   dueDate,
 }: PreviewHeaderProp) => {
   return (
-    <div className="flex justify-between items-start border-b-2 border-stone-400 bg-ink pb-6 mb-6 px-10 py-14">
-      <h1 className="text-[40px] font-normal text-paper italic tracking-wide leading-none mb-3">
+    <div className="flex justify-between items-start border-b-2 border-stone-400 bg-ink pb-6 mb-6 px-8 py-14">
+      <h1 className="text-[40px] font-normal text-paper italic leading-none mb-3">
         Invoice
       </h1>
       <div className="flex flex-col gap-2 text-sm text-stone">

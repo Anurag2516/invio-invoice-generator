@@ -26,7 +26,7 @@ const PreviewTotals = ({
   paymentInfo,
 }: PreviewTotalsProps) => {
   return (
-    <div className="flex flex-col gap-4 pb-10 px-10">
+    <div className="flex flex-col gap-4 pb-10 px-8">
       <div className="flex justify-between items-start gap-6">
         <PreviewAdditionalInfo paymentInfo={paymentInfo} />
 
@@ -69,7 +69,7 @@ const PreviewTotals = ({
             <h1 className="font-normal text-lg text-paper tracking-wide leading-tight">
               Total Due
             </h1>
-            <span className="text-lg font-semibold text-terracotta font-numbers tracking-wide">
+            <span className="text-lg  text-paper font-numbers tracking-wide">
               {currency}
               {invoiceTotal.total}
             </span>

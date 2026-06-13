@@ -62,11 +62,11 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
       </div>
 
       <div className="flex justify-end">
-        <div className="flex flex-col gap-3.5 w-75 pr-6 pt-6">
+        <div className="flex flex-col gap-2 w-75 pr-6 pt-6">
           <div className="flex items-center justify-between">
-            <div className="text-sm font-semibold uppercase tracking-wide">
+            <p className="text-[13px] font-semibold uppercase tracking-wide">
               Subtotal
-            </div>
+            </p>
             <span className="text-sm text-ink font-numbers">
               {currency}
               {invoiceTotal.subtotal}
@@ -74,9 +74,9 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="text-sm font-semibold uppercase tracking-wide">
+            <p className="text-[13px] font-semibold uppercase tracking-wide">
               Discount
-            </div>
+            </p>
             <span className="text-sm text-ink font-numbers">
               {currency}
               {invoiceTotal.discountAmount}
@@ -84,20 +84,20 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="text-sm font-semibold uppercase tracking-wide">
-              Tax Rate
-            </div>
+            <p className="text-[13px] font-semibold uppercase tracking-wide">
+              Tax
+            </p>
             <span className="text-sm text-ink font-numbers">
               {currency}
               {invoiceTotal.taxAmount}
             </span>
           </div>
 
-          <div className="flex items-center justify-between border-t border-stone text-base">
-            <span className="font-semibold uppercase font-numbers mt-2">
+          <div className="flex items-center justify-between border-t border-stone text-[15px]">
+            <p className="font-semibold uppercase tracking-wide mt-2">
               Total due
-            </span>
-            <span className="text-ink font-normal font-numbers mt-2">
+            </p>
+            <span className="text-ink font-semibold font-numbers mt-2">
               {currency}
               {invoiceTotal.total}
             </span>
