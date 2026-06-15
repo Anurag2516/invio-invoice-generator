@@ -19,7 +19,7 @@ const PartyFields = ({
 }: ClientSectionProps) => {
   const error = party === "sender" ? errors.sender : errors.client;
   return (
-    <div className="flex flex-col gap-2 ">
+    <div className="flex flex-col gap-2">
       <Input
         {...register(`${party}.name`)}
         label={party === "sender" ? "Your Name" : "Client Name"}
@@ -67,7 +67,7 @@ const PartyFields = ({
 const ClientSection = ({ register, control, errors }: InvoiceFormProps) => {
   return (
     <div>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="flex flex-col gap-3">
           <SectionHeader label="From" subLabel="(Your Details)" />
           <PartyFields

@@ -4,63 +4,16 @@ import PreviewHeader from "./PreviewHeader";
 import PreviewClientSection from "./PreviewClientSection";
 import PreviewLineItems from "./PreviewLineItems";
 import PreviewTotals from "./PreviewTotals";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import InvoicePDF from "../invoice-pdf/InvoicePDF";
-import { type RefObject, useRef, useEffect } from "react";
 
-interface InvoicePreviewProps {
-  formRef: RefObject<HTMLFormElement | null>;
-  onSaveSuccessRef: RefObject<(() => void) | null>;
-}
-
-const InvoicePreview = ({ formRef, onSaveSuccessRef }: InvoicePreviewProps) => {
+const InvoicePreview = () => {
   const activeInvoice = useInvoiceStore((state) => state.activeInvoice);
   const currency = useCurrencySign();
-  const downloadWrapperRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    onSaveSuccessRef.current = () => {
-      setTimeout(() => {
-        const anchor = downloadWrapperRef.current?.querySelector("a");
-        anchor?.click();
-      }, 0);
-    };
-
-    return () => {
-      onSaveSuccessRef.current = null;
-    };
-  }, [onSaveSuccessRef]);
-
-  const handleSaveAndDownload = () => {
-    if (!formRef.current) return;
-    formRef.current.requestSubmit();
-  };
 
   return (
-    <div className="w-2/5 fixed top-0 right-5 h-full overflow-y-auto py-12 px-6 bg-mist">
-      <div className="flex justify-between items-center pb-8">
-        <h1 className="text-2xl font-normal text-stone uppercase tracking-wide">
-          Live Preview
-        </h1>
-
-        <span ref={downloadWrapperRef} className="hidden">
-          <PDFDownloadLink
-            document={
-              <InvoicePDF activeInvoice={activeInvoice} currency={currency} />
-            }
-            fileName={`invoice-${activeInvoice.invoiceNumber}.pdf`}
-          >
-          </PDFDownloadLink>
-        </span>
-
-        <button
-          type="button"
-          onClick={handleSaveAndDownload}
-          className="text-sm text-paper font-semibold tracking-wider uppercase bg-terracotta border border-[#d4cbbf] rounded-sm px-4 py-3 shadow-xl hover:cursor-pointer hover:bg-terracotta-dark transition-colors"
-        >
-          Save & Download PDF
-        </button>
-      </div>
+    <div className="w-full xl:w-2/5 shrink-0 sticky top-0 h-[calc(100vh-131.6px)] xl:h-[calc(100vh-82.8px)] overflow-y-auto py-4 sm:py-8 px-3 sm:px-4 bg-mist">
+      <h1 className="hidden xl:block text-xl font-normal text-stone uppercase tracking-wide pb-8">
+        Live Preview
+      </h1>
 
       <div className="bg-paper mx-auto shadow-xl max-w-2xl">
         <PreviewHeader

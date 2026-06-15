@@ -84,7 +84,7 @@ const InvoiceForm = ({ formRef, onSaveSuccessRef }: InvoiceFormProps) => {
     <form
       ref={formRef}
       onSubmit={handleSubmit(formSubmit)}
-      className="w-full xl:w-3/5 h-full flex flex-col gap-6 py-8 px-6 overflow-y-auto shrink-0 bg-paper"
+      className="w-full xl:w-3/5 h-full flex flex-col gap-6 py-6 px-4 sm:py-8 sm:px-6 overflow-y-auto shrink-0 bg-paper"
     >
       <InvoiceMeta register={register} control={control} errors={errors} />
       <ClientSection register={register} control={control} errors={errors} />

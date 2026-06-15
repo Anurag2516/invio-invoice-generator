@@ -23,7 +23,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
         <SectionHeader label="Invoice Header" />
         <div className="flex-1 h-[1.6px] bg-stone" />
       </div>
-      <div className="grid grid-cols-2 gap-6 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <Input
           {...register("invoiceNumber")}
           label="Invoice Number"
@@ -38,7 +38,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
               <h2 className="text-sm font-semibold uppercase tracking-wide text-stone">
                 Status
               </h2>
-              <Select onValueChange={field.onChange} defaultValue={field.value} >
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -57,7 +57,7 @@ const InvoiceMeta = ({ register, control, errors }: InvoiceFormProps) => {
           )}
         />
       </div>
-      <div className="grid grid-cols-3 gap-5 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5 w-full">
         <Controller
           name="issueDate"
           control={control}

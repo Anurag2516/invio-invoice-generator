@@ -7,7 +7,9 @@ import { percentageFilter } from "@/utils/inputFilters";
 import { Controller } from "react-hook-form";
 
 const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
-  const invoiceTotal = useInvoiceStore((state) => state.activeInvoice.invoiceTotal);
+  const invoiceTotal = useInvoiceStore(
+    (state) => state.activeInvoice.invoiceTotal,
+  );
 
   const currency = useCurrencySign();
 
@@ -62,7 +64,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
       </div>
 
       <div className="flex justify-end">
-        <div className="flex flex-col gap-2 w-75 pr-6 pt-6">
+        <div className="flex flex-col gap-2 w-full sm:w-75 pr-0 sm:pr-6 pt-6">
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Subtotal

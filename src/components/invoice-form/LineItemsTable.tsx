@@ -25,7 +25,87 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
         <SectionHeader label="LineItems" />
         <div className="flex-1 h-[1.5px] bg-stone" />
       </div>
-      <table className="w-full border-collapse mt-5">
+
+      <div className="sm:hidden flex flex-col gap-3 mt-5">
+        {fields.map((field, index) => (
+          <div
+            key={field.id}
+            className="flex flex-col gap-3 border border-stone-200 rounded-xl p-3"
+          >
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-semibold uppercase tracking-wide text-stone">
+                Item {index + 1}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  remove(index);
+                  removeLineItem(field.id);
+                }}
+                disabled={fields.length === 1}
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-stone border border-stone hover:bg-red-100 hover:cursor-pointer transition-all duration-300 disabled:opacity-30"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <Input
+              {...register(`lineItems.${index}.description`)}
+              placeholder="Item Description"
+              label="Description"
+              error={errors.lineItems?.[index]?.description?.message}
+            />
+            <div className="grid grid-cols-3 gap-2">
+              <Controller
+                name={`lineItems.${index}.rate`}
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    value={field.value as string}
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    label="Rate"
+                    onChange={(e) => {
+                      if (positiveNumberFilter(e)) field.onChange(e);
+                    }}
+                    error={errors?.lineItems?.[index]?.rate?.message}
+                  />
+                )}
+              />
+              <Controller
+                name={`lineItems.${index}.quantity`}
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    value={field.value as string}
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="1"
+                    label="Qty"
+                    onChange={(e) => {
+                      if (positiveNumberFilter(e)) field.onChange(e);
+                    }}
+                    error={errors?.lineItems?.[index]?.quantity?.message}
+                  />
+                )}
+              />
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-semibold uppercase tracking-wide text-stone">
+                  Amount
+                </span>
+                <span className="text-base font-medium text-ink font-numbers pt-2">
+                  {currency}
+                  {(lineItems[index]?.amount ?? 0).toFixed(2)}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <table className="hidden sm:table w-full border-collapse mt-5">
         <thead>
           <tr>
             <th className="w-8" />

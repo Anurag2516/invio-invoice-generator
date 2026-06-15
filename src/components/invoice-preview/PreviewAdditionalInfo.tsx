@@ -10,15 +10,15 @@ type PreviewAdditionalInfoProps = {
 
 const PreviewAdditionalInfo = ({ paymentInfo }: PreviewAdditionalInfoProps) => {
   return (
-    <div className="flex flex-col items-start gap-2 text-stone">
+    <div className="flex flex-col items-start gap-1.5 sm:gap-2 text-stone">
       {(paymentInfo.bankName ||
         paymentInfo.accountholderName ||
         paymentInfo.accountNumber) && (
-        <h3 className="text-sm tracking-wide font-bold uppercase">
+        <h3 className="text-[10px] sm:text-sm tracking-wide font-bold uppercase">
           Payment Information
         </h3>
       )}
-      <div className="flex flex-col gap-1 w-full text-xs ">
+      <div className="flex flex-col gap-0.5 sm:gap-1 w-full text-[10px] sm:text-xs">
         {paymentInfo.bankName && (
           <p className="tracking-wide">
             Bank Name:{" "}
