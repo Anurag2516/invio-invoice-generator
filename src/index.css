@@ -35,6 +35,7 @@ body {
   --color-sage-green: #4a7c59;
   --color-sage-green-dark: #3d6449;
   --font-numbers: "IBM Plex Mono", monospace;
+  --breakpoint-xs: 375px;
 }
 
 @theme inline {
