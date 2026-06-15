@@ -4,12 +4,20 @@ import { persist } from "zustand/middleware";
 
 
 export const useAppStore = create<AppStore>()(
-  persist((set) => ({
+  persist(
+    (set, get) => ({
+      theme: "dark",
+      sidebarOpen: false,
 
-    theme: "dark",
+      changeTheme: (theme) => {
+        set({ theme: theme });
+      },
 
-    changeTheme: (theme) => {
-        set({theme: theme})
-    }
-  }), { name: "app-store" }),
+      toggleSidebar: () => {
+        const {sidebarOpen} = get();
+        set({ sidebarOpen : !sidebarOpen});
+      },
+    }),
+    { name: "app-store" },
+  ),
 );
