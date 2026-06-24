@@ -14,6 +14,8 @@ import ClientSection from "./ClientSection";
 import LineItemsTable from "./LineItemsTable";
 import TotalsSection from "./TotalsSection";
 import InvoiceAdditionalInfo from "./InvoiceAdditionalInfo";
+import { useParams } from "react-router-dom";
+import { useShallow } from "zustand/react/shallow";
 
 interface InvoiceFormProps {
   formRef: RefObject<HTMLFormElement | null>;
@@ -21,9 +23,17 @@ interface InvoiceFormProps {
 }
 
 const InvoiceForm = ({ formRef, onSaveSuccessRef }: InvoiceFormProps) => {
-  const activeInvoice = useInvoiceStore((s) => s.activeInvoice);
-  const saveInvoice = useInvoiceStore((s) => s.saveInvoice);
-  const updateActiveInvoice = useInvoiceStore((s) => s.updateActiveInvoice);
+  const { activeInvoice, saveInvoice, updateActiveInvoice, loadInvoice } =
+    useInvoiceStore(
+      useShallow((state) => ({
+        activeInvoice: state.activeInvoice,
+        saveInvoice: state.saveInvoice,
+        updateActiveInvoice: state.updateActiveInvoice,
+        loadInvoice: state.loadInvoice,
+      })),
+    );
+
+  const { id } = useParams();
 
   const {
     register,
@@ -79,6 +89,10 @@ const InvoiceForm = ({ formRef, onSaveSuccessRef }: InvoiceFormProps) => {
     saveInvoice();
     onSaveSuccessRef.current?.();
   };
+
+  useEffect(() => {
+    if (id) loadInvoice(id);
+  }, [id]);
 
   return (
     <form
