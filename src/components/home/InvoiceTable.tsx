@@ -49,7 +49,7 @@ const InvoiceTable = ({
         <div className="text-center">Actions</div>
       </div>
 
-      <div className="flex flex-col max-h-[500px] overflow-y-auto mask-b-from-87% mask-b-to-100%">
+      <div className="flex flex-col max-h-125 overflow-y-auto mask-b-from-87% mask-b-to-100%">
         {filteredInvoices.length === 0 ? (
           <div className="px-6 py-10 text-center text-sm text-[#8a8377]">
             No invoices in this view.
