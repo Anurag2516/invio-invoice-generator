@@ -43,7 +43,7 @@ export const createEmptyInvoice = (
   sender: defaultUser(),
   client: defaultUser(),
   issueDate: format(new Date(), "yyyy-MM-dd"),
-  dueDate: format(new Date(), "yyyy-MM-dd"),
+  dueDate: "",
   lineItems: [defaultLineItem()],
   currency: "INR",
   invoiceTotal: defaultInvoiceTotal(),
