@@ -1,16 +1,30 @@
-import { useRef } from "react";
-import InvoiceForm from "./components/invoice-form/InvoiceForm";
-import InvoicePreview from "./components/invoice-preview/InvoicePreview";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Home from "./pages/Home";
+import Invoice from "./pages/Invoice";
+import InvoicePreviewModal from "./components/invoice-preview/InvoicePreviewModal";
 
 function App() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const onSaveSuccessRef = useRef<(() => void) | null>(null);
+  const location = useLocation()
+  const backgroundLocation = location.state?.backgroundLocation;
 
   return (
-    <div className="w-full bg-slate-50">
-      <InvoiceForm formRef={formRef} onSaveSuccessRef={onSaveSuccessRef} />
-      <InvoicePreview formRef={formRef} onSaveSuccessRef={onSaveSuccessRef} />
-    </div>
+    <>
+      <Routes location={backgroundLocation || location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/invoices/new" element={<Invoice />} />
+        <Route path="/invoices/:id/edit" element={<Invoice />} />
+        <Route path="/invoices/:id/preview" element={<InvoicePreviewModal />} />
+      </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path="/invoices/:id/preview"
+            element={<InvoicePreviewModal />}
+          />
+        </Routes>
+      )}
+    </>
   );
 }
 
