@@ -1,15 +1,17 @@
 import type { useInvoiceStore } from "@/store/invoiceStore";
 
-type LineItems = ReturnType<typeof useInvoiceStore.getState>["activeInvoice"]["lineItems"]
+type LineItems = ReturnType<
+  typeof useInvoiceStore.getState
+>["activeInvoice"]["lineItems"];
 
 interface PreviewLineItemsProps {
-    lineItems: LineItems;
-    currency: string | undefined
+  lineItems: LineItems;
+  currency: string | undefined;
 }
 
 const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
   return (
-    <div className="px-4 sm:px-8">
+    <div className="px-3 xs:px-4 sm:px-8">
       <table className="w-full border-collapse mb-4 sm:mb-6">
         <thead>
           <tr className="text-stone text-[9px] sm:text-xs font-bold uppercase tracking-widest border-b border-stone">
@@ -36,14 +38,14 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
               <td className="py-2 sm:py-3 px-1.5 sm:px-3">
                 {item.description || "Item Description"}
               </td>
-              <td className="py-2 sm:py-3 px-1.5 sm:px-3 text-center font-numbers">
+              <td className="py-2 sm:py-3 px-1.5 sm:px-3 text-center ">
                 {item.quantity}
               </td>
-              <td className="py-2 sm:py-3 px-1.5 sm:px-3 text-right font-numbers">
+              <td className="py-2 sm:py-3 px-1.5 sm:px-3 text-right ">
                 {currency}
                 {item.rate}
               </td>
-              <td className="py-2 sm:py-3 px-1.5 sm:px-3 text-right font-numbers">
+              <td className="py-2 sm:py-3 px-1.5 sm:px-3 text-right ">
                 {currency}
                 {item.amount}
               </td>
@@ -55,4 +57,4 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
   );
 };
 
-export default PreviewLineItems
+export default PreviewLineItems;

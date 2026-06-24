@@ -69,7 +69,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Subtotal
             </p>
-            <span className="text-sm text-ink font-numbers">
+            <span className="text-sm text-ink ">
               {currency}
               {invoiceTotal.subtotal}
             </span>
@@ -79,7 +79,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Discount
             </p>
-            <span className="text-sm text-ink font-numbers">
+            <span className="text-sm text-ink ">
               {currency}
               {invoiceTotal.discountAmount}
             </span>
@@ -89,7 +89,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Tax
             </p>
-            <span className="text-sm text-ink font-numbers">
+            <span className="text-sm text-ink ">
               {currency}
               {invoiceTotal.taxAmount}
             </span>
@@ -99,7 +99,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="font-semibold uppercase tracking-wide mt-2">
               Total due
             </p>
-            <span className="text-ink font-semibold font-numbers mt-2">
+            <span className="text-ink font-semibold  mt-2">
               {currency}
               {invoiceTotal.total}
             </span>

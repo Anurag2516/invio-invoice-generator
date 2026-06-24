@@ -50,7 +50,6 @@ const PartyFields = ({
               if (phoneNumberFilter(e)) field.onChange(e);
             }}
             error={error?.phone?.message}
-            className="font-numbers"
           />
         )}
       />

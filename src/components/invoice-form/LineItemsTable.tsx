@@ -95,7 +95,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                 <span className="text-sm font-semibold uppercase tracking-wide text-stone">
                   Amount
                 </span>
-                <span className="text-base font-medium text-ink font-numbers pt-2">
+                <span className="text-base font-medium text-ink  pt-2">
                   {currency}
                   {(lineItems[index]?.amount ?? 0).toFixed(2)}
                 </span>
@@ -192,7 +192,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                 />
               </td>
 
-              <td className="py-2 text-right text-base font-medium text-ink font-numbers">
+              <td className="py-2 text-right text-base font-medium text-ink ">
                 {currency}
                 {(lineItems[index]?.amount ?? 0).toFixed(2)}
               </td>
@@ -205,7 +205,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
 
       <button
         type="button"
-        className="flex items-center gap-2 justify-center w-full mt-4 rounded-xl border-2 border-dashed border-[#4d82d4] py-3 text-base font-semibold tracking-widest text-[#4d82d4] hover:cursor-pointer hover:border-[#2f6bc8] hover:text-[#2f6bc8] hover:bg-[#2f6bc8]/5 transition-colors"
+        className="flex items-center gap-2 justify-center w-full mt-4 rounded-xl border-2 border-dashed border-teal py-3 text-base font-semibold tracking-widest text-teal hover:cursor-pointer hover:border-teal-dark hover:text-teal-dark hover:bg-teal/5 transition-colors"
         onClick={() => append(defaultLineItem())}
       >
         <Plus size={18} />

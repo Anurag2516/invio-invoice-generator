@@ -27,7 +27,7 @@ const PartyInfo = ({ label, data }: PartyInfoProps) => (
       {data.companyName && <p>{data.companyName}</p>}
       {data.address && <p>{data.address}</p>}
       {data.email && <p>{data.email}</p>}
-      {data.phone && <span className="font-numbers">{data.phone}</span>}
+      {data.phone && <span>{data.phone}</span>}
     </div>
   </div>
 );
@@ -36,7 +36,7 @@ const PreviewClientSection = ({
   sender,
   client,
 }: PreviewClientSectionProps) => (
-  <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-4 sm:mb-7 px-4 sm:px-8">
+  <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-4 sm:mb-7 px-3 xs:px-4 sm:px-8">
     <PartyInfo label="Bill From:" data={sender} />
     <PartyInfo label="Bill To:" data={client} />
   </div>
