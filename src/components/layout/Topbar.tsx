@@ -36,7 +36,7 @@ const Topbar = ({ formRef, onSaveSuccessRef }: InvoicePreviewProps) => {
   };
 
   return (
-    <div className="bg-paper border-b border-[#e8e4dc]">
+    <div className="bg-paper border-b border-parchment">
       <div className="flex justify-between items-center py-3 sm:py-4 px-4 sm:px-6">
         <div className="flex items-center gap-2 sm:gap-4">
           <button
@@ -75,7 +75,7 @@ const Topbar = ({ formRef, onSaveSuccessRef }: InvoicePreviewProps) => {
         <button
           onClick={handleSaveAndDownload}
           type="button"
-          className="bg-sage-green hover:bg-sage-green-dark text-white text-xs sm:text-base font-semibold rounded-lg shadow-md transition-colors cursor-pointer py-2.5 px-2 sm:py-2 sm:px-3"
+          className="bg-teal hover:bg-teal-dark text-white text-xs sm:text-base font-semibold rounded-lg shadow-md transition-colors cursor-pointer py-2.5 px-2 sm:px-3"
         >
           Save & Download PDF
         </button>
@@ -84,4 +84,4 @@ const Topbar = ({ formRef, onSaveSuccessRef }: InvoicePreviewProps) => {
   );
 };
 
-export default Topbar
+export default Topbar;
