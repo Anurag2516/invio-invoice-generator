@@ -36,7 +36,7 @@ export interface PaymentInfo {
   accountNumber: string;
 }
 
-export type Status = "Draft" | "Paid" | "Sent" | "Overdue";
+export type Status = "Draft" | "Paid" | "Sent";
 
 export type Currencies = "INR" | "USD" | "EUR";
 
