@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   paymentValueMono: {
     fontSize: 10,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
     color: "#0f0e0c",
   },
 
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   totalValue: {
     fontSize: 10,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
     color: "#0f0e0c",
   },
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   totalDueValue: {
     fontSize: 16,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
     color: "#fffefb",
   },
 

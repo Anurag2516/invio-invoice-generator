@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     paddingTop: 2.5,
     paddingBottom: 2.5,
     fontSize: 9,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
   },
   dateRow: {
     display: "flex",
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   dateValue: {
     fontSize: 8,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
     color: "#c4baae",
     letterSpacing: 0.1,
   },

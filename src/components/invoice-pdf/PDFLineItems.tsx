@@ -76,20 +76,20 @@ const styles = StyleSheet.create({
     width: "15%",
     textAlign: "center",
     fontSize: 11,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
   },
   cellRate: {
     width: "20%",
     textAlign: "right",
     fontSize: 11,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
   },
   cellAmount: {
     width: "25%",
     textAlign: "right",
     paddingRight: 4,
     fontSize: 11,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
   },
 });
 

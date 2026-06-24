@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   phone: {
     fontSize: 10,
-    fontFamily: "IBM Plex Mono",
+    fontFamily: "IBM Plex Sans",
     marginBottom: 1,
   },
 });

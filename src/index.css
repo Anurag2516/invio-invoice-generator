@@ -6,12 +6,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('./assets/fonts/IBMPlexMono-Regular.ttf') format('truetype');
-  font-display: swap;
-}
-
-@font-face {
   font-family: "IBM Plex Sans";
   src: url("./assets/fonts/IBMPlexSans-Regular.ttf") format("truetype");
   font-display: swap;
@@ -35,7 +29,6 @@ body {
   --color-ink: #0f0e0c;
   --color-teal: #0f766e;
   --color-teal-dark: #0E6259;
-  --font-numbers: "IBM Plex Mono", monospace;
   --breakpoint-xs: 375px;
 }
 
