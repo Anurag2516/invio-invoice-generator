@@ -3,7 +3,7 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
   font-family: "IBM Plex Sans";
@@ -20,19 +20,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@theme {
-  --color-paper: #fffefb;
-  --color-mist: #f7f5f0;
-  --color-sand: #f0ede6;
-  --color-parchment: #e8e4dc;
-  --color-stone: #8a8070;
-  --color-ink: #0f0e0c;
-  --color-teal: #0f766e;
-  --color-teal-dark: #0E6259;
-  --breakpoint-xs: 375px;
-}
-
 @theme inline {
+  --breakpoint-xs: 375px;
   --font-heading: var(--font-sans);
   --font-sans: "Geist Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -66,6 +55,10 @@ body {
   --color-card: var(--card);
   --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-warm-background: var(--warm-background);
+  --color-stone: var(--stone);
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -76,8 +69,12 @@ body {
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: oklch(0.998 0.003 85);
+  --warm-background: oklch(0.9703 0.007 88.64);
   --foreground: oklch(0.145 0 0);
+  --stone: oklch(0.5215 0.0242 78.95);
+  --teal: oklch(0.5109 0.0861 186.39);
+  --teal-dark: oklch(0.4477 0.0753 183.63);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -113,6 +110,7 @@ body {
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
+  --stone: oklch(0.6685 0.0218 84.59);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
