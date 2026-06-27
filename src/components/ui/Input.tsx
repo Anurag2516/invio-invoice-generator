@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import React, { forwardRef } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -19,7 +20,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={inputRef}
           {...rest}
-          className={`h-11 w-full rounded-lg border bg-mist px-3.5 text-sm text-stone-800 shadow-sm outline-none transition-all duration-200 placeholder:text-stone/60 hover:border-stone-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/10 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:opacity-50 ${error ? "border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-500/10" : "border-stone-300"} ${className}`}
+          className={cn(
+            `h-11 w-full rounded-lg border bg-background dark:bg-input/30 px-3.5 py-2 text-sm text-foreground shadow-sm outline-none transition-all duration-200 placeholder:text-muted-foreground/80 hover:border-ring focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[1px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 ${
+              error
+                ? "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40"
+                : "border-input"
+            }`,
+            className,
+          )}
         />
         {error && <p className="text-[10px] text-red-500">{error}</p>}
       </div>

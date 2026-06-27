@@ -19,9 +19,9 @@ function DatePicker({
   disabled,
 }: DatePickerProps) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col">
       {label && (
-        <label className="text-sm font-semibold uppercase tracking-wide text-stone">
+        <label className="pb-1 text-sm font-semibold uppercase tracking-wide text-stone">
           {label}
         </label>
       )}
@@ -31,13 +31,14 @@ function DatePicker({
             type="button"
             disabled={disabled}
             className={`
-              h-10.5 w-full rounded-lg border bg-mist px-3.5
-              text-sm shadow-sm outline-none
-              transition-all duration-200 text-left flex items-center justify-between gap-3
-              hover:border-stone-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/10
-              disabled:cursor-not-allowed disabled:bg-stone-50 disabled:opacity-50
-              ${value ? "text-stone-800" : "text-stone-400"}
-              ${error ? "border-red-400 bg-red-50" : "border-stone-200"}
+              h-11 w-full sm:w-56 rounded-lg border bg-background dark:bg-input/30 px-3.5 py-2
+              text-sm shadow-sm outline-none transition-all duration-200 text-left flex items-center justify-between gap-3 hover:border-ring/50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[1px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
+              ${value ? "text-foreground" : "text-muted-foreground/80"}
+              ${
+                error
+                  ? "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40"
+                  : "border-input"
+              }
             `}
           >
             {value ? format(value, "PPP") : "Pick a date"}
