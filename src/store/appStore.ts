@@ -2,21 +2,19 @@ import { create } from "zustand";
 import type { AppStore } from "../types/app";
 import { persist } from "zustand/middleware";
 
-
 export const useAppStore = create<AppStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       theme: "dark",
       sidebarOpen: false,
 
-      changeTheme: (theme) => {
-        set({ theme: theme });
-      },
+      toggleTheme: () =>
+        set((state) => ({
+          theme: state.theme === "dark" ? "light" : "dark",
+        })),
 
-      toggleSidebar: () => {
-        const {sidebarOpen} = get();
-        set({ sidebarOpen : !sidebarOpen});
-      },
+      toggleSidebar: () =>
+        set((state) => ({ sidebarOpen: !state.sidebarOpen })),
     }),
     { name: "app-store" },
   ),
