@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   paymentTitle: {
     fontSize: 10,
     fontFamily: "IBM Plex Sans",
-    color: "#8a8070",
+    color: "#71685a",
     letterSpacing: 1.2,
     textTransform: "uppercase",
     marginBottom: 2,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   paymentLabel: {
     fontSize: 10,
     fontFamily: "IBM Plex Sans",
-    color: "#8a8070",
+    color: "#71685a",
   },
   paymentValue: {
     fontSize: 10,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   totalLabel: {
     fontSize: 10,
     fontFamily: "IBM Plex Sans",
-    color: "#8a8070",
+    color: "#71685a",
   },
   totalValue: {
     fontSize: 10,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   notesLabel: {
     fontSize: 9,
     fontFamily: "IBM Plex Sans",
-    color: "#8a8070",
+    color: "#71685a",
     letterSpacing: 1.2,
     textTransform: "uppercase",
     marginBottom: 2,

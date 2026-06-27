@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
   tableHeader: {
     display: "flex",
     flexDirection: "row",
-    color: "#8a8070",
+    color: "#71685a",
     borderBottomWidth: 1,
-    borderBottomColor: "#8a8070",
+    borderBottomColor: "#71685a",
     paddingBottom: 6,
   },
   tableRow: {

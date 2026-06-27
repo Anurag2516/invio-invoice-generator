@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   col: {
     display: "flex",
     flexDirection: "column",
-    color: "#8a8070",
+    color: "#71685a",
   },
   label: {
     fontSize: 10,

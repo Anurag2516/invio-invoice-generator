@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   dateLabel: {
     fontSize: 8,
     fontFamily: "IBM Plex Sans",
-    color: "#8a8070",
+    color: "#9b9486",
     letterSpacing: 0.8,
     width: 60,
   },
