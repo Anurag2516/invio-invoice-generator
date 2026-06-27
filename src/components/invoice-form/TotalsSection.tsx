@@ -14,10 +14,10 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
   const currency = useCurrencySign();
 
   return (
-    <div className="text-stone mt-4">
+    <div className="text-stone mt-8">
       <div className="flex items-center gap-3 w-full">
         <SectionHeader label="Summary" />
-        <div className="flex-1 h-[1.5px] bg-stone" />
+        <div className="flex-1 h-[1.5px] bg-stone"/>
       </div>
 
       <div className="flex items-center gap-8 mt-4 w-full">
@@ -69,7 +69,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Subtotal
             </p>
-            <span className="text-sm text-ink ">
+            <span className="text-sm text-foreground">
               {currency}
               {invoiceTotal.subtotal}
             </span>
@@ -79,7 +79,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Discount
             </p>
-            <span className="text-sm text-ink ">
+            <span className="text-sm text-foreground">
               {currency}
               {invoiceTotal.discountAmount}
             </span>
@@ -89,7 +89,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="text-[13px] font-semibold uppercase tracking-wide">
               Tax
             </p>
-            <span className="text-sm text-ink ">
+            <span className="text-sm text-foreground">
               {currency}
               {invoiceTotal.taxAmount}
             </span>
@@ -99,7 +99,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
             <p className="font-semibold uppercase tracking-wide mt-2">
               Total due
             </p>
-            <span className="text-ink font-semibold  mt-2">
+            <span className="text-foreground font-semibold mt-2">
               {currency}
               {invoiceTotal.total}
             </span>

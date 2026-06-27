@@ -20,7 +20,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
   const currency = useCurrencySign();
 
   return (
-    <div className="w-full mt-4">
+    <div className="w-full pt-8">
       <div className="flex items-center gap-3 w-full">
         <SectionHeader label="LineItems" />
         <div className="flex-1 h-[1.5px] bg-stone" />
@@ -95,7 +95,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                 <span className="text-sm font-semibold uppercase tracking-wide text-stone">
                   Amount
                 </span>
-                <span className="text-base font-medium text-ink  pt-2">
+                <span className="text-base font-medium text-foreground  pt-2">
                   {currency}
                   {(lineItems[index]?.amount ?? 0).toFixed(2)}
                 </span>
@@ -126,10 +126,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
 
         <tbody>
           {fields.map((field, index) => (
-            <tr
-              key={field.id}
-              className="border-b border-stone-100 align-middle"
-            >
+            <tr key={field.id} className="align-middle">
               <td className="pr-4">
                 <button
                   type="button"
@@ -192,7 +189,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                 />
               </td>
 
-              <td className="py-2 text-right text-base font-medium text-ink ">
+              <td className="py-2 text-right text-base font-medium text-foreground ">
                 {currency}
                 {(lineItems[index]?.amount ?? 0).toFixed(2)}
               </td>

@@ -5,7 +5,6 @@ interface StatsCardsProps {
 }
 
 const StatsCards = ({ invoices }: StatsCardsProps) => {
-    
   const statsCards = [
     {
       label: "Total Invoices",
@@ -31,25 +30,25 @@ const StatsCards = ({ invoices }: StatsCardsProps) => {
     },
   ];
   return (
-    <div>
-      <h1 className="text-2xl text-ink px-4 sm:px-8 lg:px-24 pt-8 font-medium">
+    <div className="bg-background">
+      <h1 className="text-2xl text-foreground px-4 sm:px-8 lg:px-24 pt-8 font-medium">
         My Dashboard
       </h1>
       <p className="text-base text-stone px-4 sm:px-8 lg:px-24 pt-2">
         Welcome Back
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-8 bg-paper px-4 sm:px-8 lg:px-24">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-12 px-4 sm:px-8 lg:px-24">
         {statsCards.map((statsCard) => (
           <div
             key={statsCard.label}
-            className="flex flex-col gap-1.5 border border-parchment rounded-xl py-4 px-6 bg-white"
+            className="flex flex-col gap-1.5 border border-border rounded-xl py-4 px-6 bg-background shadow-sm"
           >
-            <span className="text-[13px] font-normal uppercase tracking-wide text-stone">
+            <span className="text-[13px] font-normal uppercase tracking-wide text-foreground">
               {statsCard.label}
             </span>
             <span
-              className="text-3xl font-normal leading-tight text-ink"
+              className="text-3xl font-normal leading-tight text-foreground"
               style={{ color: statsCard.color }}
             >
               {statsCard.value}

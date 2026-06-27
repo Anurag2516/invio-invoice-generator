@@ -12,13 +12,12 @@ const Invoice = () => {
   const onSaveSuccessRef = useRef<(() => void) | null>(null);
 
   return (
-    <div className="w-full bg-slate-50 overflow-hidden">
+    <div className="w-full overflow-hidden">
       <div className="flex h-screen">
         <Sidebar />
         <div className="flex-1 flex flex-col min-w-0">
           <Topbar formRef={formRef} onSaveSuccessRef={onSaveSuccessRef} />
-
-          <div className="xl:hidden w-full border-b border-parchment bg-paper">
+          <div className="xl:hidden w-full border-b border-border bg-background">
             <div className="flex justify-center">
               {["edit", "preview"].map((tab) => (
                 <button
