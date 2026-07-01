@@ -10,7 +10,7 @@ const SectionHeader = ({ label, subLabel }: SectionHeaderProps) => {
         {label}
       </h2>
       {subLabel && (
-        <p className="text-xs text-stone-500 tracking-wide">{subLabel}</p>
+        <p className="text-xs text-stone/80 tracking-wide">{subLabel}</p>
       )}
     </div>
   );
