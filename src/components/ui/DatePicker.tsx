@@ -32,7 +32,7 @@ function DatePicker({
             disabled={disabled}
             className={`
               h-11 w-full sm:w-56 rounded-lg border bg-background dark:bg-input/30 px-3.5 py-2
-              text-sm shadow-sm outline-none transition-all duration-200 text-left flex items-center justify-between gap-3 hover:border-ring/50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[1px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
+              text-sm shadow-sm outline-none transition-[color, box-shadow] duration-150 ease-in-out text-left flex items-center justify-between gap-3 hover:border-ring/90 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[1px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50
               ${value ? "text-foreground" : "text-muted-foreground/80"}
               ${
                 error
