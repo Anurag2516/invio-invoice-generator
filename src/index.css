@@ -11,6 +11,10 @@
   font-display: swap;
 }
 
+.no-transitions * {
+  transition: none;
+}
+
 body {
   font-family: "IBM Plex Sans", sans-serif;
   font-optical-sizing: auto;
