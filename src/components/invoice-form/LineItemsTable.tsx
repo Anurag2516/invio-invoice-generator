@@ -66,7 +66,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                     inputMode="decimal"
                     placeholder="0.00"
                     label="Rate"
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if (positiveNumberFilter(e)) field.onChange(e);
                     }}
                     error={errors?.lineItems?.[index]?.rate?.message}
@@ -84,7 +84,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                     inputMode="decimal"
                     placeholder="1"
                     label="Qty"
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       if (positiveNumberFilter(e)) field.onChange(e);
                     }}
                     error={errors?.lineItems?.[index]?.quantity?.message}
@@ -160,7 +160,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                       type="text"
                       inputMode="decimal"
                       placeholder="0.00"
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         if (positiveNumberFilter(e)) field.onChange(e);
                       }}
                       error={errors?.lineItems?.[index]?.rate?.message}
@@ -180,7 +180,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
                       type="text"
                       inputMode="decimal"
                       placeholder="1"
-                      onChange={(e) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         if (positiveNumberFilter(e)) field.onChange(e);
                       }}
                       error={errors?.lineItems?.[index]?.quantity?.message}

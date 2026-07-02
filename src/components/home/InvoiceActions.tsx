@@ -95,7 +95,7 @@ const InvoiceActions = ({
 
         <Tooltip>
           <TooltipTrigger
-            onClick={(e) => handleDeleteBtnClick(e, invoice.id)}
+            onClick={(e: React.SyntheticEvent) => handleDeleteBtnClick(e, invoice.id)}
             className="px-2 py-1.5 text-red-400/90 hover:bg-ring/30 rounded-md cursor-pointer transition-colors duration-150 ease-in-out"
           >
             <Trash2 size={18} />

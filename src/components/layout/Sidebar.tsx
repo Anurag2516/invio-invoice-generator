@@ -137,7 +137,9 @@ function SidebarContent({
                         <DropdownMenuTrigger asChild>
                           <button
                             type="button"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e: React.SyntheticEvent) =>
+                              e.stopPropagation()
+                            }
                             className="p-1 rounded-sm text-foreground/50 hover:text-foreground hover:bg-foreground/10 transition-colors duration-150 ease-in-out cursor-pointer"
                           >
                             <EllipsisVertical size={18} />
@@ -145,7 +147,9 @@ function SidebarContent({
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
                           align="end"
-                          onClick={(e) => e.stopPropagation()}
+                          onClick={(e: React.SyntheticEvent) =>
+                            e.stopPropagation()
+                          }
                         >
                           <DropdownMenuItem asChild>
                             <PDFDownloadLink
@@ -163,7 +167,9 @@ function SidebarContent({
                             </PDFDownloadLink>
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={(e) => onDeleteBtnClick(e, invoice.id)}
+                            onClick={(e: React.SyntheticEvent) =>
+                              onDeleteBtnClick(e, invoice.id)
+                            }
                             className="flex items-center gap-2 py-2 text-red-500 focus:text-red-500 focus:bg-red-500/10 cursor-pointer transition-colors"
                           >
                             <Trash2 size={14} />

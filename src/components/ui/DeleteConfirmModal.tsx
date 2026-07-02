@@ -21,7 +21,7 @@ const DeleteConfirmModal = ({
 
       <div
         className="relative z-10 bg-background border border-white/12 rounded-xl shadow-2xl w-full max-w-80 p-6 flex flex-col gap-5"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
       >
         <div className="flex flex-col items-center gap-3 text-center">
           <div className="flex items-center gap-2">
@@ -31,12 +31,12 @@ const DeleteConfirmModal = ({
             <h3 className="text-foreground text-sm font-semibold tracking-wide">
               Delete Invoice
             </h3>
-            </div>
-            <p className="text-foreground/70 text-xs mt-1 leading-relaxed">
-              {deleteTargetInvoice
-                ? `${deleteTargetInvoice.invoiceNumber}${deleteTargetInvoice.client.name ? ` · ${deleteTargetInvoice.client.name}` : ""} will be permanently removed.`
-                : "This invoice will be permanently removed."}
-            </p>
+          </div>
+          <p className="text-foreground/70 text-xs mt-1 leading-relaxed">
+            {deleteTargetInvoice
+              ? `${deleteTargetInvoice.invoiceNumber}${deleteTargetInvoice.client.name ? ` · ${deleteTargetInvoice.client.name}` : ""} will be permanently removed.`
+              : "This invoice will be permanently removed."}
+          </p>
         </div>
 
         <div className="flex gap-2">

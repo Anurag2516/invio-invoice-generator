@@ -26,7 +26,7 @@ const InvoicePreviewModal = () => {
         <div className="absolute inset-0 bg-black/60" />
         <div
           className="relative z-10 bg-white rounded-xl shadow-2xl p-6"
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
         >
           <p className="text-sm text-[#71685a]">Invoice not found.</p>
         </div>
@@ -43,7 +43,7 @@ const InvoicePreviewModal = () => {
 
       <div
         className="relative z-10 w-full max-w-2xl max-h-[93vh] overflow-y-auto bg-[#f7f5f0] rounded-xl shadow-2xl py-6 px-3 sm:px-4"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between pb-6">
           <h1 className="text-xl font-normal text-[#71685a] uppercase tracking-wide pl-1">
@@ -68,7 +68,10 @@ const InvoicePreviewModal = () => {
             sender={invoice.sender}
             client={invoice.client}
           />
-          <PreviewLineItems lineItems={invoice.lineItems} currency={getCurrencySign(invoice.currency)} />
+          <PreviewLineItems
+            lineItems={invoice.lineItems}
+            currency={getCurrencySign(invoice.currency)}
+          />
           <PreviewTotals
             invoiceTotal={invoice.invoiceTotal}
             currency={getCurrencySign(invoice.currency)}
