@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 export const useAppStore = create<AppStore>()(
   persist(
     (set) => ({
-      theme: "dark",
+      theme: "light",
       sidebarOpen: false,
 
       toggleTheme: () =>
