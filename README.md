@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# Invio - Invoice Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An Invoice generator built with React. Create, manage, and export invoices as PDF - with a live preview as you type.
 
-Currently, two official plugins are available:
+**[Live Demo](https://invio-eight.vercel.app)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Preview
 
-## React Compiler
+![Home Page](./src/assets/img/readmeImg.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Live Preview - invoice updates in real time as you fill the form
+- PDF Export - download a professionally formatted PDF instantly 
+- Dashboard - view all invoices with status tracking (Draft, Sent, Paid, Overdue)  
+- Dark / Light Mode - toggle between themes
+- Auto Save - invoices persist to local storage automatically 
+- Dynamic Line Items - add, and remove line items with auto-calculated totals  
+- Status Filtering - filter invoices by status on the dashboard  
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React  
+- TypeScript  
+- Tailwind CSS  
+- shadcn/ui
+- Zustand (with persist middleware)
+- React Hook Form with Zod Validation
+- @react-pdf/renderer for generating PDF
+- React Router v6
+- Vercel
+
+---
+
+## Architecture Decisions
+
+**Zustand over Redux** - invoice state is straightforward enough that Redux would be overkill. Zustand's persist middleware handles localStorage sync in one line, replacing the need for a custom hook.
+
+**RHF + Zustand separation** - React Hook Form owns form state for a short time, Zustand owns persisted application state. They sync at save boundaries keeping form performance fast and global state clean.
+
+**react-pdf/renderer over html2pdf** - builds the PDF as a dedicated React component tree rather than converting DOM to PDF. Gives more control over output.
+
+---
+
+## Installation & Setup
+
+```bash
+# Clone the project
+git clone https://github.com/Anurag2516/invio-invoice-generator
+
+# Navigate to project folder
+cd invio-invoice-generator
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
 ```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## License
+This project is licensed under the MIT License — see the LICENSE file for details.
