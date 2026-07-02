@@ -16,6 +16,7 @@ import TotalsSection from "./TotalsSection";
 import InvoiceAdditionalInfo from "./InvoiceAdditionalInfo";
 import { useParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface InvoiceFormProps {
   formRef: RefObject<HTMLFormElement | null>;
@@ -95,21 +96,19 @@ const InvoiceForm = ({ formRef, onSaveSuccessRef }: InvoiceFormProps) => {
   }, [id]);
 
   return (
-    <form
-      ref={formRef}
-      onSubmit={handleSubmit(formSubmit)}
-      className="w-full xl:w-3/5 h-full flex flex-col gap-6 py-6 px-4 sm:py-8 sm:px-6 overflow-y-auto shrink-0 bg-paper"
-    >
-      <InvoiceMeta register={register} control={control} errors={errors} />
-      <ClientSection register={register} control={control} errors={errors} />
-      <LineItemsTable register={register} control={control} errors={errors} />
-      <TotalsSection register={register} control={control} errors={errors} />
-      <InvoiceAdditionalInfo
-        register={register}
-        control={control}
-        errors={errors}
-      />
-    </form>
+    <ScrollArea className="w-full xl:w-3/5 h-full flex flex-col gap-6 px-4 sm:px-6 shrink-0 bg-background">
+      <form ref={formRef} onSubmit={handleSubmit(formSubmit)}>
+        <InvoiceMeta register={register} control={control} errors={errors} />
+        <ClientSection register={register} control={control} errors={errors} />
+        <LineItemsTable register={register} control={control} errors={errors} />
+        <TotalsSection register={register} control={control} errors={errors} />
+        <InvoiceAdditionalInfo
+          register={register}
+          control={control}
+          errors={errors}
+        />
+      </form>
+    </ScrollArea>
   );
 };
 
