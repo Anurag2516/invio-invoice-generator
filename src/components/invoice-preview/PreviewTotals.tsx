@@ -30,10 +30,10 @@ const PreviewTotals = ({
       <div className="flex justify-between items-start gap-3 sm:gap-6">
         <PreviewAdditionalInfo paymentInfo={paymentInfo} />
 
-        <div className="min-w-32 sm:min-w-54 text-[10px] sm:text-sm text-stone">
+        <div className="min-w-32 sm:min-w-54 text-[10px] sm:text-sm text-[#71685a]">
           <div className="flex justify-between items-center">
             <p>Subtotal</p>
-            <span className="font-normal text-ink ">
+            <span className="font-normal text-[#0f0e0c] ">
               {currency}
               {invoiceTotal.subtotal}
             </span>
@@ -46,7 +46,7 @@ const PreviewTotals = ({
                 <span className=" text-xs">({invoiceTotal.taxRate}%)</span>
               )}
             </p>
-            <span className="font-normal text-ink ">
+            <span className="font-normal text-[#0f0e0c] ">
               {currency}
               {invoiceTotal.taxAmount}
             </span>
@@ -59,17 +59,17 @@ const PreviewTotals = ({
                 <span className=" text-xs">({invoiceTotal.discountRate}%)</span>
               )}
             </p>
-            <span className="font-normal text-ink ">
+            <span className="font-normal text-[#0f0e0c] ">
               {currency}
               {invoiceTotal.discountAmount}
             </span>
           </div>
 
-          <div className="flex justify-between items-center bg-ink mt-2 px-1.5 sm:px-2 py-2 sm:py-2.5">
-            <h1 className="font-normal text-[11px] sm:text-lg text-paper tracking-wide leading-tight">
+          <div className="flex justify-between items-center bg-[#0f0e0c] mt-2 px-1.5 sm:px-2 py-2 sm:py-2.5">
+            <h1 className="font-normal text-[11px] sm:text-lg text-[#fffefb] tracking-wide leading-tight">
               Total Due
             </h1>
-            <span className="text-[11px] sm:text-lg text-paper  tracking-wide">
+            <span className="text-[11px] sm:text-lg text-[#fffefb] tracking-wide">
               {currency}
               {invoiceTotal.total}
             </span>
@@ -80,10 +80,10 @@ const PreviewTotals = ({
       <div className="flex-1">
         {notes && (
           <>
-            <p className="text-[10px] sm:text-sm font-bold uppercase tracking-wider text-stone mb-1">
+            <p className="text-[10px] sm:text-sm font-bold uppercase tracking-wider text-[#71685a] mb-1">
               Notes
             </p>
-            <p className="text-[9px] sm:text-xs text-ink leading-relaxed">
+            <p className="text-[9px] sm:text-xs text-[#0f0e0c] leading-relaxed">
               {notes}
             </p>
           </>

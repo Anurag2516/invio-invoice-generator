@@ -10,7 +10,7 @@ type PreviewAdditionalInfoProps = {
 
 const PreviewAdditionalInfo = ({ paymentInfo }: PreviewAdditionalInfoProps) => {
   return (
-    <div className="flex flex-col items-start gap-1.5 sm:gap-2 text-stone">
+    <div className="flex flex-col items-start gap-1.5 sm:gap-2 text-[#71685a]">
       {(paymentInfo.bankName ||
         paymentInfo.accountholderName ||
         paymentInfo.accountNumber) && (
@@ -22,13 +22,15 @@ const PreviewAdditionalInfo = ({ paymentInfo }: PreviewAdditionalInfoProps) => {
         {paymentInfo.bankName && (
           <p className="tracking-wide">
             Bank Name:{" "}
-            <span className="font-normal text-ink">{paymentInfo.bankName}</span>
+            <span className="font-normal text-[#0f0e0c]">
+              {paymentInfo.bankName}
+            </span>
           </p>
         )}
         {paymentInfo.accountholderName && (
           <p className="tracking-wide">
             Accountholder Name:{" "}
-            <span className="font-normal text-ink">
+            <span className="font-normal text-[#0f0e0c]">
               {paymentInfo.accountholderName}
             </span>
           </p>
@@ -36,7 +38,7 @@ const PreviewAdditionalInfo = ({ paymentInfo }: PreviewAdditionalInfoProps) => {
         {paymentInfo.accountNumber && (
           <p className="tracking-wide">
             Account Number:{" "}
-            <span className="font-normal text-ink ">
+            <span className="font-normal text-[#0f0e0c] ">
               {paymentInfo.accountNumber}
             </span>
           </p>

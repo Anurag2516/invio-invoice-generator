@@ -19,11 +19,11 @@ interface PreviewClientSectionProps {
 
 const PartyInfo = ({ label, data }: PartyInfoProps) => (
   <div>
-    <h3 className="text-[10px] sm:text-sm uppercase tracking-wider text-stone mb-1">
+    <h3 className="text-[10px] sm:text-sm uppercase tracking-wider text-[#71685a] mb-1">
       {label}
     </h3>
-    <div className="text-[11px] sm:text-[14px] text-stone leading-4 sm:leading-5.5">
-      <p className="font-bold text-sm sm:text-lg text-ink">{data.name}</p>
+    <div className="text-[11px] sm:text-[14px] text-[#71685a] leading-4 sm:leading-5.5">
+      <p className="font-bold text-sm sm:text-lg text-[#0f0e0c]">{data.name}</p>
       {data.companyName && <p>{data.companyName}</p>}
       {data.address && <p>{data.address}</p>}
       {data.email && <p>{data.email}</p>}

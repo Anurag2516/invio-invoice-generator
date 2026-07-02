@@ -14,7 +14,7 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
     <div className="px-3 xs:px-4 sm:px-8">
       <table className="w-full border-collapse mb-4 sm:mb-6">
         <thead>
-          <tr className="text-stone text-[9px] sm:text-xs font-bold uppercase tracking-widest border-b border-stone">
+          <tr className="text-[#71685a] text-[9px] sm:text-xs font-bold uppercase tracking-widest border-b border-[#71685a]">
             <th className="py-1.5 sm:py-2.5 px-1.5 sm:px-3 text-left w-2/5">
               Description
             </th>
@@ -33,7 +33,7 @@ const PreviewLineItems = ({ lineItems, currency }: PreviewLineItemsProps) => {
           {lineItems.map((item) => (
             <tr
               key={item.id}
-              className="border-b border-[#f0ebe3] text-[11px] sm:text-sm text-ink"
+              className="border-b border-[#f0ebe3] text-[11px] sm:text-sm text-[#0f0e0c]"
             >
               <td className="py-2 sm:py-3 px-1.5 sm:px-3">
                 {item.description || "Item Description"}
