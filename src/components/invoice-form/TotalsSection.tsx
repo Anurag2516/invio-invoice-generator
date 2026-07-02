@@ -17,7 +17,7 @@ const TotalsSection = ({ control, errors }: InvoiceFormProps) => {
     <div className="text-stone mt-8">
       <div className="flex items-center gap-3 w-full">
         <SectionHeader label="Summary" />
-        <div className="flex-1 h-[1.5px] bg-stone"/>
+        <div className="flex-1 h-[1px] bg-stone/50"/>
       </div>
 
       <div className="flex items-center gap-8 mt-4 w-full">

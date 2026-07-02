@@ -78,7 +78,7 @@ const PDFHeader = ({ invoiceNumber, issueDate, dueDate }: PDFHeaderProps) => {
       <Text style={styles.invoiceTitle}>Invoice</Text>
 
       <View style={styles.rightCol}>
-        <Text style={styles.invoiceNumberBadge}>#{invoiceNumber}</Text>
+        <Text style={styles.invoiceNumberBadge}>{invoiceNumber}</Text>
 
         <View style={styles.dateRow}>
           <Text style={styles.dateLabel}>ISSUE DATE</Text>

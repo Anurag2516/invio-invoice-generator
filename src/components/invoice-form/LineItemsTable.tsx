@@ -23,7 +23,7 @@ const LineItemsTable = ({ register, control, errors }: InvoiceFormProps) => {
     <div className="w-full pt-8">
       <div className="flex items-center gap-3 w-full">
         <SectionHeader label="LineItems" />
-        <div className="flex-1 h-[1.5px] bg-stone" />
+        <div className="flex-1 h-px bg-stone/50" />
       </div>
 
       <div className="sm:hidden flex flex-col gap-3 mt-5">

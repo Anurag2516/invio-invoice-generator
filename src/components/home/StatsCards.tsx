@@ -42,7 +42,7 @@ const StatsCards = ({ invoices }: StatsCardsProps) => {
         {statsCards.map((statsCard) => (
           <div
             key={statsCard.label}
-            className="flex flex-col gap-1.5 border border-border rounded-xl py-4 px-6 bg-background shadow-sm"
+            className="flex flex-col gap-2 border border-border rounded-xl py-6 px-6 bg-background shadow-sm"
           >
             <span className="text-[13px] font-normal uppercase tracking-wide text-foreground">
               {statsCard.label}

@@ -10,7 +10,6 @@ const InvoiceFilterTabs = ({
   activeTab,
   setActiveTab,
 }: InvoiceFilterTabsProps) => {
-    
   const tabs: { key: ActiveTab; label: string }[] = [
     { key: "all", label: "All Invoices" },
     { key: "outstanding", label: "Outstanding" },
@@ -19,7 +18,7 @@ const InvoiceFilterTabs = ({
   ];
 
   return (
-    <div className="flex items-center gap-2 px-4 sm:px-6 pt-6 pb-4 overflow-x-auto">
+    <div className="flex items-center gap-2.5 px-4 sm:px-6 pt-6 pb-4 overflow-x-auto">
       {tabs.map((tab) => {
         const isActive = activeTab === tab.key;
         return (
@@ -27,10 +26,10 @@ const InvoiceFilterTabs = ({
             type="button"
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors whitespace-nowrap ${
+            className={`px-4 py-2 rounded-full text-sm font-medium border whitespace-nowrap transition-[color, border-color] duration-150 ease-in-out ${
               isActive
-                ? "bg-ink/90 text-paper border-ink/90"
-                : "bg-transparent text-stone border-parchment hover:border-[#cfc9bb] hover:text-[#5c5750]"
+                ? "bg-foreground/90 text-background border-foreground/90"
+                : "bg-transparent text-stone border-border hover:border-foreground/35  hover:text-foreground/85"
             }`}
           >
             {tab.label}

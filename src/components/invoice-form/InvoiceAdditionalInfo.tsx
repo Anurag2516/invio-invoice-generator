@@ -4,11 +4,11 @@ import Input from "../ui/Input";
 
 const InvoiceAdditionalInfo = ({ register, errors }: InvoiceFormProps) => {
   return (
-    <div className="flex flex-col gap-6 mt-6">
-      <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-6 mt-8 pb-8">
+      <div className="flex flex-col gap-5 w-full">
         <div className="flex items-center gap-3 w-full">
           <SectionHeader label="Payment Information" />
-          <div className="flex-1 h-[1.5px] bg-stone" />
+          <div className="flex-1 h-[1.5px] bg-stone/50" />
         </div>
         <Input
           {...register("paymentInfo.bankName")}
@@ -33,7 +33,7 @@ const InvoiceAdditionalInfo = ({ register, errors }: InvoiceFormProps) => {
         <SectionHeader label="Notes" />
         <textarea
           {...register("notes")}
-          className="bg-mist border border-stone-200 rounded-lg px-3.5 py-3 text-sm text-stone-800 placeholder:text-stone/60 resize-y min-h-45 outline-none w-full hover:border-stone-400 focus:border-green-500 focus:ring-2 focus:ring-green-500/10"
+          className="bg-background dark:bg-input/30 border border-input rounded-lg px-3.5 py-2 text-sm text-foreground placeholder:text-muted-foreground/80 resize-y min-h-45 shadow-sm outline-none transition-[color, box-shadow] duration-150 ease-in-out w-full hover:border-ring/90 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[1px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
           placeholder="Payment terms, bank details, UPI ID, thank you note…"
         />
       </div>
