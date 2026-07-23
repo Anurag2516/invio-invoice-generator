@@ -1,10 +1,18 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { prisma } from "../config/db";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/generateToken";
-import { LoginInput, RegisterInput, registerSchema } from "../schemas/user.schema";
+import {
+  LoginInput,
+  RegisterInput,
+  registerSchema,
+} from "../schemas/user.schema";
 
-const register = async (req: Request, res: Response): Promise<void> => {
+const register = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const parsedUser = registerSchema.safeParse(req.body.user);
 
@@ -47,28 +55,32 @@ const register = async (req: Request, res: Response): Promise<void> => {
       message: "User registered successfully",
       data: { name: newUser.name, email: newUser.email },
     });
-  } catch {
-    res.status(500).json({ success: false, message: "Internal server error" });
+  } catch (error) {
+    next(error);
   }
 };
 
-const login = async (req: Request, res: Response): Promise<void> => {
+const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
-   const parsedUser = registerSchema.safeParse(req.body.user);
+    const parsedUser = registerSchema.safeParse(req.body.user);
 
-   if (!parsedUser.success) {
-     res.status(400).json({
-       success: false,
-       message: "Invalid User",
-       errors: parsedUser.error.issues.map((i) => ({
-         field: i.path.join("."),
-         message: i.message,
-       })),
-     });
-     return;
-   }
+    if (!parsedUser.success) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid User",
+        errors: parsedUser.error.issues.map((i) => ({
+          field: i.path.join("."),
+          message: i.message,
+        })),
+      });
+      return;
+    }
 
-   const { email, password }: LoginInput = parsedUser.data;
+    const { email, password }: LoginInput = parsedUser.data;
 
     const user = await prisma.user.findUnique({
       where: { email },
@@ -88,20 +100,51 @@ const login = async (req: Request, res: Response): Promise<void> => {
       message: "Logged in successfully",
       data: { name: user.name, email: user.email },
     });
-  } catch {
-    res.status(500).json({ success: false, message: "Internal server error" });
+  } catch (error) {
+    next(error);
   }
 };
 
-const logout = (req: Request, res: Response): void => {
-  res.clearCookie("jwt", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    path: "/",
-  });
+const logout = (req: Request, res: Response, next: NextFunction): void => {
+  try {
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+    });
 
-  res.status(200).json({ success: true, message: "Logged out successfully" });
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export { register, login, logout };
+const deleteAccount = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const userId = req.user.userId;
+
+    await prisma.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+    });
+
+    res.status(200).json({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { register, login, logout, deleteAccount };
