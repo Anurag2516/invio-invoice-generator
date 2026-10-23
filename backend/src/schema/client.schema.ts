@@ -9,6 +9,13 @@ export const clientSchema = z.object({
   website: z.url().optional(),
 });
 
+export const listClientsQuerySchema = z.object({
+  search: z.string().trim().max(100).optional(),
+  limit: z.coerce.number().int().min(1).max(100).optional(),
+  sort: z.enum(["updatedAt", "createdAt"]).default("createdAt"),
+  order: z.enum(["asc", "desc"]).default("desc"),
+});
+
 export const updateClientSchema = clientSchema.partial();
 
 export type ClientInput = z.infer<typeof clientSchema>;

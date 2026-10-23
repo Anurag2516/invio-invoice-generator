@@ -92,5 +92,12 @@ export const autoSaveSchema = z.object({
     .optional(),
 });
 
+export const listInvoicesQuerySchema = z.object({
+  search: z.string().trim().max(100).optional(),
+  limit: z.coerce.number().int().min(1).max(100).optional(),
+  sort: z.enum(["updatedAt", "createdAt"]).default("createdAt"),
+  order: z.enum(["asc", "desc"]).default("desc"),
+});
+
 export type AutoSaveInput = z.infer<typeof autoSaveSchema>;
 export type InvoiceInput = z.infer<typeof invoiceSchema>;
