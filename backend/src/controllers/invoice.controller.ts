@@ -5,8 +5,10 @@ import {
   autoSaveSchema,
   InvoiceInput,
   invoiceSchema,
-} from "../schemas/invoice.schema";
+  listInvoicesQuerySchema,
+} from "../schema/invoice.schema";
 import { Params } from "../types/params";
+import { overdueWhere } from "../utils/overdue";
 
 const createDraftInvoice = async (
   req: Request,
@@ -30,6 +32,15 @@ const createDraftInvoice = async (
       res.status(404).json({ message: "User not found" });
       return;
     }
+
+    const { clientId } = req.body;
+
+    const client = clientId
+      ? await prisma.client.findUnique({
+          where: { id: clientId },
+          omit: { userId: true, createdAt: true, updatedAt: true },
+        })
+      : null;
 
     const result = await prisma.$transaction(async (tx) => {
       const lastInvoice = await tx.invoice.findFirst({
@@ -60,6 +71,15 @@ const createDraftInvoice = async (
           accountHolderName: user?.accountHolderName,
           accountNumber: user?.accountNumber,
           bankName: user?.bankName,
+          ...(client && {
+            clientId: client.id,
+            snapshotClientName: client.name,
+            snapshotClientEmail: client.email,
+            snapshotClientCompany: client.companyName,
+            snapshotClientAddress: client.address,
+            snapshotClientPhone: client.phone,
+            snapshotClientWebsite: client.website,
+          }),
           lineItems: {
             create: {
               rate: 0,
@@ -82,6 +102,13 @@ const createDraftInvoice = async (
           bankName: true,
           accountHolderName: true,
           accountNumber: true,
+          clientId: true,
+          snapshotClientName: true,
+          snapshotClientEmail: true,
+          snapshotClientCompany: true,
+          snapshotClientAddress: true,
+          snapshotClientPhone: true,
+          snapshotClientWebsite: true,
           lineItems: true,
         },
       });
@@ -180,6 +207,7 @@ const saveInvoice = async (
 
     if (invoiceExists.status !== "Draft") {
       res.status(403).json({ message: "Only draft invoices can be edited" });
+      return;
     }
 
     const savedInvoice = await prisma.invoice.update({
@@ -252,10 +280,36 @@ const getInvoices = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    const parsed = listInvoicesQuerySchema.safeParse(req.query);
+
+    if (!parsed.success) {
+      res.status(400).json({
+        errors: parsed.error.issues.map((i) => ({
+          field: i.path.join("."),
+          message: i.message,
+        })),
+      });
+      return;
+    }
+
+    const { search, limit, sort, order, filter } = parsed.data;
+
     const invoice = await prisma.invoice.findMany({
       where: {
         userId: req.user.userId,
+        ...(search && {
+          OR: [
+            { invoiceNumber: { contains: search, mode: "insensitive" } },
+            { snapshotClientName: { contains: search, mode: "insensitive" } },
+          ],
+        }),
+        ...(filter === "overdue" && overdueWhere()),
+        ...(filter === "paid" && { status: "Paid" }),
+        ...(filter === "outstanding" && { status: "Sent" }),
+        ...(filter === "cancelled" && { status: "Cancelled" }),
       },
+      ...(limit && { take: limit }),
+      orderBy: { [sort]: order },
       omit: {
         userId: true,
       },
@@ -285,6 +339,7 @@ const deleteInvoice = async (
     const invoiceExists = await prisma.invoice.findUnique({
       where: {
         id: invoiceId,
+        userId: req.user.userId,
       },
     });
 
@@ -308,6 +363,44 @@ const deleteInvoice = async (
   }
 };
 
+const getDashboardStats = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const [total, overdue, paid, outstanding] = await Promise.all([
+      prisma.invoice.count({
+        where: {
+          userId: req.user.userId,
+        },
+      }),
+      prisma.invoice.count({
+        where: {
+          userId: req.user.userId,
+          ...overdueWhere(),
+        },
+      }),
+      prisma.invoice.count({
+        where: {
+          userId: req.user.userId,
+          status: "Paid",
+        },
+      }),
+      prisma.invoice.count({
+        where: {
+          userId: req.user.userId,
+          status: "Sent",
+        },
+      }),
+    ]);
+
+    res.status(200).json({ total, overdue, paid, outstanding });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   createDraftInvoice,
   autoSaveInvoice,
@@ -315,4 +408,5 @@ export {
   getInvoice,
   getInvoices,
   deleteInvoice,
+  getDashboardStats,
 };

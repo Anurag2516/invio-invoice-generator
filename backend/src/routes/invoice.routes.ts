@@ -3,6 +3,7 @@ import {
   autoSaveInvoice,
   createDraftInvoice,
   deleteInvoice,
+  getDashboardStats,
   getInvoice,
   getInvoices,
   saveInvoice,
@@ -17,5 +18,6 @@ router.put("/saveInvoice/:id", isAuthenticated, saveInvoice);
 router.get("/getInvoice/:id", isAuthenticated, getInvoice);
 router.get("/getInvoices", isAuthenticated, getInvoices);
 router.delete("/deleteInvoice/:id", isAuthenticated, deleteInvoice);
+router.get("/getDashboardStats", isAuthenticated, getDashboardStats);
 
 export default router;

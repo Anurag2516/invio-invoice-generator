@@ -97,6 +97,7 @@ export const listInvoicesQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).optional(),
   sort: z.enum(["updatedAt", "createdAt"]).default("createdAt"),
   order: z.enum(["asc", "desc"]).default("desc"),
+  filter: z.enum(["outstanding", "paid", "overdue", "cancelled"]).optional()
 });
 
 export type AutoSaveInput = z.infer<typeof autoSaveSchema>;
