@@ -1,61 +1,50 @@
-import type { Invoice } from "@/types/invoice";
+import { useDashboardStats } from "@/hooks/useInvoices";
 
-interface StatsCardsProps {
-  invoices: Invoice[];
-}
+const StatsCards = () => {
+  const { data: stats, isLoading, isError } = useDashboardStats();
 
-const StatsCards = ({ invoices }: StatsCardsProps) => {
   const statsCards = [
-    {
-      label: "Total Invoices",
-      value: invoices.length,
-      sub: "All time",
-    },
-    {
-      label: "Paid Invoices",
-      value: invoices.filter((i) => i.status === "Paid").length,
-      color: "#4a7c59",
-    },
+    { label: "Total Invoices", value: stats?.total },
+    { label: "Paid Invoices", value: stats?.paid, color: "#4a7c59" },
     {
       label: "Outstanding Invoices",
-      value: invoices.filter((i) => i.status === "Sent").length,
+      value: stats?.outstanding,
       color: "#c48a2f",
     },
-    {
-      label: "Overdue Invoices",
-      value: invoices.filter(
-        (i) => i.status === "Sent" && new Date(i.dueDate) < new Date(),
-      ).length,
-      color: "#dc3545",
-    },
+    { label: "Overdue Invoices", value: stats?.overdue, color: "#dc3545" },
   ];
+
   return (
     <div className="bg-background">
-      <h1 className="text-2xl text-foreground px-4 sm:px-8 lg:px-24 pt-8 font-medium">
-        My Dashboard
-      </h1>
-      <p className="text-base text-stone px-4 sm:px-8 lg:px-24 pt-2">
-        Welcome Back
-      </p>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-12 px-4 sm:px-8 lg:px-24">
-        {statsCards.map((statsCard) => (
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-12">
+        {statsCards.map((card) => (
           <div
-            key={statsCard.label}
+            key={card.label}
             className="flex flex-col gap-2 border border-border rounded-xl py-6 px-6 bg-background shadow-sm"
           >
             <span className="text-[13px] font-normal uppercase tracking-wide text-foreground">
-              {statsCard.label}
+              {card.label}
             </span>
-            <span
-              className="text-3xl font-normal leading-tight text-foreground"
-              style={{ color: statsCard.color }}
-            >
-              {statsCard.value}
-            </span>
+
+            {isLoading ? (
+              <div className="h-9 w-16 animate-pulse rounded bg-muted" />
+            ) : (
+              <span
+                className="text-3xl font-normal leading-tight text-foreground"
+                style={{ color: isError ? undefined : card.color }}
+              >
+                {isError ? "—" : (card.value ?? 0)}
+              </span>
+            )}
           </div>
         ))}
       </div>
+
+      {isError && (
+        <p className="mt-2 text-sm text-foreground/60">
+          Couldn't load invoice stats.
+        </p>
+      )}
     </div>
   );
 };
