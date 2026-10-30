@@ -1,6 +1,7 @@
 import { getUser, updateUser } from "@/api/user.api";
 import { userKey } from "@/lib/queryKeys";
-import type { UserProfileApiPayload } from "@/types/invoice";
+import { formDataToUserApiPayload } from "@/mapper/user.mapper";
+import type { UserProfileFormValues } from "@/types/invoice";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function useUser() {
@@ -14,11 +15,12 @@ export function useUser() {
 export function useUpdateUser() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (user: UserProfileApiPayload) => updateUser(user),
+    mutationFn: (user: UserProfileFormValues) =>
+      updateUser(formDataToUserApiPayload(user)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKey.userProfile });
     },
-    onError: (error:any) => {
+    onError: (error: any) => {
       console.error(error.response?.data || "Something went wrong");
     },
   });

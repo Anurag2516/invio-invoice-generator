@@ -4,22 +4,21 @@ import { useUpdateUser } from "./useUser";
 import userProfileSchema from "@/schema/profile.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  formDataToUserApiPayload,
-  UserResponseToformData,
+  userResponseToFormData,
 } from "@/mapper/user.mapper";
 
 export const useProfileForm = (user: UserResponse) => {
-  const { mutateAsync: updateUser, isPending, isSuccess } = useUpdateUser();
+  const { mutate: updateUser, isPending, isSuccess } = useUpdateUser();
 
   const form = useForm<UserProfileFormValues>({
     resolver: zodResolver(userProfileSchema),
-    defaultValues: UserResponseToformData(user),
+    defaultValues: userResponseToFormData(user),
   });
 
-  const onSubmit = form.handleSubmit(async (user: UserProfileFormValues) => {
-    const payload = formDataToUserApiPayload(user);
-    const data = await updateUser(payload);
-    if (data) form.reset(UserResponseToformData(data));
+  const onSubmit = form.handleSubmit((values) => {
+    updateUser(values, {
+      onSuccess: (data) => form.reset(userResponseToFormData(data)),
+    });
   });
 
   return { form, onSubmit, isPending, isSuccess };
