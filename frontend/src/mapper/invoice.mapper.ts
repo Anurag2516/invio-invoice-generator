@@ -1,8 +1,9 @@
 import type {
   AutoSaveApiPayload,
   InvoiceApiPayload,
-  InvoiceFormData,
+  InvoiceFormValues,
   InvoiceResponse,
+  LineItemResponse,
 } from "@/types/invoice";
 
 const toNull = (val: string) => (val.trim() === "" ? null : val.trim());
@@ -15,7 +16,7 @@ const optNum = (val: unknown) => {
 };
 
 export const formDataToAutoSavePayload = (
-  form: InvoiceFormData,
+  form: InvoiceFormValues,
 ): AutoSaveApiPayload => ({
   invoiceNumber: toOptional(form.invoiceNumber),
   status: form.status || undefined,
@@ -46,7 +47,7 @@ export const formDataToAutoSavePayload = (
   snapshotClientPhone: toNull(form.snapshotClientPhone),
   snapshotClientWebsite: toNull(form.snapshotClientWebsite),
   lineItems: form.lineItems.map(({ id, ...rest }) => ({
-    description: rest.description.trim() || null,
+    description: rest.description || null,
     quantity: optNum(rest.quantity),
     rate: optNum(rest.rate),
     amount: optNum(rest.amount),
@@ -54,7 +55,7 @@ export const formDataToAutoSavePayload = (
 });
 
 export const formDataToApiPayload = (
-  form: InvoiceFormData,
+  form: InvoiceFormValues,
 ): InvoiceApiPayload => ({
   invoiceNumber: form.invoiceNumber.trim(),
   status: form.status,
@@ -92,7 +93,7 @@ export const formDataToApiPayload = (
 
 export const invoiceResponseToFormData = (
   invoice: InvoiceResponse,
-): InvoiceFormData => ({
+): InvoiceFormValues => ({
   invoiceNumber: invoice.invoiceNumber,
   status: invoice.status,
   clientId: invoice.clientId,
@@ -129,5 +130,45 @@ export const invoiceResponseToFormData = (
     quantity: item.quantity,
     rate: item.rate,
     amount: item.amount,
+  })),
+});
+
+export const mapInvoice = (invoice: InvoiceResponse) => ({
+  invoiceNumber: invoice.invoiceNumber,
+  status: invoice.status,
+  clientId: invoice.clientId,
+  issueDate: new Date(invoice.issueDate).toISOString().split("T")[0],
+  dueDate: invoice.dueDate
+    ? new Date(invoice.dueDate).toISOString().split("T")[0]
+    : null,
+  currency: invoice.currency,
+  subtotal: Number(invoice.subtotal),
+  taxRate: Number(invoice.taxRate),
+  taxAmount: Number(invoice.taxAmount),
+  discountRate: Number(invoice.discountRate),
+  discountAmount: Number(invoice.discountAmount),
+  total: Number(invoice.total),
+  bankName: invoice.bankName,
+  accountHolderName: invoice.accountHolderName,
+  accountNumber: invoice.accountNumber,
+  notes: invoice.notes,
+  senderName: invoice.senderName,
+  senderEmail: invoice.senderEmail,
+  senderCompany: invoice.senderCompany,
+  senderAddress: invoice.senderAddress,
+  senderPhone: invoice.senderPhone,
+  senderWebsite: invoice.senderWebsite,
+  snapshotClientName: invoice.snapshotClientName,
+  snapshotClientEmail: invoice.snapshotClientEmail,
+  snapshotClientCompany: invoice.snapshotClientCompany,
+  snapshotClientAddress: invoice.snapshotClientAddress,
+  snapshotClientPhone: invoice.snapshotClientPhone,
+  snapshotClientWebsite: invoice.snapshotClientWebsite,
+  lineItems: invoice.lineItems.map((item: LineItemResponse) => ({
+    id: item.id,
+    description: item.description,
+    quantity: Number(item.quantity),
+    rate: Number(item.rate),
+    amount: Number(item.amount),
   })),
 });
