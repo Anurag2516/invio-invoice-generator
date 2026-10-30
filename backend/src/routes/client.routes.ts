@@ -12,8 +12,8 @@ const router = Router()
 
 router.post("/createClient", isAuthenticated, createClient)
 router.put("/updateClient/:id", isAuthenticated, updateClient);
-router.get("/client/:id", isAuthenticated, getClient);
+router.get("/getClient/:id", isAuthenticated, getClient);
 router.get("/getClients", isAuthenticated, getClients);
-router.delete("/client/:id", isAuthenticated, deleteClient);
+router.delete("/deleteClient/:id", isAuthenticated, deleteClient);
 
 export default router

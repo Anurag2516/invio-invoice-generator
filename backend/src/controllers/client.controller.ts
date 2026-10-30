@@ -2,9 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import {
   ClientInput,
   clientSchema,
+  listClientsQuerySchema,
   UpdateClientInput,
   updateClientSchema,
-} from "../schemas/client.schema";
+} from "../schema/client.schema";
 import { prisma } from "../config/db";
 import { Params } from "../types/params";
 
@@ -116,7 +117,19 @@ const getClients = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const search = req.query.search as string | undefined;
+    const parsed = listClientsQuerySchema.safeParse(req.query);
+
+    if (!parsed.success) {
+      res.status(400).json({
+        errors: parsed.error.issues.map((i) => ({
+          field: i.path.join("."),
+          message: i.message,
+        })),
+      });
+      return;
+    }
+
+    const { search, limit, sort, order } = parsed.data;
 
     const clients = await prisma.client.findMany({
       where: {
@@ -128,10 +141,27 @@ const getClients = async (
           ],
         }),
       },
+      ...(limit && { take: limit }),
+      orderBy: { [sort]: order },
       omit: { userId: true },
+      include: {
+        _count: { select: { invoice: { where: { userId: req.user.userId } } } },
+        invoice: {
+          where: { userId: req.user.userId },
+          orderBy: { createdAt: "desc" },
+          take: 1,
+          select: { invoiceNumber: true },
+        },
+      },
     });
 
-    res.status(200).json(clients);
+    res.status(200).json(
+      clients.map(({ _count, invoice, ...client }) => ({
+        ...client,
+        invoiceCount: _count.invoice,
+        lastInvoiceNumber: invoice[0]?.invoiceNumber ?? null,
+      })),
+    );
   } catch (error) {
     next(error);
   }
