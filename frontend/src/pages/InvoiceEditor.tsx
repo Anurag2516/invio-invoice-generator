@@ -1,5 +1,5 @@
-import InvoiceFormLoader from "@/components/invoice/invoice-form/InvoiceForm";
-import Topbar from "@/components/invoice/Topbar";
+import InvoiceFormLoader from "@/components/invoice-editor/invoice-form/InvoiceForm";
+import Topbar from "@/components/invoice-editor/Topbar";
 import { Eye, Pencil } from "lucide-react";
 import { useRef, useState } from "react";
 
