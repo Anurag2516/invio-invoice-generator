@@ -7,6 +7,6 @@ export const getUser = async (): Promise<UserResponse> => {
 };
 
 export const updateUser = async (user: UserProfileApiPayload): Promise<UserResponse> => {
-  const res = await api.put("/api/user/updateProfile", user);
+  const res = await api.patch("/api/user/updateProfile", user);
   return res.data;
 };
