@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UpdateUserInput, updateUserSchema } from "../schemas/user.schema";
+import { UpdateUserInput, updateUserSchema } from "../schema/user.schema";
 import { prisma } from "../config/db";
 
 const getProfile = async (

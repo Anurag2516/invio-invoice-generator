@@ -6,6 +6,6 @@ import { getProfile } from "../controllers/user.controller";
 const router = Router()
 
 router.get("/getProfile", isAuthenticated, getProfile);
-router.put("/updateProfile", isAuthenticated, updateProfile);
+router.patch("/updateProfile", isAuthenticated, updateProfile);
 
 export default router
