@@ -4,13 +4,13 @@ import {
   useFormContext,
   useWatch,
 } from "react-hook-form";
-import type { InvoiceFormValues, LineItemFormData } from "../../types/invoice";
-import Input from "../ui/Input";
+import type { InvoiceFormValues, LineItemFormData } from "@/types/invoice";
+import Input from "@/components/ui/Input";
 import { Plus, X } from "lucide-react";
 import { useCurrencySign } from "@/hooks/useCurrencySign";
-import SectionHeader from "../ui/SectionHeader";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { positiveNumberFilter } from "@/utils/inputFilters";
-import { Button } from "../ui/Button";
+import { Button } from "@/components/ui/Button";
 import { calculateLineAmount } from "@/utils/calculations";
 
 const LineItemsTable = () => {

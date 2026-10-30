@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from "@react-pdf/renderer";
-import type { Invoice } from "@/types/invoice";
+import type { InvoiceResponse } from "@/types/invoice";
 
 interface PDFTotalsProps {
-  invoice: Invoice;
+  invoice: InvoiceResponse;
   currency: string | undefined;
 }
 

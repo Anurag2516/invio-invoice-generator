@@ -1,8 +1,8 @@
-import type { InvoiceFormValues } from "../../types/invoice";
-import Input from "../ui/Input";
-import { statusOptions } from "../../constants/statusOptions";
-import { currencyOptions } from "../../constants/currencies";
-import SectionHeader from "../ui/SectionHeader";
+import type { InvoiceFormValues } from "@/types/invoice";
+import Input from "@/components/ui/Input";
+import { statusOptions } from "@/constants/statusOptions";
+import { currencyOptions } from "@/constants/currencies";
+import SectionHeader from "@/components/ui/SectionHeader";
 import {
   Select,
   SelectContent,
@@ -11,9 +11,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/Select";
+} from "@/components/ui/Select";
 import { Controller, useFormContext } from "react-hook-form";
-import DatePicker from "../ui/DatePicker";
+import DatePicker from "@/components/ui/DatePicker";
 import { format } from "date-fns";
 
 const InvoiceMeta = () => {

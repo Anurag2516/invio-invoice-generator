@@ -1,6 +1,6 @@
 import type { InvoiceFormValues } from "@/types/invoice";
-import SectionHeader from "../ui/SectionHeader";
-import Input from "../ui/Input";
+import SectionHeader from "@/components/ui/SectionHeader";
+import Input from "@/components/ui/Input";
 import { useFormContext } from "react-hook-form";
 
 const InvoiceAdditionalInfo = () => {

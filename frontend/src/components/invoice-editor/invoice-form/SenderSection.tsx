@@ -8,11 +8,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { InvoiceFormData } from "@/types/invoice";
+import type { InvoiceFormValues } from "@/types/invoice";
 import { User } from "lucide-react";
-import Input from "../ui/Input";
-import { Button } from "../ui/Button";
-import SectionHeader from "../ui/SectionHeader";
+import Input from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
 
@@ -223,7 +223,7 @@ const UserEditModal = ({
 };
 
 const SenderSection = () => {
-  const { setValue, getValues ,watch } = useFormContext<InvoiceFormData>();
+  const { setValue, getValues ,watch } = useFormContext<InvoiceFormValues>();
 
   const [
     senderName,

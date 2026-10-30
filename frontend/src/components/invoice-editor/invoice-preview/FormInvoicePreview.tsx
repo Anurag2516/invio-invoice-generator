@@ -1,5 +1,5 @@
 import InvoicePreview from './InvoicePreview';
-import { ScrollArea } from '../ui/scroll-area';
+import { ScrollArea } from "@/components/ui/scroll-area";
 import type { InvoiceFormValues, InvoiceResponse } from '@/types/invoice';
 import { useFormContext, useWatch } from 'react-hook-form';
 

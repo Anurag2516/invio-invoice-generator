@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { X } from "lucide-react";
 import { useInvoice } from "@/hooks/useInvoices";
-import { Spinner } from "../ui/spinner";
+import { Spinner } from "@/components/ui/spinner";
 import InvoicePreview from "./InvoicePreview";
 
 const HomeInvoicePreview = () => {

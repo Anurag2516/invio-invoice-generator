@@ -1,7 +1,7 @@
-import type { InvoiceFormValues } from "../../types/invoice";
-import Input from "../ui/Input";
+import type { InvoiceFormValues } from "@/types/invoice";
+import Input from "@/components/ui/Input";
 import { useCurrencySign } from "@/hooks/useCurrencySign";
-import SectionHeader from "../ui/SectionHeader";
+import SectionHeader from "@/components/ui/SectionHeader";
 import { percentageFilter } from "@/utils/inputFilters";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { calculateInvoiceTotal } from "@/utils/calculations";
