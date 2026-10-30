@@ -94,10 +94,9 @@ model Invoice {
   updatedAt     DateTime @updatedAt
 
   @@unique([userId, invoiceNumber])
-  @@index([userId])
+  @@index([userId, status, dueDate])
+  @@index([userId, issueDate])
   @@index([clientId])
-  @@index([status])
-  @@index([issueDate])
 }
 
 model LineItem {
