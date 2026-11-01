@@ -63,6 +63,9 @@ body {
   --color-stone: var(--stone);
   --color-teal: var(--teal);
   --color-teal-dark: var(--teal-dark);
+  --color-teal-tint: var(--teal-tint);
+  --color-teal-tint-hover: var(--teal-tint-hover);
+  --color-teal-border: var(--teal-border);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -79,6 +82,9 @@ body {
   --stone: oklch(0.5215 0.0242 78.95);
   --teal: oklch(0.5109 0.0861 186.39);
   --teal-dark: oklch(0.4477 0.0753 183.63);
+  --teal-tint: oklch(0.97 0.012 186);
+  --teal-tint-hover: oklch(0.94 0.025 186);
+  --teal-border: oklch(0.8 0.05 186);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
