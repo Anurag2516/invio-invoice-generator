@@ -3,12 +3,13 @@ import { prisma } from "../config/db";
 import {
   AutoSaveInput,
   autoSaveSchema,
-  InvoiceInput,
   invoiceSchema,
   listInvoicesQuerySchema,
+  updateInvoiceStatusSchema,
 } from "../schema/invoice.schema";
 import { Params } from "../types/params";
 import { overdueWhere } from "../utils/overdue";
+import { Prisma } from "../../generated/prisma/client";
 
 const createDraftInvoice = async (
   req: Request,
@@ -140,8 +141,11 @@ const autoSaveInvoice = async (
     const { lineItems, clientId, ...invoiceData }: AutoSaveInput = parsed.data;
     const invoiceId = req.params.id;
 
-    const invoiceExists = await prisma.invoice.findUnique({
-      where: { id: invoiceId, userId: req.user.userId },
+    const invoiceExists = await prisma.invoice.findFirst({
+      where: {
+        id: invoiceId,
+        userId: req.user.userId,
+      },
     });
 
     if (!invoiceExists) {
@@ -149,8 +153,15 @@ const autoSaveInvoice = async (
       return;
     }
 
+    if (invoiceExists.status !== "Draft") {
+      res.status(403).json({
+        message: "Only draft invoices can be edited.",
+      });
+      return;
+    }
+
     await prisma.invoice.update({
-      where: { id: invoiceId, userId: req.user.userId },
+      where: { id: invoiceId, userId: req.user.userId, status: "Draft" },
       data: {
         ...invoiceData,
         ...(clientId !== undefined && {
@@ -181,6 +192,7 @@ const saveInvoice = async (
 ) => {
   try {
     const parsedInvoice = invoiceSchema.safeParse(req.body);
+
     if (!parsedInvoice.success) {
       res.status(400).json({
         errors: parsedInvoice.error.issues.map((i) => ({
@@ -190,23 +202,32 @@ const saveInvoice = async (
       });
       return;
     }
-    const { lineItems, ...invoice }: InvoiceInput = parsedInvoice.data;
+
+    const { lineItems, ...invoice } = parsedInvoice.data;
     const invoiceId = req.params.id;
 
-    const invoiceExists = await prisma.invoice.findUnique({
+    const invoiceExists = await prisma.invoice.findFirst({
       where: {
         id: invoiceId,
         userId: req.user.userId,
       },
+      select: {
+        id: true,
+        status: true,
+      },
     });
 
     if (!invoiceExists) {
-      res.status(404).json({ message: "Invoice not found" });
+      res.status(404).json({
+        message: "Invoice not found",
+      });
       return;
     }
 
     if (invoiceExists.status !== "Draft") {
-      res.status(403).json({ message: "Only draft invoices can be edited" });
+      res.status(403).json({
+        message: "Only draft invoices can be edited",
+      });
       return;
     }
 
@@ -214,6 +235,7 @@ const saveInvoice = async (
       where: {
         id: invoiceId,
         userId: req.user.userId,
+        status: "Draft",
       },
       data: {
         ...invoice,
@@ -223,7 +245,9 @@ const saveInvoice = async (
         },
       },
       include: {
-        lineItems: { omit: { invoiceId: true } },
+        lineItems: {
+          omit: { invoiceId: true },
+        },
       },
       omit: {
         userId: true,
@@ -231,6 +255,96 @@ const saveInvoice = async (
     });
 
     res.status(200).json(savedInvoice);
+  } catch (error: any) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      res.status(409).json({
+        message: "Invoice status changed. Refresh before editing.",
+      });
+      return;
+    }
+
+    next(error);
+  }
+};
+
+const updateInvoiceStatus = async (
+  req: Request<Params>,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const parsed = updateInvoiceStatusSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      res.status(400).json({
+        message: "Invalid invoice status",
+      });
+      return;
+    }
+
+    const { status } = parsed.data;
+    const invoiceId = req.params.id;
+
+    const invoice = await prisma.invoice.findFirst({
+      where: {
+        id: invoiceId,
+        userId: req.user.userId,
+      },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    if (!invoice) {
+      res.status(404).json({
+        message: "Invoice not found",
+      });
+      return;
+    }
+
+    const allowedTransitions = {
+      Draft: ["Sent", "Paid", "Cancelled"],
+      Sent: ["Paid", "Cancelled"],
+      Paid: [],
+      Cancelled: [],
+    } as const;
+
+    const allowedStatuses = allowedTransitions[invoice.status];
+
+    if (!allowedStatuses.includes(status as never)) {
+      res.status(409).json({
+        message: `Cannot change invoice status from ${invoice.status} to ${status}.`,
+      });
+      return;
+    }
+
+    const updated = await prisma.invoice.updateMany({
+      where: {
+        id: invoiceId,
+        userId: req.user.userId,
+        status: invoice.status,
+      },
+      data: {
+        status,
+      },
+    });
+
+    if (updated.count === 0) {
+      res.status(409).json({
+        message: "Invoice status has changed. Please refresh and try again.",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      id: invoiceId,
+      status,
+      message: `Invoice marked as ${status}`,
+    });
   } catch (error) {
     next(error);
   }
@@ -405,6 +519,7 @@ export {
   createDraftInvoice,
   autoSaveInvoice,
   saveInvoice,
+  updateInvoiceStatus,
   getInvoice,
   getInvoices,
   deleteInvoice,
