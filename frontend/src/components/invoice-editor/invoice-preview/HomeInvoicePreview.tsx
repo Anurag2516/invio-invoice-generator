@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { useInvoice } from "@/hooks/useInvoices";
 import { Spinner } from "@/components/ui/spinner";
 import InvoicePreview from "./InvoicePreview";
+import { toast } from "sonner";
 
 const HomeInvoicePreview = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const HomeInvoicePreview = () => {
   const handleClose = () => navigate(-1);
 
   if (!id) {
-    console.error("Invoice not found");
+    toast.error("Invoice not found");
     return;
   }
 
@@ -27,7 +28,7 @@ const HomeInvoicePreview = () => {
     );
 
   if (isError || !invoice) {
-    console.error("Could not load invoice");
+    toast.error("Failed to load invoice");
     navigate(-1);
     return null;
   }
