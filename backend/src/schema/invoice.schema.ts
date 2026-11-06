@@ -18,7 +18,6 @@ export const lineItemSchema = z.object({
 
 export const invoiceSchema = z.object({
   invoiceNumber: z.string().min(1),
-  status: statusSchema,
   currency: currencySchema,
   clientId: z.string().min(1),
   senderName: z.string().min(1),
@@ -53,7 +52,6 @@ const nullableNum = z.number().nullable().optional();
 
 export const autoSaveSchema = z.object({
   invoiceNumber: z.string().optional(),
-  status: statusSchema.optional(),
   clientId: z.string().nullable().optional(),
   issueDate: z.string().nullable().optional(),
   dueDate: z.string().nullable().optional(),
@@ -98,6 +96,10 @@ export const listInvoicesQuerySchema = z.object({
   sort: z.enum(["updatedAt", "createdAt"]).default("createdAt"),
   order: z.enum(["asc", "desc"]).default("desc"),
   filter: z.enum(["outstanding", "paid", "overdue", "cancelled"]).optional()
+});
+
+export const updateInvoiceStatusSchema = z.object({
+  status: z.enum(["Sent", "Paid", "Cancelled"]),
 });
 
 export type AutoSaveInput = z.infer<typeof autoSaveSchema>;
