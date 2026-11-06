@@ -6,6 +6,7 @@ import type {
   InvoiceApiPayload,
   InvoiceResponse,
   RequestParams,
+  UpdateStatus,
 } from "@/types/invoice";
 
 export const createDraftInvoice = async (
@@ -15,7 +16,10 @@ export const createDraftInvoice = async (
   return res.data;
 };
 
-export const autoSaveInvoice = async (id: string, invoice: AutoSaveApiPayload) => {
+export const autoSaveInvoice = async (
+  id: string,
+  invoice: AutoSaveApiPayload,
+) => {
   const res = await api.patch(`/api/invoice/autoSaveInvoice/${id}`, invoice);
   return res.data;
 };
@@ -25,6 +29,11 @@ export const updateInvoice = async (
   invoice: InvoiceApiPayload,
 ): Promise<InvoiceResponse> => {
   const res = await api.put(`/api/invoice/updateInvoice/${id}`, invoice);
+  return res.data;
+};
+
+export const updateInvoiceStatus = async (id: string, status: UpdateStatus) => {
+  const res = await api.patch(`/api/invoice/${id}/status`, { status });
   return res.data;
 };
 
