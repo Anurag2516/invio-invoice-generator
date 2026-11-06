@@ -3,6 +3,7 @@ import { userKey } from "@/lib/queryKeys";
 import { formDataToUserApiPayload } from "@/mapper/user.mapper";
 import type { UserProfileFormValues } from "@/types/invoice";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export function useUser() {
   return useQuery({
@@ -19,9 +20,11 @@ export function useUpdateUser() {
       updateUser(formDataToUserApiPayload(user)),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKey.userProfile });
+    
+    toast.success("User details updated successfully");
     },
-    onError: (error: any) => {
-      console.error(error.response?.data || "Something went wrong");
+    onError: () => {
+      toast.error("Failed to update user details. Please try again.");
     },
   });
 }

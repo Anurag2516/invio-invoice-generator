@@ -1,6 +1,8 @@
 import type { AuthStore, Login, Signup } from "@/types/auth";
 import { create } from "zustand";
 import api from "@/lib/axios";
+import { queryClient } from "@/lib/queryClient";
+import { toast } from "sonner";
 
 export const useAuthStore = create<AuthStore>()((set) => ({
   user: null,
@@ -26,7 +28,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   },
 
   signup: async (authData: Signup): Promise<void> => {
-    set({ isSubmitting: true });
+    set({ isSubmitting: true, error: null });
 
     try {
       const res = await api.post("api/auth/register", authData);
@@ -34,6 +36,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
       const data = res.data;
 
       set({ user: data, isAuthenticated: true });
+      toast.success("Account created successfully");
     } catch (error: any) {
       console.error(error);
       set({ error: error.response?.data?.message || error.message });
@@ -43,7 +46,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   },
 
   login: async (authData: Login): Promise<void> => {
-    set({ isSubmitting: true });
+    set({ isSubmitting: true, error: null });
 
     try {
       const res = await api.post("api/auth/login", authData);
@@ -62,8 +65,17 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   logout: async (): Promise<void> => {
     try {
       await api.post("api/auth/logout");
+    } catch (error) {
+      console.error(error);
+      toast.error("Logout request failed, but you've been signed out locally.");
     } finally {
-      set({ user: null, isAuthenticated: false });
+      queryClient.clear();
+      set({
+        user: null,
+        isAuthenticated: false,
+        isSubmitting: false,
+        error: null,
+      });
     }
   },
 }));
