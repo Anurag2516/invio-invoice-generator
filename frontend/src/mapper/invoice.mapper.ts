@@ -19,7 +19,6 @@ export const formDataToAutoSavePayload = (
   form: InvoiceFormValues,
 ): AutoSaveApiPayload => ({
   invoiceNumber: toOptional(form.invoiceNumber),
-  status: form.status || undefined,
   clientId: form.clientId || null,
   issueDate: form.issueDate ? new Date(form.issueDate).toISOString() : null,
   dueDate: form.dueDate ? new Date(form.dueDate).toISOString() : null,
@@ -58,7 +57,6 @@ export const formDataToApiPayload = (
   form: InvoiceFormValues,
 ): InvoiceApiPayload => ({
   invoiceNumber: form.invoiceNumber.trim(),
-  status: form.status,
   clientId: form.clientId,
   issueDate: new Date(form.issueDate).toISOString(),
   dueDate: new Date(form.dueDate).toISOString(),
@@ -95,7 +93,6 @@ export const invoiceResponseToFormData = (
   invoice: InvoiceResponse,
 ): InvoiceFormValues => ({
   invoiceNumber: invoice.invoiceNumber,
-  status: invoice.status,
   clientId: invoice.clientId,
   issueDate: new Date(invoice.issueDate).toISOString().split("T")[0],
   dueDate: invoice.dueDate
@@ -134,6 +131,7 @@ export const invoiceResponseToFormData = (
 });
 
 export const mapInvoice = (invoice: InvoiceResponse) => ({
+  id: invoice.id,
   invoiceNumber: invoice.invoiceNumber,
   status: invoice.status,
   clientId: invoice.clientId,
@@ -171,4 +169,6 @@ export const mapInvoice = (invoice: InvoiceResponse) => ({
     rate: Number(item.rate),
     amount: Number(item.amount),
   })),
+  createdAt: invoice.createdAt,
+  isOverdue: invoice.isOverdue,
 });
