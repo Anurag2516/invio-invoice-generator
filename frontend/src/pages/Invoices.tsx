@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Menu } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/spinner";
@@ -15,10 +15,13 @@ import InvoiceTableSkeleton from "@/components/ui/skeleton/InvoiceTableSkeleton"
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ACTIVE_TABS, type ActiveTab } from "@/types/invoice";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAppStore } from "@/store/appStore";
 
 const Invoices = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
+
+  const { toggleSidebar } = useAppStore();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const tabParam = searchParams.get("tab");
@@ -74,14 +77,23 @@ const Invoices = () => {
       <ScrollArea className="bg-background flex flex-col flex-1 min-w-0 overflow-y-auto">
         <div className="px-4 sm:px-10 py-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div>
-              <h2 className="text-2xl text-foreground font-medium">
-                My Invoices
-              </h2>
-              <p className="text-sm text-foreground/50 mt-1">
-                {invoices.length}{" "}
-                {invoices.length === 1 ? "invoice" : "invoices"}
-              </p>
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <h2 className="text-2xl text-foreground font-medium">
+                  My Invoices
+                </h2>
+                <p className="text-sm text-foreground/50 mt-1">
+                  {invoices.length}{" "}
+                  {invoices.length === 1 ? "invoice" : "invoices"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={toggleSidebar}
+                className="block xl:hidden text-foreground"
+              >
+                <Menu size={18} />
+              </button>
             </div>
 
             <div className="flex gap-2 items-center">
