@@ -44,7 +44,6 @@ export type InvoiceFormValues = z.infer<typeof invoiceSchema>;
 
 export interface InvoiceApiPayload {
   invoiceNumber: string;
-  status: Status;
   issueDate: string;
   dueDate: string;
   currency: Currency;
@@ -74,6 +73,8 @@ export interface InvoiceApiPayload {
   lineItems: Omit<LineItemFormData, "id">[];
 }
 
+export type UpdateStatus = "Sent" | "Paid" | "Cancelled";
+
 type Nullable<T> = T extends object
   ? { [K in keyof T]: Nullable<T[K]> | null | undefined }
   : T | null | undefined;
@@ -90,7 +91,7 @@ export interface InvoiceResponse {
   status: Status;
   currency: Currency;
   issueDate: string;
-  dueDate: string;
+  dueDate: string|null;
   createdAt: string;
   subtotal: number;
   taxRate: number;
