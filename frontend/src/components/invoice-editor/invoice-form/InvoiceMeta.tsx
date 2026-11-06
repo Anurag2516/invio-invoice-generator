@@ -38,32 +38,6 @@ const InvoiceMeta = () => {
           />
         </div>
         <Controller
-          name="status"
-          control={control}
-          render={({ field }) => (
-            <div className="flex flex-col gap-1.5 w-auto">
-              <label className="text-sm font-semibold uppercase tracking-wider text-stone">
-                Status
-              </label>
-              <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full sm:w-auto">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Status</SelectLabel>
-                    {statusOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-        />
-        <Controller
           name="currency"
           control={control}
           render={({ field }) => (
