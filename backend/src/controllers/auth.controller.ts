@@ -7,7 +7,8 @@ import {
   loginSchema,
   RegisterInput,
   registerSchema,
-} from "../schemas/user.schema";
+} from "../schema/user.schema";
+import { jwtCookieOptions } from "../config/cookie";
 
 const getMe = async (
   req: Request,
@@ -138,12 +139,7 @@ const login = async (
 
 const logout = (req: Request, res: Response, next: NextFunction): void => {
   try {
-    res.clearCookie("jwt", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
-    });
+    res.clearCookie("jwt", jwtCookieOptions);
 
     res.status(204).send();
   } catch (error) {
