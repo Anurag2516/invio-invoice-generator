@@ -12,11 +12,13 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { positiveNumberFilter } from "@/utils/inputFilters";
 import { Button } from "@/components/ui/Button";
 import { calculateLineAmount } from "@/utils/calculations";
+import { useEffect } from "react";
 
 const LineItemsTable = () => {
   const {
     register,
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<InvoiceFormValues>();
 
@@ -30,6 +32,21 @@ const LineItemsTable = () => {
   });
 
   const currencySign = useCurrencySign(currency);
+
+  useEffect(() => {
+    lineItems.forEach((item: LineItemFormData, index: number) => {
+      const computed = calculateLineAmount(
+        item.quantity ?? 0,
+        item.rate ?? 0,
+      );
+      if (item.amount !== computed) {
+        setValue(`lineItems.${index}.amount`, computed, {
+          shouldDirty: false,
+          shouldValidate: false,
+        });
+      }
+    });
+  }, [lineItems, setValue]);
 
   const defaultLineItem = (): LineItemFormData => ({
     id: `temp_${crypto.randomUUID()}`,
@@ -116,10 +133,7 @@ const LineItemsTable = () => {
                 </span>
                 <span className="text-base font-medium text-foreground pt-2">
                   {currencySign}
-                  {calculateLineAmount(
-                    lineItems[index]?.quantity ?? 0,
-                    lineItems[index]?.rate ?? 0,
-                  )}
+                  {lineItems[index]?.amount ?? 0}
                 </span>
               </div>
             </div>

@@ -5,10 +5,12 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { percentageFilter } from "@/utils/inputFilters";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { calculateInvoiceTotal } from "@/utils/calculations";
+import { useEffect } from "react";
 
 const TotalsSection = () => {
   const {
     control,
+    setValue,
     formState: { errors },
   } = useFormContext<InvoiceFormValues>();
 
@@ -16,7 +18,19 @@ const TotalsSection = () => {
     name: ["lineItems", "taxRate", "discountRate", "currency"],
   });
 
-  const { subtotal, taxAmount, discountAmount, total } = calculateInvoiceTotal(lineItems, taxRate, discountRate)
+  const { subtotal, taxAmount, discountAmount, total } = calculateInvoiceTotal(
+    lineItems,
+    taxRate,
+    discountRate,
+  );
+  
+  useEffect(() => {
+    const opts = { shouldDirty: false, shouldValidate: false };
+    setValue("subtotal", subtotal, opts);
+    setValue("taxAmount", taxAmount, opts);
+    setValue("discountAmount", discountAmount, opts);
+    setValue("total", total, opts);
+  }, [subtotal, taxAmount, discountAmount, total, setValue]);
 
   const currencySign = useCurrencySign(currency);
 
