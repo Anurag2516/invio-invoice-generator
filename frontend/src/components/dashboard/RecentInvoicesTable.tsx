@@ -15,7 +15,18 @@ import {
 } from "@/components/ui/tooltip";
 import { STATUS_STYLES } from "@/constants/statusStyles";
 import type { InvoiceResponse } from "@/types/invoice";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, EllipsisIcon, FileText, Plus } from "lucide-react";
+import { Button } from "../ui/Button";
+import DropdownActions from "../ui/shared/DropdownActions";
+import type { Dispatch, SetStateAction } from "react";
+
+type InvoiceTableProps = {
+  invoices: InvoiceResponse[];
+  handleNewInvoiceClick: () => void;
+  isPending: boolean;
+  setDeleteId: Dispatch<SetStateAction<string | null>>;
+
+};
 
 const colWidths = (
   <>
@@ -27,14 +38,42 @@ const colWidths = (
   </>
 );
 
-const RecentInvoiceTable = ({ invoices }: { invoices: InvoiceResponse[] }) => (
+const RecentInvoiceTable = ({
+  invoices,
+  handleNewInvoiceClick,
+  isPending,
+  setDeleteId
+}: InvoiceTableProps) => {
+  if (invoices.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-10 px-4 text-center border border-border rounded-xl shadow-sm">
+        <FileText size={24} className="text-muted-foreground mb-2" />
+        <p className="text-sm text-muted-foreground mb-3">No invoices yet</p>
+        <Button
+          type="button"
+          onClick={handleNewInvoiceClick}
+          disabled={isPending}
+          className="bg-teal hover:bg-teal-dark text-white py-3"
+        >
+          <Plus size={14} className="hidden xs:block shrink-0" />
+          <span className="text-[12px] xs:text-[14px] ">
+            New invoice
+          </span>
+        </Button>
+      </div>
+    );
+  }
+  return (
     <>
       <div className="md:hidden flex flex-col divide-y divide-border w-full border border-border shadow-xs rounded-lg bg-background overflow-hidden">
         {invoices.map((invoice) => (
           <div key={invoice.id} className="flex flex-col gap-4 px-4 py-4">
-            <span className="text-[13px] font-medium">
-              {invoice.invoiceNumber}
-            </span>
+            <div className="flex justify-between">
+              <span className="text-[13px] font-medium">
+                {invoice.invoiceNumber}
+              </span>
+              <DropdownActions invoice={invoice} setDeleteId={setDeleteId} />
+            </div>
 
             <div className="flex items-start justify-between">
               <div>
@@ -103,6 +142,9 @@ const RecentInvoiceTable = ({ invoices }: { invoices: InvoiceResponse[] }) => (
               <TableHead className="px-6 text-xs font-semibold tracking-wide text-stone uppercase text-center">
                 Status
               </TableHead>
+              <TableHead className="px-6 text-xs font-semibold tracking-wide text-stone uppercase text-center">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
 
@@ -159,6 +201,13 @@ const RecentInvoiceTable = ({ invoices }: { invoices: InvoiceResponse[] }) => (
                     {invoice.status}
                   </span>
                 </TableCell>
+
+                <TableCell className="px-6 text-center">
+                  <DropdownActions
+                    invoice={invoice}
+                    setDeleteId={setDeleteId}
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -166,5 +215,6 @@ const RecentInvoiceTable = ({ invoices }: { invoices: InvoiceResponse[] }) => (
       </div>
     </>
   );
+};
 
 export default RecentInvoiceTable;

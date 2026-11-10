@@ -12,31 +12,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/Button";
-import { MoreHorizontal } from "lucide-react";
-import {
-  useLocation,
-  useNavigate,
-  type Location,
-  type NavigateFunction,
-} from "react-router-dom";
 import { useDeleteInvoice } from "@/hooks/useInvoices";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import DeleteInvoiceDialog from "@/components/ui/shared/DeleteInvoiceDialog";
-
-interface ActionMenuProps {
-  id: string;
-  navigate: NavigateFunction;
-  location: Location;
-  setDeleteId: Dispatch<SetStateAction<string | null>>;
-}
+import DropdownActions from "../ui/shared/DropdownActions";
 
 interface InvoiceTableProps {
   invoices: InvoiceResponse[];
@@ -54,44 +33,9 @@ const colWidths = (
   </>
 );
 
-const ActionMenu = ({
-  id,
-  navigate,
-  location,
-  setDeleteId,
-}: ActionMenuProps) => (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="ghost" size="icon" className="size-8">
-        <MoreHorizontal />
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent>
-      <DropdownMenuItem onClick={() => navigate(`/invoices/edit?id=${id}`)}>
-        Edit Invoice
-      </DropdownMenuItem>
-      <DropdownMenuItem
-        onClick={() =>
-          navigate(`/invoices/${id}/preview`, {
-            state: { backgroundLocation: location },
-          })
-        }
-      >
-        Open Invoice
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem variant="destructive" onClick={() => setDeleteId(id)}>
-        Delete Invoice
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-);
-
 const InvoiceTable = ({ invoices, activeTab }: InvoiceTableProps) => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-  const location = useLocation();
   const { mutate: deleteInvoice, isPending: isDeletePending } =
     useDeleteInvoice();
 
@@ -101,8 +45,8 @@ const InvoiceTable = ({ invoices, activeTab }: InvoiceTableProps) => {
 
   if (invoices.length === 0) {
     return (
-      <div className="px-6 py-20 text-center text-sm text-stone">
-        {activeTab === "all"
+      <div className="px-6 py-20 text-center text-[16px] text-stone">
+        {activeTab === undefined
           ? "No invoices available."
           : `No ${activeTab} invoices available.`}
       </div>
@@ -118,12 +62,7 @@ const InvoiceTable = ({ invoices, activeTab }: InvoiceTableProps) => {
               <span className="text-[13px] font-medium">
                 {invoice.invoiceNumber}
               </span>
-              <ActionMenu
-                id={invoice.id}
-                navigate={navigate}
-                location={location}
-                setDeleteId={setDeleteId}
-              />
+              <DropdownActions invoice={invoice} setDeleteId={setDeleteId} />
             </div>
 
             <div className="flex items-start justify-between">
@@ -254,10 +193,8 @@ const InvoiceTable = ({ invoices, activeTab }: InvoiceTableProps) => {
                 </TableCell>
 
                 <TableCell className="px-6 text-right">
-                  <ActionMenu
-                    id={invoice.id}
-                    navigate={navigate}
-                    location={location}
+                  <DropdownActions
+                    invoice={invoice}
                     setDeleteId={setDeleteId}
                   />
                 </TableCell>
