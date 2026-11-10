@@ -47,77 +47,82 @@ interface ClientSearchProps {
   handleOnClear: () => void;
   handleOnSelect: (client: ClientResponse) => void;
   handleEditClick: () => void;
+  error?: string;
 }
 
 interface ClientCardProps {
   clientData: ClientData;
   handleEditClick: () => void;
   handleOnClear: () => void;
+  error?: string;
 }
 
 const ClientCard = ({
   clientData,
   handleOnClear,
   handleEditClick,
+  error,
 }: ClientCardProps) => {
   return (
-    <div className="rounded-md border border-border bg-foreground/3 mt-4 p-3 flex flex-col gap-2">
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="size-7 rounded-full bg-teal/15 flex items-center justify-center shrink-0">
-            <User className="size-3.5 text-teal" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-[15px] font-semibold text-foreground truncate">
-              {clientData.name}
-            </p>
-            {clientData.email && (
-              <p className="text-sm text-foreground/50 truncate">
-                {clientData.email}
+    <>
+      <div className="rounded-md border border-border bg-foreground/3 mt-4 p-3 flex flex-col gap-2">
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="size-7 rounded-full bg-teal/15 flex items-center justify-center shrink-0">
+              <User className="size-3.5 text-teal" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[15px] font-semibold text-foreground truncate">
+                {clientData.name}
               </p>
+              {clientData.email && (
+                <p className="text-sm text-foreground/50 truncate">
+                  {clientData.email}
+                </p>
+              )}
+            </div>
+          </div>
+          <div className="flex justify-center items-center gap-1 shrink-0">
+            <Button
+              onClick={handleEditClick}
+              type="button"
+              variant="ghost"
+              className="px-2 py-1 text-sm"
+            >
+              Edit
+            </Button>
+            <Button
+              type="button"
+              onClick={handleOnClear}
+              variant="ghost"
+              className="px-2 py-1"
+            >
+              <X size={10} />
+            </Button>
+          </div>
+        </div>
+
+        {(clientData.companyName ||
+          clientData.address ||
+          clientData.phone ||
+          clientData.website) && (
+          <div className="pl-9 flex flex-col space-y-[0.5px] text-sm">
+            {clientData.companyName && (
+              <p className=" text-foreground/60">{clientData.companyName}</p>
+            )}
+            {clientData.address && (
+              <p className="text-foreground/60">{clientData.address}</p>
+            )}
+            {clientData.phone && (
+              <p className=" text-foreground/60 pt-1.5">{clientData.phone}</p>
+            )}
+            {clientData.website && (
+              <p className=" text-foreground/60">{clientData.website}</p>
             )}
           </div>
-        </div>
-        <div className="flex justify-center items-center gap-1 shrink-0">
-          <Button
-            onClick={handleEditClick}
-            type="button"
-            variant="ghost"
-            className="px-2 py-1 text-sm"
-          >
-            Edit
-          </Button>
-          <Button
-            type="button"
-            onClick={handleOnClear}
-            variant="ghost"
-            className="px-2 py-1"
-          >
-            <X size={10} />
-          </Button>
-        </div>
+        )}
       </div>
-
-      {(clientData.companyName ||
-        clientData.address ||
-        clientData.phone ||
-        clientData.website) && (
-        <div className="pl-9 flex flex-col space-y-[0.5px] text-sm">
-          {clientData.companyName && (
-            <p className=" text-foreground/60">{clientData.companyName}</p>
-          )}
-          {clientData.address && (
-            <p className="text-foreground/60">{clientData.address}</p>
-          )}
-          {clientData.phone && (
-            <p className=" text-foreground/60 pt-1.5">{clientData.phone}</p>
-          )}
-          {clientData.website && (
-            <p className=" text-foreground/60">{clientData.website}</p>
-          )}
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
@@ -128,6 +133,7 @@ const ClientSearch = ({
   handleOnClear,
   handleOnSelect,
   handleEditClick,
+  error,
 }: ClientSearchProps) => {
   const [search, setSearch] = useState<string>("");
   const debouncedSearch = useDebounce(search, 300);
@@ -149,7 +155,11 @@ const ClientSearch = ({
           <PopoverTrigger asChild>
             <button
               type="button"
-              className="mt-3 flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 text-sm"
+              aria-invalid={!!error}
+              className={cn(
+                "mt-3 flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 text-sm",
+                error && "border-destructive",
+              )}
             >
               {clientData.name ? (
                 <span className="font-medium">{clientData.name}</span>
@@ -232,11 +242,18 @@ const ClientSearch = ({
         </Popover>
       )}
 
+      {error && (
+        <p role="alert" className="mt-1.5 text-sm text-destructive">
+          {error}
+        </p>
+      )}
+
       {isClientSelected && (
         <ClientCard
           clientData={clientData}
           handleEditClick={handleEditClick}
           handleOnClear={handleOnClear}
+          error={error}
         />
       )}
     </div>
@@ -244,7 +261,11 @@ const ClientSearch = ({
 };
 
 const ClientSection = () => {
-  const { setValue, control } = useFormContext<InvoiceFormValues>();
+  const {
+    setValue,
+    control,
+    formState: { errors },
+  } = useFormContext<InvoiceFormValues>();
 
   const [id, name, email, companyName, address, phone, website] = useWatch({
     control,
@@ -339,6 +360,9 @@ const ClientSection = () => {
     setMode(null);
   };
 
+  const clientError =
+    errors.clientId?.message ?? errors.snapshotClientName?.message;
+
   const clientData = {
     id,
     name,
@@ -357,6 +381,7 @@ const ClientSection = () => {
         handleOnClear={handleOnClear}
         handleOnSelect={handleOnSelect}
         handleEditClick={handleEditClick}
+        error={isClientSelected ? undefined : clientError}
       />
 
       {mode === "Edit" && (
