@@ -4,7 +4,7 @@ import { format, isValid, parseISO } from "date-fns";
 interface PDFHeaderProps {
   invoiceNumber: string;
   issueDate: string;
-  dueDate: string;
+  dueDate: string | null;
 }
 
 const styles = StyleSheet.create({
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const formatDate = (dateStr: string): string => {
+const formatDate = (dateStr: string | null): string => {
   if (!dateStr) return "—";
   const parsed = parseISO(dateStr);
   return isValid(parsed) ? format(parsed, "dd MMM yyyy").toUpperCase() : "—";
