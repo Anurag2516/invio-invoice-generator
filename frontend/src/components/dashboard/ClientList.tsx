@@ -1,16 +1,20 @@
 import type { ClientResponse } from "@/types/invoice";
-import { Users } from "lucide-react";
+import { UserPlus, Users } from "lucide-react";
 import type { NavigateFunction } from "react-router-dom";
+import { Button } from "../ui/Button";
 
 type ClientListProps = {
   isClientsLoading: boolean;
   clients: ClientResponse[];
   navigate: NavigateFunction;
+  setMode: React.Dispatch<React.SetStateAction<"Create" | "Edit" | null>>;
 };
+
 const ClientList = ({
   isClientsLoading,
   clients,
   navigate,
+  setMode
 }: ClientListProps) => {
   return (
     <>
@@ -27,15 +31,18 @@ const ClientList = ({
           ))}
         </div>
       ) : clients.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
+        <div className="flex flex-col items-center justify-center py-10 px-4 text-center border border-border rounded-xl shadow-sm">
           <Users size={24} className="text-muted-foreground mb-2" />
-          <p className="text-sm text-muted-foreground">No clients yet</p>
-          <button
-            onClick={() => navigate("/clients")}
-            className="mt-2 text-xs text-teal hover:underline"
+          <p className="text-sm text-muted-foreground mb-2">No clients yet</p>
+          <Button
+            type="button"
+            onClick={() => setMode("Create")}
+            className="py-3 bg-teal-tint dark:bg-teal-tint/60 hover:bg-teal-tint-hover 
+          border border-teal-border text-teal-dark dark:text-teal-text"
           >
-            Add a client
-          </button>
+            <UserPlus size={13} className="hidden xs:block shrink-0" />
+            <span className="text-[12px] xs:text-[14px]">Add client</span>
+          </Button>
         </div>
       ) : (
         <div className="flex flex-col gap-3 divide-y divide-border">
