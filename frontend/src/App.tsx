@@ -1,19 +1,23 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
-import Invoice from "./pages/Invoice";
-import InvoicePreviewModal from "./components/invoice-preview/InvoicePreviewModal";
+import Dashboard from "./pages/Dashboard";
+import Invoice from "./pages/InvoiceEditor";
+import HomeInvoicePreview from "./components/invoice-editor/invoice-preview/HomeInvoicePreview";
 import { useEffect } from "react";
 import { useAppStore } from "./store/appStore";
 import { TooltipProvider } from "./components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAuthStore } from "./store/authStore";
-import ProtectedRoutes from "./components/layout/ProtectedRoutes";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { AuthSkeleton } from "./components/ui/skeleton/AuthSkeleton";
+import Clients from "./pages/Clients";
+import Invoices from "./pages/Invoices";
+import SidebarLayout from "./components/layout/SidebarLayout";
+import { queryClient } from "./lib/queryClient";
+import { Toaster } from "./components/ui/sonner";
 
-const queryClient = new QueryClient();
 
 function AppRoutes() {
   const location = useLocation();
@@ -35,14 +39,18 @@ function AppRoutes() {
   return (
     <TooltipProvider>
       <Routes location={backgroundLocation || location}>
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/invoices/new" element={<Invoice />} />
-          <Route path="/invoices/:id/edit" element={<Invoice />} />
-          <Route
-            path="/invoices/:id/preview"
-            element={<InvoicePreviewModal />}
-          />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<SidebarLayout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/invoices" element={<Invoices />} />
+            <Route path="/invoice/new" element={<Invoice />} />
+            <Route path="/invoices/edit" element={<Invoice />} />
+            <Route
+              path="/invoices/:id/preview"
+              element={<HomeInvoicePreview />}
+            />
+          </Route>
         </Route>
 
         <Route path="/signup" element={<Signup />} />
@@ -53,20 +61,23 @@ function AppRoutes() {
         <Routes>
           <Route
             path="/invoices/:id/preview"
-            element={<InvoicePreviewModal />}
+            element={<HomeInvoicePreview />}
           />
         </Routes>
       )}
+      
+      <Toaster theme={theme} richColors position="top-right" />
     </TooltipProvider>
   );
 }
 
 function App() {
-  const { initializeAuth, isAuthLoading } = useAuthStore();
+  const initializeAuth = useAuthStore((s) => s.initializeAuth);
+  const isAuthLoading = useAuthStore((s) => s.isAuthLoading);
 
   useEffect(() => {
     initializeAuth();
-  }, []);
+  }, [initializeAuth]);
 
   if (isAuthLoading) return <AuthSkeleton />;
   return (
