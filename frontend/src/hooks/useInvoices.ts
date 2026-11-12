@@ -74,6 +74,7 @@ export function useAutoSaveInvoice() {
     onError: (error: any) => {
       console.error(error.response?.data || "Something went wrong");
     },
+    mutationKey: ["autoSaveInvoice"],
   });
 }
 

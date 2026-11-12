@@ -48,7 +48,7 @@ const InvoiceFormState = ({
 };
 
 const InvoiceForm = () => {
-  const { watch } = useFormContext<InvoiceFormValues>();
+  const { watch, reset } = useFormContext<InvoiceFormValues>();
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id")!;
   const { data: invoice } = useInvoice(id);
@@ -64,9 +64,13 @@ const InvoiceForm = () => {
 
     const subscription = watch((values) => {
       pending = values as InvoiceFormValues;
+      const toSave = pending!;
       clearTimeout(timeout);
       timeout = setTimeout(() => {
-        autoSave({ invoice: pending!, id });
+        autoSave(
+          { invoice: toSave, id },
+          { onSuccess: () => reset(toSave, { keepValues: true }) },
+        );
         pending = null;
       }, 2000);
     });

@@ -11,16 +11,54 @@ import { useCurrencySign } from "@/hooks/useCurrencySign";
 import type { InvoiceFormValues } from "@/types/invoice";
 import PdfDownloadedToast from "./PdfDownloadedToast";
 import { Button } from "../ui/Button";
+import { useMutationState } from "@tanstack/react-query";
+
+type SaveStatus = "saved" | "unsaved" | "saving" | "error";
+
+const SaveIndicator = ({ isDirty }: { isDirty: boolean }) => {
+  const lastStatus = useMutationState({
+    filters: { mutationKey: ["autoSaveInvoice"] },
+    select: (m) => m.state.status,
+  }).at(-1);
+
+  const SAVE_STATUS_UI: Record<SaveStatus, { label: string; dot: string }> = {
+    saved: { label: "Auto saved", dot: "bg-emerald-400" },
+    unsaved: { label: "Unsaved changes", dot: "bg-amber-400" },
+    saving: { label: "Saving...", dot: "bg-amber-400 animate-pulse" },
+    error: { label: "Save failed", dot: "bg-red-500" },
+  };
+
+  const status =
+    lastStatus === "pending"
+      ? "saving"
+      : lastStatus === "error"
+        ? "error"
+        : isDirty
+          ? "unsaved"
+          : "saved";
+
+  const { label, dot } = SAVE_STATUS_UI[status];
+  return (
+    <div className="flex items-center gap-1">
+      <span className={`h-1 w-1 rounded-full sm:h-1.5 sm:w-1.5 ${dot}`} />
+      <p className="text-[10px] text-foreground sm:text-[12px]">{label}</p>
+    </div>
+  );
+};
 
 const Topbar = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const { data: invoice } = useInvoice(id!);
   const { toggleSidebar } = useAppStore();
-  const { handleSubmit, control } = useFormContext<InvoiceFormValues>();
+  const {
+    handleSubmit,
+    control,
+    formState: { isDirty },
+  } = useFormContext<InvoiceFormValues>();
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const {mutate: changeInvoiceStatus, isPending} = useUpdateInvoiceStatus()
+  const { mutate: changeInvoiceStatus, isPending } = useUpdateInvoiceStatus();
 
   const currencyCode = useWatch({ control, name: "currency" });
   const currency = useCurrencySign(currencyCode);
@@ -71,11 +109,13 @@ const Topbar = () => {
         setIsGenerating(false);
       }
     },
-    (errors: any) => {console.log("Form errors:", errors);
-      toast.error("Fix the highlighted fields first")},
+    (errors: any) => {
+      console.log("Form errors:", errors);
+      toast.error("Fix the highlighted fields first");
+    },
   );
 
-  if (!invoice) return toast.error("Failed to load invoice");
+  if (!invoice) return null;
 
   return (
     <div className="bg-background border-b border-stone/30">
@@ -109,12 +149,7 @@ const Topbar = () => {
                 </span>
               )}
             </div>
-            <div className="flex items-center gap-1">
-              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-400" />
-              <p className="text-[10px] sm:text-[12px] text-foreground">
-                Auto Saved
-              </p>
-            </div>
+            <SaveIndicator isDirty={isDirty} />
           </div>
         </div>
 
