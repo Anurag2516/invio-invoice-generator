@@ -11,7 +11,6 @@ import { useState, type Dispatch, type SetStateAction } from "react";
 import { useAppStore } from "@/store/appStore";
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 
 type SidebarFooterProps = {
   username: string | undefined;
@@ -25,16 +24,19 @@ const SidebarFooter = ({
   expanded,
 }: SidebarFooterProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+
   const { theme, toggleTheme } = useAppStore();
-  const { logout } = useAuthStore();
+  const logout = useAuthStore((s) => s.logout);
 
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const handleLogoutClick = async () => {
+    if (loggingOut) return;
+    setLoggingOut(true);
     await logout();
     navigate("/login", { replace: true });
-    queryClient.clear();
   };
 
   return (
@@ -42,7 +44,10 @@ const SidebarFooter = ({
       className={`px-3 flex ${expanded ? "flex-row justify-between py-3" : "flex-col py-4 gap-1.5"} items-center border-t border-border`}
     >
       <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
-        <Tooltip open={menuOpen ? false : undefined}>
+        <Tooltip
+          open={menuOpen ? false : tooltipOpen}
+          onOpenChange={setTooltipOpen}
+        >
           <TooltipTrigger asChild>
             <DropdownMenuTrigger asChild>
               <button
@@ -78,14 +83,15 @@ const SidebarFooter = ({
           align="start"
           onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
         >
-          <DropdownMenuItem
-            onClick={() => setProfileModal(true)}
-            variant="default"
-          >
+          <DropdownMenuItem onClick={() => setProfileModal(true)}>
             <UserPen /> Edit Profile
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" onClick={handleLogoutClick}>
+          <DropdownMenuItem
+            variant="destructive"
+            disabled={loggingOut}
+            onClick={handleLogoutClick}
+          >
             <LogOut />
             Log out
           </DropdownMenuItem>
