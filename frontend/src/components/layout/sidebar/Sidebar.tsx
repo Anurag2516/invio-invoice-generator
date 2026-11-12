@@ -23,17 +23,18 @@ import SidebarHeader from "./SidebarHeader";
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState<boolean>(true);
-  const [activeInvoiceId, setActiveInvoiceId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [profileModal, setProfileModal] = useState<boolean>(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const isEditPage = useMatch("/invoices/edit");
+  const isNewInvoicePage = useMatch("/invoice/new");
 
   const username = useAuthStore((state) => state.user?.name);
 
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const openId = searchParams.get("id");
 
   const { data: invoices = [], isLoading: isInvoicesLoading } = useInvoices({
     limit: 7,
@@ -48,7 +49,6 @@ export default function Sidebar() {
 
   const handleInvoiceClick = (invoiceId: string) => {
     setSearchParams({ id: invoiceId });
-    setActiveInvoiceId(invoiceId);
     if (window.innerWidth < 1280) toggleSidebar();
   };
 
@@ -56,14 +56,18 @@ export default function Sidebar() {
     createDraft(undefined, {
       onSuccess: (data) => {
         setSearchParams({ id: data.id });
-        setActiveInvoiceId(null);
         if (window.innerWidth < 1280) toggleSidebar();
       },
     });
   };
 
-  const handleDelete = async () => {
-    deleteInvoice(deleteId!, { onSuccess: () => setDeleteId(null) });
+  const handleDelete = () => {
+    deleteInvoice(deleteId!, {
+      onSuccess: () => {
+        if (openId === deleteId) navigate("/invoices", { replace: true });
+        setDeleteId(null);
+      },
+    });
   };
 
   const onToggleExpand = () => setExpanded((curr) => !curr);
@@ -93,13 +97,12 @@ export default function Sidebar() {
               navigate={navigate}
             />
 
-            {isEditPage && (
+            {(isEditPage || isNewInvoicePage) && (
               <InvoicesList
                 expanded={expanded}
                 onToggleExpand={onToggleExpand}
                 invoices={invoices}
                 isInvoicesLoading={isInvoicesLoading}
-                activeInvoiceId={activeInvoiceId}
                 onInvoiceClick={handleInvoiceClick}
                 setDeleteId={setDeleteId}
               />
@@ -122,8 +125,8 @@ export default function Sidebar() {
           <SheetTitle className="sr-only">Invoice Sidebar</SheetTitle>
           <div className="h-full flex flex-col bg-background gap-4">
             <SidebarHeader
-              expanded={expanded}
-              onToggleExpand={onToggleExpand}
+              expanded={true}
+              onToggleExpand={toggleSidebar}
               isPending={isPending}
               onNewInvoiceClick={handleNewInvoiceClick}
               isEditPage={isEditPage}
@@ -131,18 +134,17 @@ export default function Sidebar() {
 
             <ScrollArea className="overflow-y-auto flex-1">
               <SidebarNav
-                expanded={expanded}
+                expanded={true}
                 location={location}
                 navigate={navigate}
               />
 
-              {isEditPage && (
+              {(isEditPage || isNewInvoicePage) && (
                 <InvoicesList
-                  expanded={expanded}
-                  onToggleExpand={onToggleExpand}
+                  expanded={true}
+                  onToggleExpand={toggleSidebar}
                   invoices={invoices}
                   isInvoicesLoading={isInvoicesLoading}
-                  activeInvoiceId={activeInvoiceId}
                   onInvoiceClick={handleInvoiceClick}
                   setDeleteId={setDeleteId}
                 />
@@ -150,7 +152,7 @@ export default function Sidebar() {
             </ScrollArea>
 
             <SidebarFooter
-              expanded={expanded}
+              expanded={true}
               username={username}
               setProfileModal={setProfileModal}
             />
