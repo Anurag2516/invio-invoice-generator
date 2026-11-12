@@ -1,7 +1,7 @@
 import StatsCards from "@/components/dashboard/StatsCards";
 import InvoiceTableSkeleton from "@/components/ui/skeleton/InvoiceTableSkeleton";
 import { useClients } from "@/hooks/useClients";
-import { useCreateDraftInvoice, useInvoices } from "@/hooks/useInvoices";
+import { useCreateDraftInvoice, useDeleteInvoice, useInvoices } from "@/hooks/useInvoices";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
@@ -9,13 +9,15 @@ import RecentInvoiceTable from "@/components/dashboard/RecentInvoicesTable";
 import { ClientAddModal } from "@/components/ui/shared/ClientFormDialog";
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import OverdueBadge from "@/components/dashboard/OverdueBadge";
 import ClientList from "@/components/dashboard/ClientList";
 import Header from "@/components/dashboard/Header";
+import OverdueBanner from "@/components/dashboard/OverdueBanner";
+import DeleteInvoiceDialog from "@/components/ui/shared/DeleteInvoiceDialog";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [mode, setMode] = useState<"Edit" | "Create" | null>(null);
   const userName = useAuthStore((state) => state.user?.name);
 
@@ -33,6 +35,9 @@ const Dashboard = () => {
     order: "desc",
   });
 
+  const { mutate: deleteInvoice, isPending: isDeletePending } =
+      useDeleteInvoice();
+
   const handleNewInvoiceClick = () => {
     createDraft(undefined, {
       onSuccess: (data) => {
@@ -40,6 +45,10 @@ const Dashboard = () => {
       },
     });
   };
+
+   const handleDelete = () => {
+     deleteInvoice(deleteId!, { onSuccess: () => setDeleteId(null) });
+   };
 
   return (
     <>
@@ -50,9 +59,8 @@ const Dashboard = () => {
           handleNewInvoiceClick={handleNewInvoiceClick}
           isPending={isPending}
         />
-
         <div className="px-4 sm:px-8 bg-background flex-1">
-          <OverdueBadge navigate={navigate} />
+          <OverdueBanner navigate={navigate} />
 
           <StatsCards />
 
@@ -71,7 +79,12 @@ const Dashboard = () => {
               </div>
               {isInvoicesLoading && <InvoiceTableSkeleton />}
               {!isInvoicesLoading && !isError && (
-                <RecentInvoiceTable invoices={invoices} />
+                <RecentInvoiceTable
+                  invoices={invoices}
+                  handleNewInvoiceClick={handleNewInvoiceClick}
+                  isPending={isPending}
+                  setDeleteId={setDeleteId}
+                />
               )}
             </div>
 
@@ -92,12 +105,20 @@ const Dashboard = () => {
                 isClientsLoading={isClientsLoading}
                 clients={clients}
                 navigate={navigate}
+                setMode={setMode}
               />
             </div>
           </div>
         </div>
+        {mode === "Create" && <ClientAddModal setMode={setMode} />}
+
+        <DeleteInvoiceDialog
+          deleteId={deleteId}
+          setDeleteId={setDeleteId}
+          isDeletePending={isDeletePending}
+          handleDelete={handleDelete}
+        />
       </ScrollArea>
-      {mode === "Create" && <ClientAddModal setMode={setMode} />}
     </>
   );
 };
