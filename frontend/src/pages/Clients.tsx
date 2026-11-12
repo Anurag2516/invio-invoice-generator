@@ -1,5 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { Search, Plus, MoreHorizontal } from "lucide-react";
+import { Search, Plus, MoreHorizontal, Users, Menu } from "lucide-react";
 import {
   useClients,
   useDeleteClient,
@@ -51,6 +51,7 @@ import { formatDate } from "@/utils/formatDate";
 import { useCreateDraftInvoice } from "@/hooks/useInvoices";
 import { useNavigate } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useAppStore } from "@/store/appStore";
 
 interface ClientModalProps {
   showClientModal: boolean;
@@ -216,10 +217,9 @@ const ClientTable = ({
 
   if (clients.length === 0) {
     return (
-      <div className="overflow-hidden border border-border rounded-xl bg-background">
-        <p className="py-10 text-center text-sm text-muted-foreground">
-          No clients in this view.
-        </p>
+      <div className="flex flex-col items-center justify-center py-10 px-4 text-center">
+        <Users size={24} className="text-muted-foreground mb-2" />
+        <p className="text-[16px] text-muted-foreground mb-2">No clients yet</p>
       </div>
     );
   }
@@ -347,6 +347,8 @@ const Clients = () => {
   });
   const [search, setSearch] = useState<string>("");
 
+  const { toggleSidebar } = useAppStore();
+
   const debouncedSearch = useDebounce(search, 300);
   const { data: clients = [], isLoading: isClientsLoading } = useClients({
     search: debouncedSearch,
@@ -408,13 +410,22 @@ const Clients = () => {
       <ScrollArea className="bg-background flex flex-col flex-1 min-w-0 overflow-y-auto">
         <div className="px-4 sm:px-10 pt-6 pb-10">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div>
-              <h2 className="text-2xl text-foreground font-medium">
-                My Clients
-              </h2>
-              <p className="text-sm text-foreground/50 mt-1">
-                {clients.length} {clients.length === 1 ? "client" : "clients"}
-              </p>
+            <div className="flex items-center justify-between gap-2">
+              <div>
+                <h2 className="text-2xl text-foreground font-medium">
+                  My Clients
+                </h2>
+                <p className="text-sm text-foreground/50 mt-1">
+                  {clients.length} {clients.length === 1 ? "client" : "clients"}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={toggleSidebar}
+                className="block xl:hidden text-foreground"
+              >
+                <Menu size={18} />
+              </button>
             </div>
 
             <div className="flex gap-2 items-center">
