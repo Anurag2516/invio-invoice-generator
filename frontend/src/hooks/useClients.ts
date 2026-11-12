@@ -7,22 +7,19 @@ import {
 } from "@/api/client.api";
 import { clientKey } from "@/lib/queryKeys";
 import { formDataToClientApiPayload } from "@/mapper/client.mapper";
-import type {
-  ClientFormValues,
-  RequestParams,
-} from "@/types/invoice";
+import type { ClientFormValues, RequestParams } from "@/types/invoice";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export function useClients(
   params: RequestParams = {},
-  fetchAll: boolean = true,
+  options: { enabled?: boolean } = {},
 ) {
   return useQuery({
     queryKey: clientKey.list(params),
     queryFn: () => getClients(params),
     staleTime: 1000 * 60 * 5,
-    enabled: fetchAll || !!params,
+    enabled: options.enabled ?? true,
   });
 }
 
@@ -31,6 +28,7 @@ export function useClient(id: string) {
     queryKey: clientKey.single(id),
     queryFn: () => getClient(id),
     staleTime: 1000 * 60 * 5,
+    enabled: Boolean(id),
   });
 }
 
@@ -59,11 +57,9 @@ export function useUpdateClient() {
       id: string;
       clientData: ClientFormValues;
     }) => updateClient(id, clientData),
-    onSuccess: (_, variables) => {
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: clientKey.all });
-      queryClient.invalidateQueries({
-        queryKey: clientKey.single(variables.id),
-      });
+      queryClient.invalidateQueries({ queryKey: clientKey.single(id) });
       toast.success("Client details updated successfully");
     },
     onError: () => {

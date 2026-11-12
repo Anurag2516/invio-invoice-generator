@@ -7,122 +7,108 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { useClients } from "@/hooks/useClients";
-import { useDebounce } from "@/hooks/useDebounce";
-import type {
-  ClientFormValues,
-  ClientResponse,
-  InvoiceFormValues,
-} from "@/types/invoice";
-import { useState } from "react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown, Plus, User, X } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { useFormContext, useWatch, type SetValueConfig } from "react-hook-form";
 import {
   ClientAddModal,
   ClientEditModal,
 } from "@/components/ui/shared/ClientFormDialog";
+import { useClients } from "@/hooks/useClients";
+import { useDebounce } from "@/hooks/useDebounce";
+import { cn } from "@/lib/utils";
+import type {
+  ClientFormValues,
+  ClientResponse,
+  InvoiceFormValues,
+} from "@/types/invoice";
+import { Check, ChevronsUpDown, Plus, User, X } from "lucide-react";
+import { useState } from "react";
+import { useFormContext, useWatch, type SetValueConfig } from "react-hook-form";
 
-type ClientData = {
-  id: string | null;
-  name: string;
-  email: string;
-  companyName: string;
-  address: string;
-  phone: string;
-  website: string;
+type ClientData = ClientFormValues & { id: string | null };
+type Mode = "Edit" | "Create" | null;
+
+const EMPTY_CLIENT_FORM: ClientFormValues = {
+  name: "",
+  email: "",
+  companyName: "",
+  address: "",
+  phone: "",
+  website: "",
 };
+
+interface ClientCardProps {
+  clientData: ClientData;
+  onEdit: () => void;
+  onClear: () => void;
+}
 
 interface ClientSearchProps {
   clientData: ClientData;
   isClientSelected: boolean;
   onCreate: () => void;
-  handleOnClear: () => void;
-  handleOnSelect: (client: ClientResponse) => void;
-  handleEditClick: () => void;
+  onClear: () => void;
+  onSelect: (client: ClientResponse) => void;
+  onEdit: () => void;
   error?: string;
 }
 
-interface ClientCardProps {
-  clientData: ClientData;
-  handleEditClick: () => void;
-  handleOnClear: () => void;
-  error?: string;
-}
+const ClientCard = ({ clientData, onEdit, onClear }: ClientCardProps) => {
+  const { name, email, companyName, address, phone, website } = clientData;
+  const hasDetails = companyName || address || phone || website;
 
-const ClientCard = ({
-  clientData,
-  handleOnClear,
-  handleEditClick,
-  error,
-}: ClientCardProps) => {
   return (
-    <>
-      <div className="rounded-md border border-border bg-foreground/3 mt-4 p-3 flex flex-col gap-2">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="size-7 rounded-full bg-teal/15 flex items-center justify-center shrink-0">
-              <User className="size-3.5 text-teal" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-[15px] font-semibold text-foreground truncate">
-                {clientData.name}
-              </p>
-              {clientData.email && (
-                <p className="text-sm text-foreground/50 truncate">
-                  {clientData.email}
-                </p>
-              )}
-            </div>
+    <div className="mt-4 flex flex-col gap-2 rounded-md border border-border bg-foreground/3 p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-teal/15">
+            <User className="size-3.5 text-teal" />
           </div>
-          <div className="flex justify-center items-center gap-1 shrink-0">
-            <Button
-              onClick={handleEditClick}
-              type="button"
-              variant="ghost"
-              className="px-2 py-1 text-sm"
-            >
-              Edit
-            </Button>
-            <Button
-              type="button"
-              onClick={handleOnClear}
-              variant="ghost"
-              className="px-2 py-1"
-            >
-              <X size={10} />
-            </Button>
+          <div className="min-w-0">
+            <p className="truncate text-[15px] font-semibold text-foreground">
+              {name}
+            </p>
+            {email && (
+              <p className="truncate text-sm text-foreground/50">{email}</p>
+            )}
           </div>
         </div>
 
-        {(clientData.companyName ||
-          clientData.address ||
-          clientData.phone ||
-          clientData.website) && (
-          <div className="pl-9 flex flex-col space-y-[0.5px] text-sm">
-            {clientData.companyName && (
-              <p className=" text-foreground/60">{clientData.companyName}</p>
-            )}
-            {clientData.address && (
-              <p className="text-foreground/60">{clientData.address}</p>
-            )}
-            {clientData.phone && (
-              <p className=" text-foreground/60 pt-1.5">{clientData.phone}</p>
-            )}
-            {clientData.website && (
-              <p className=" text-foreground/60">{clientData.website}</p>
-            )}
-          </div>
-        )}
+        <div className="flex shrink-0 items-center gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            className="px-2 py-1 text-sm"
+            onClick={onEdit}
+          >
+            Edit
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            className="px-2 py-1"
+            aria-label="Remove client"
+            onClick={onClear}
+          >
+            <X size={10} />
+          </Button>
+        </div>
       </div>
-    </>
+
+      {hasDetails && (
+        <div className="flex flex-col space-y-[0.5px] pl-9 text-sm text-foreground/60">
+          {companyName && <p>{companyName}</p>}
+          {address && <p>{address}</p>}
+          {phone && <p className="pt-1.5">{phone}</p>}
+          {website && <p>{website}</p>}
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -130,28 +116,59 @@ const ClientSearch = ({
   clientData,
   isClientSelected,
   onCreate,
-  handleOnClear,
-  handleOnSelect,
-  handleEditClick,
+  onClear,
+  onSelect,
+  onEdit,
   error,
 }: ClientSearchProps) => {
-  const [search, setSearch] = useState<string>("");
-  const debouncedSearch = useDebounce(search, 300);
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const debounced = useDebounce(search, 300);
+
+  const term = debounced.trim();
+  const hasSearched = term.length > 0;
+
   const {
     data: clients = [],
-    isLoading,
+    isFetching,
     isError,
-  } = useClients({ search: debouncedSearch }, false);
+  } = useClients({ search: term }, {enabled: hasSearched});
 
-  const isSearching = search !== debouncedSearch || isLoading;
-  const hasSearched = debouncedSearch.length > 0;
+  const isSearching = search.trim() !== term || (hasSearched && isFetching);
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next);
+    if (!next) setSearch("");
+  };
+
+  const handleSelect = (client: ClientResponse) => {
+    onSelect(client);
+    handleOpenChange(false);
+  };
+
+  const handleCreate = () => {
+    handleOpenChange(false);
+    onCreate();
+  };
+
+  const renderStatus = () => {
+    if (!hasSearched && !isSearching) return "Start typing to search clients.";
+    if (isSearching) return "Searching...";
+    if (isError) return "Something went wrong. Try again.";
+    if (clients.length === 0) return `No clients found for "${term}".`;
+    return null;
+  };
+
+  const status = renderStatus();
 
   return (
     <div className="w-full max-w-md">
       <SectionHeader label="Bill To" subLabel="(Client Details)" />
 
-      {!isClientSelected && (
-        <Popover>
+      {isClientSelected ? (
+        <ClientCard clientData={clientData} onEdit={onEdit} onClear={onClear} />
+      ) : (
+        <Popover open={open} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <button
               type="button"
@@ -161,13 +178,7 @@ const ClientSearch = ({
                 error && "border-destructive",
               )}
             >
-              {clientData.name ? (
-                <span className="font-medium">{clientData.name}</span>
-              ) : (
-                <span className="text-muted-foreground">
-                  Select a client...
-                </span>
-              )}
+              <span className="text-muted-foreground">Select a client...</span>
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </button>
           </PopoverTrigger>
@@ -175,41 +186,21 @@ const ClientSearch = ({
           <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
             <Command shouldFilter={false}>
               <CommandInput
+                value={search}
                 onValueChange={setSearch}
                 placeholder="Search clients..."
               />
 
               <CommandList>
-                {isSearching && hasSearched && (
-                  <CommandEmpty>Searching...</CommandEmpty>
-                )}
+                {status && <CommandEmpty>{status}</CommandEmpty>}
 
-                {!isSearching && isError && (
-                  <CommandEmpty>Something went wrong. Try again.</CommandEmpty>
-                )}
-
-                {!isSearching &&
-                  !isError &&
-                  hasSearched &&
-                  clients.length === 0 && (
-                    <CommandEmpty>
-                      No clients found for "{debouncedSearch}".
-                    </CommandEmpty>
-                  )}
-
-                {!isSearching && !isError && !hasSearched && (
-                  <CommandEmpty>Start typing to search clients.</CommandEmpty>
-                )}
-
-                {!isSearching && !isError && clients.length > 0 && (
+                {!status && (
                   <CommandGroup>
                     {clients.map((client: ClientResponse) => (
                       <CommandItem
                         key={client.id}
                         value={`${client.name} ${client.email}`}
-                        onSelect={() => {
-                          handleOnSelect(client);
-                        }}
+                        onSelect={() => handleSelect(client)}
                       >
                         <div className="flex flex-col">
                           <span className="font-medium">{client.name}</span>
@@ -233,7 +224,7 @@ const ClientSearch = ({
 
               <CommandSeparator />
               <CommandGroup>
-                <CommandItem onSelect={onCreate}>
+                <CommandItem onSelect={handleCreate}>
                   <Plus /> Create New
                 </CommandItem>
               </CommandGroup>
@@ -246,15 +237,6 @@ const ClientSearch = ({
         <p role="alert" className="mt-1.5 text-sm text-destructive">
           {error}
         </p>
-      )}
-
-      {isClientSelected && (
-        <ClientCard
-          clientData={clientData}
-          handleEditClick={handleEditClick}
-          handleOnClear={handleOnClear}
-          error={error}
-        />
       )}
     </div>
   );
@@ -280,33 +262,23 @@ const ClientSection = () => {
     ],
   });
 
-  const [form, setForm] = useState<ClientFormValues>({
-    name: "",
-    email: "",
-    companyName: "",
-    address: "",
-    phone: "",
-    website: "",
-  });
+  const [form, setForm] = useState<ClientFormValues>(EMPTY_CLIENT_FORM);
+  const [mode, setMode] = useState<Mode>(null);
 
-  const [mode, setMode] = useState<"Edit" | "Create" | null>(null);
-
-  const isClientSelected = Boolean(name?.trim()) || Boolean(id);
-
-  const formReset = () => {
-    setForm({
-      name: "",
-      email: "",
-      companyName: "",
-      address: "",
-      phone: "",
-      website: "",
-    });
+  const clientData: ClientData = {
+    id: id ?? null,
+    name: name ?? "",
+    email: email ?? "",
+    companyName: companyName ?? "",
+    address: address ?? "",
+    phone: phone ?? "",
+    website: website ?? "",
   };
 
-  const handleOnChange = (field: keyof ClientFormValues, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
+  const isClientSelected = Boolean(clientData.name.trim() || clientData.id);
+
+  const clientError =
+    errors.clientId?.message ?? errors.snapshotClientName?.message;
 
   const setSnapshotValues = (
     client: Partial<ClientFormValues>,
@@ -328,59 +300,44 @@ const ClientSection = () => {
     setSnapshotValues(client, options);
   };
 
-  const onCreate = () => {
-    setMode("Create");
-  };
+  const handleSelect = (client: ClientResponse) => setClientValues(client);
 
-  const handleOnSelect = (client: ClientResponse) => {
-    setClientValues(client);
-  };
-
-  const handleOnClear = () => {
+  const handleClear = () => {
     setClientValues({});
-    formReset();
+    setForm(EMPTY_CLIENT_FORM);
   };
 
-  const handleEdit = () => {
+  const handleCreateSuccess = (client: ClientResponse) =>
+    setClientValues(client, { shouldDirty: true, shouldValidate: true });
+
+  const handleEditOpen = () => {
+    const { id: _id, ...rest } = clientData;
+    setForm(rest);
+    setMode("Edit");
+  };
+
+  const handleEditSave = () => {
     setSnapshotValues(form, { shouldDirty: true, shouldValidate: true });
     setMode(null);
   };
 
-  const handleCreate = (client: ClientResponse) => {
-    setClientValues(client, { shouldDirty: true, shouldValidate: true });
-  };
-
-  const handleEditClick = () => {
-    setForm({ name, email, companyName, address, phone, website });
-    setMode("Edit");
-  };
-
   const handleEditCancel = () => {
-    formReset();
+    setForm(EMPTY_CLIENT_FORM);
     setMode(null);
   };
 
-  const clientError =
-    errors.clientId?.message ?? errors.snapshotClientName?.message;
+  const handleFormChange = (field: keyof ClientFormValues, value: string) =>
+    setForm((prev) => ({ ...prev, [field]: value }));
 
-  const clientData = {
-    id,
-    name,
-    email,
-    companyName,
-    address,
-    phone,
-    website,
-  };
   return (
     <>
       <ClientSearch
         clientData={clientData}
         isClientSelected={isClientSelected}
-        onCreate={onCreate}
-        handleOnClear={handleOnClear}
-        handleOnSelect={handleOnSelect}
-        handleEditClick={handleEditClick}
+        onCreate={() => setMode("Create")}
+        onClear={handleClear}
+        onSelect={handleSelect}
+        onEdit={handleEditOpen}
         error={isClientSelected ? undefined : clientError}
       />
 
@@ -389,16 +346,13 @@ const ClientSection = () => {
           setMode={setMode}
           formData={form}
           onCancel={handleEditCancel}
-          handleOnChange={handleOnChange}
-          handleEdit={handleEdit}
+          handleOnChange={handleFormChange}
+          handleEdit={handleEditSave}
         />
       )}
 
       {mode === "Create" && (
-        <ClientAddModal
-          setMode={setMode}
-          onSuccess={(client) => handleCreate(client)}
-        />
+        <ClientAddModal setMode={setMode} onSuccess={handleCreateSuccess} />
       )}
     </>
   );
