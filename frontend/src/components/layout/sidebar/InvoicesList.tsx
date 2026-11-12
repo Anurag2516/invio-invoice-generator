@@ -68,7 +68,7 @@ const InvoicesList = ({
         <InvoiceListSkeleton />
       ) : !expanded ? (
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <button
               type="button"
               onClick={onToggleExpand}
@@ -90,7 +90,7 @@ const InvoicesList = ({
               <div
                 key={invoice.id}
                 onClick={() => onInvoiceClick(invoice.id)}
-                className={`py-3 pl-3 pr-1.5 ml-0.5 mr-1.5 flex flex-col cursor-pointer border-l-5 transition-[background-color,border-color] duration-150 ease-in-out ${
+                className={`min-w-0 py-3 pl-2 ml-0.5 mr-1.5 flex flex-col cursor-pointer border-l-5 transition-[background-color,border-color] duration-150 ease-in-out ${
                   id === invoice.id
                     ? "border-teal dark:bg-teal-tint/50 bg-teal-tint"
                     : "border-transparent bg-background hover:bg-teal-tint dark:hover:bg-teal-tint/40"
@@ -125,10 +125,10 @@ const InvoicesList = ({
                       {meta && ` · ${meta}`}
                     </span>
                   </span>
-                    <span className="shrink-0 font-medium tabular-nums">
-                      {getCurrencySign(invoice.currency)}
-                      {invoice.total}
-                    </span>
+                  <span className="shrink-0 font-medium tabular-nums pr-1">
+                    {getCurrencySign(invoice.currency)}
+                    {invoice.total}
+                  </span>
                 </div>
               </div>
             );

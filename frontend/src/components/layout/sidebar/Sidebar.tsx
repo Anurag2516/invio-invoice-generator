@@ -90,7 +90,7 @@ export default function Sidebar() {
             isEditPage={isEditPage}
           />
 
-          <ScrollArea className="overflow-y-auto flex-1">
+          <ScrollArea className="overflow-y-auto flex-1 [&>[data-radix-scroll-area-viewport]>div]:block!">
             <SidebarNav
               expanded={expanded}
               location={location}
@@ -132,7 +132,7 @@ export default function Sidebar() {
               isEditPage={isEditPage}
             />
 
-            <ScrollArea className="overflow-y-auto flex-1">
+            <ScrollArea className="overflow-y-auto flex-1 [&>[data-radix-scroll-area-viewport]>div]:block!">
               <SidebarNav
                 expanded={true}
                 location={location}
