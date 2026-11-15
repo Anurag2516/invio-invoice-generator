@@ -32,7 +32,7 @@ const UserBlock = ({
       {party.companyName && <p>{party.companyName}</p>}
       {party.address && <p>{party.address}</p>}
       {party.phone && <span>{party.phone}</span>}
-      {party.website && <p>{party.website}</p>}
+      {party.website && <p className="truncate">{party.website}</p>}
     </div>
   </div>
 );
