@@ -14,6 +14,6 @@ router.get("/me", isAuthenticated, getMe)
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.delete("/deleteAccount/:id", isAuthenticated, deleteAccount);
+router.post("/deleteAccount", isAuthenticated, deleteAccount);
 
 export default router;

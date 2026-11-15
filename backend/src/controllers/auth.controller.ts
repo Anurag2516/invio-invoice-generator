@@ -154,20 +154,23 @@ const deleteAccount = async (
 ): Promise<void> => {
   try {
     const userId = req.user.userId;
+    const { password } = req.body;
 
-    await prisma.user.delete({
-      where: {
-        id: userId,
-      },
-    });
+    if (typeof password !== "string" || !password) {
+      res.status(400).json({ message: "Password is required" });
+      return;
+    }
 
-    res.clearCookie("jwt", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
-    });
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      res.status(403).json({ message: "Incorrect password" });
+      return;
+    }
 
+    await prisma.user.delete({ where: { id: userId } });
+
+    res.clearCookie("jwt", jwtCookieOptions);
     res.status(204).send();
   } catch (error) {
     next(error);
