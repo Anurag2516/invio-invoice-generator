@@ -3,6 +3,7 @@ import { create } from "zustand";
 import api from "@/lib/axios";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
+import axios from "axios";
 
 export const useAuthStore = create<AuthStore>()((set) => ({
   user: null,
@@ -76,6 +77,32 @@ export const useAuthStore = create<AuthStore>()((set) => ({
         isSubmitting: false,
         error: null,
       });
+    }
+  },
+
+  deleteAccount: async (password: string): Promise<boolean> => {
+    set({ isSubmitting: true, error: null });
+    try {
+      await api.post("/api/auth/deleteAccount", { password });
+
+      queryClient.clear();
+      set({
+        user: null,
+        isAuthenticated: false,
+        isSubmitting: false,
+        error: null,
+      });
+      return true;
+    } catch (error: unknown) {
+      const message =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
+          : "Failed to delete account. Please try again.";
+
+      console.error(error);
+      toast.error(message);
+      set({ isSubmitting: false, error: message });
+      return false;
     }
   },
 }));

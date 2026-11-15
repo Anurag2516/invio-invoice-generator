@@ -31,4 +31,5 @@ export interface AuthStore {
   signup: (authData: Signup) => Promise<void>;
   login: (authData: Login) => Promise<void>;
   logout: () => Promise<void>;
+  deleteAccount: (data: string) => Promise<boolean>;
 }
