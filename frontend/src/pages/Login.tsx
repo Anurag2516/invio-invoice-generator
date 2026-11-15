@@ -44,7 +44,7 @@ const Login = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <nav className="w-full bg-background border-b border-stone/30 px-20 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="bg-primary text-primary-foreground rounded-lg w-8 h-8 flex items-center justify-center font-bold text-sm">
+          <div className="bg-teal text-white rounded-lg w-8 h-8 flex items-center justify-center font-bold text-sm">
             I
           </div>
           <span className="font-medium text-foreground">Invio</span>
@@ -106,12 +106,6 @@ const Login = () => {
                 <label className="text-[13px] font-semibold text-muted-foreground tracking-widest uppercase">
                   Password
                 </label>
-                <Link
-                  to="/forgot-password"
-                  className="text-xs font-semibold text-teal hover:text-teal-dark tracking-widest uppercase transition-colors"
-                >
-                  Forgot?
-                </Link>
               </div>
               <PasswordInput
                 {...register("password")}
@@ -125,7 +119,7 @@ const Login = () => {
               disabled={isSubmitting}
               variant="default"
               size="lg"
-              className="w-full h-10"
+              className="w-full h-10 bg-teal hover:bg-teal-dark text-white"
             >
               {isSubmitting ? (
                 <>
