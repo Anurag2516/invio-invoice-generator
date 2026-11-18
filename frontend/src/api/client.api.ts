@@ -22,7 +22,7 @@ export const getClient = async (id: string): Promise<ClientResponse> => {
 export const createClient = async (
   clientData: ClientApiPayload,
 ): Promise<ClientResponse> => {
-  const res = await api.post("/api/client/createClient/", clientData);
+  const res = await api.post("/api/client/createClient", clientData);
   return res.data;
 };
 
