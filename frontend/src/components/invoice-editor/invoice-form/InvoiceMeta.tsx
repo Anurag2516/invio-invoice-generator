@@ -1,6 +1,5 @@
 import type { InvoiceFormValues } from "@/types/invoice";
 import Input from "@/components/ui/Input";
-import { statusOptions } from "@/constants/statusOptions";
 import { currencyOptions } from "@/constants/currencies";
 import SectionHeader from "@/components/ui/SectionHeader";
 import {

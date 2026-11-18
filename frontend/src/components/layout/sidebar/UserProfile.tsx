@@ -6,7 +6,7 @@ import { useUser } from "@/hooks/useUser";
 import { useProfileForm } from "@/hooks/useProfileForm";
 import { FormProvider } from "react-hook-form";
 import UserProfileSkeleton from "@/components/ui/skeleton/UserProfileSkeleton";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import {
   Dialog,
   DialogContent,
@@ -80,19 +80,10 @@ const ProfileFormLoader = ({
 
 const ProfileFormContent = ({ profile, setProfileModal }: ProfileFormProps) => {
   const { form, onSubmit, isPending } = useProfileForm(profile);
-  const [showDiscardDialog, setShowDiscardDialog] = useState<boolean>(false);
   const {
     register,
     formState: { isDirty, errors },
   } = form;
-
-  const handleClose = () => {
-    if (isDirty) {
-      setShowDiscardDialog(true);
-    } else {
-      setProfileModal(false);
-    }
-  };
 
   return (
     <>

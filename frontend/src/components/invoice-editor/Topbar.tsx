@@ -8,7 +8,7 @@ import { useSearchParams } from "react-router-dom";
 import { STATUS_STYLES } from "@/constants/statusStyles";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { useCurrencySign } from "@/hooks/useCurrencySign";
-import type { InvoiceFormValues } from "@/types/invoice";
+import type { InvoiceFormValues, InvoiceResponse } from "@/types/invoice";
 import PdfDownloadedToast from "./PdfDownloadedToast";
 import { Button } from "../ui/Button";
 import { useMutationState } from "@tanstack/react-query";
@@ -73,9 +73,22 @@ const Topbar = () => {
           import("./invoice-pdf/InvoicePDF"),
         ]);
 
+        const pdfInvoice: InvoiceResponse = {
+          ...invoice,
+          ...values,
+          taxRate: Number(values.taxRate),
+          discountRate: Number(values.discountRate),
+          lineItems: values.lineItems.map((item) => ({
+            ...item,
+            quantity: Number(item.quantity),
+            rate: Number(item.rate),
+            amount: Number(item.amount),
+          })),
+        };
+
         const blob = await pdf(
           <InvoicePDF
-            invoice={{ ...invoice, ...values }}
+            invoice={pdfInvoice}
             currency={currency}
           />,
         ).toBlob();

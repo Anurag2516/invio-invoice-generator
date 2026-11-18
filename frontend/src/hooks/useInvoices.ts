@@ -15,6 +15,7 @@ import {
   mapInvoice,
 } from "@/mapper/invoice.mapper";
 import type {
+  InvoiceFormOutput,
   InvoiceFormValues,
   RequestParams,
   UpdateStatus,
@@ -106,7 +107,7 @@ export function useUpdateInvoiceStatus() {
 export function useUpdateInvoice() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, invoice }: { id: string; invoice: InvoiceFormValues }) =>
+    mutationFn: ({ id, invoice }: { id: string; invoice: InvoiceFormOutput }) =>
       updateInvoice(id, formDataToApiPayload(invoice)),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: invoiceKey.all });

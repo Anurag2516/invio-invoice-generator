@@ -239,7 +239,7 @@ export const ClientAddModal = ({ setMode, onSuccess }: ClientAddModalProps) => {
           </div>
         </div>
         <DialogFooter>
-          <DialogClose>
+          <DialogClose asChild>
             <Button type="button" variant="outline">
               Cancel
             </Button>

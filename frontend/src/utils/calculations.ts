@@ -1,4 +1,4 @@
-import type { LineItemFormData } from "../types/invoice";
+import type { LineItemResponse } from "../types/invoice";
 
 export const calculateLineAmount = (
   quantity: number,
@@ -8,7 +8,7 @@ export const calculateLineAmount = (
 };
 
 export const calculateInvoiceTotal = (
-  lineItems: LineItemFormData[],
+  lineItems: LineItemResponse[],
   taxRate: number,
   discountRate: number,
 ) => {

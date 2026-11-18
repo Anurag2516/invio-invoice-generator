@@ -40,7 +40,8 @@ export type DashboardStats = {
   overdue: number;
 };
 
-export type InvoiceFormValues = z.infer<typeof invoiceSchema>;
+export type InvoiceFormValues = z.input<typeof invoiceSchema>;
+export type InvoiceFormOutput = z.output<typeof invoiceSchema>;
 
 export interface InvoiceApiPayload {
   invoiceNumber: string;
@@ -70,7 +71,7 @@ export interface InvoiceApiPayload {
   snapshotClientAddress?: string;
   snapshotClientPhone?: string;
   snapshotClientWebsite?: string;
-  lineItems: Omit<LineItemFormData, "id">[];
+  lineItems: Omit<LineItemResponse, "id">[];
 }
 
 export type UpdateStatus = "Sent" | "Paid" | "Cancelled";
@@ -82,7 +83,7 @@ type Nullable<T> = T extends object
 export interface AutoSaveApiPayload extends Nullable<
   Omit<InvoiceApiPayload, "lineItems">
 > {
-  lineItems: Nullable<Omit<LineItemFormData, "id">>[] | undefined;
+  lineItems: Nullable<Omit<LineItemResponse, "id">>[] | undefined;
 }
 
 export interface InvoiceResponse {
@@ -135,15 +136,13 @@ export interface DraftInvoiceResponse {
   accountNumber?: string;
 }
 
-export interface LineItemFormData {
+export interface LineItemResponse {
   id: string;
   description: string;
   quantity: number;
   rate: number;
   amount: number;
 }
-
-export type LineItemResponse = LineItemFormData;
 
 export type UserProfileFormValues = z.infer<typeof userProfileSchema>;
 

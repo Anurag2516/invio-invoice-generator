@@ -1,6 +1,7 @@
 import type {
   AutoSaveApiPayload,
   InvoiceApiPayload,
+  InvoiceFormOutput,
   InvoiceFormValues,
   InvoiceResponse,
   LineItemResponse,
@@ -54,7 +55,7 @@ export const formDataToAutoSavePayload = (
 });
 
 export const formDataToApiPayload = (
-  form: InvoiceFormValues,
+  form: InvoiceFormOutput,
 ): InvoiceApiPayload => ({
   invoiceNumber: form.invoiceNumber.trim(),
   clientId: form.clientId,

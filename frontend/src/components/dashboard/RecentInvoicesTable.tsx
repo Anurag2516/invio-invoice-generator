@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/tooltip";
 import { STATUS_STYLES } from "@/constants/statusStyles";
 import type { InvoiceResponse } from "@/types/invoice";
-import { CircleAlert, EllipsisIcon, FileText, Plus } from "lucide-react";
+import { CircleAlert, FileText, Plus } from "lucide-react";
 import { Button } from "../ui/Button";
 import DropdownActions from "../ui/shared/DropdownActions";
 import type { Dispatch, SetStateAction } from "react";

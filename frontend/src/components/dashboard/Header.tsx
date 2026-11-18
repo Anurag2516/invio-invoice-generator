@@ -1,6 +1,7 @@
 import { Menu, Plus, UserPlus } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAppStore } from "@/store/appStore";
+import { Spinner } from "../ui/spinner";
 
 type HeaderProps = {
   userName: string | undefined;
@@ -53,12 +54,20 @@ function Header({
           type="button"
           onClick={handleNewInvoiceClick}
           disabled={isPending}
-          className="bg-teal hover:bg-teal-dark text-white py-4"
+          className="bg-teal hover:bg-teal-dark text-white py-4 inline-flex items-center"
         >
-          <Plus size={14} className="hidden xs:block shrink-0" />
-          <span className="text-[13px] xs:text-[15px] font-medium">
-            New invoice
-          </span>
+          {isPending ? (
+            <>
+              <Spinner /> Loading...
+            </>
+          ) : (
+            <>
+              <Plus size={14} className="hidden xs:block shrink-0" />
+              <span className="text-[13px] xs:text-[15px] font-medium">
+                New invoice
+              </span>
+            </>
+          )}
         </Button>
       </div>
     </header>

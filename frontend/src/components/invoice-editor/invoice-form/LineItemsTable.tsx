@@ -4,7 +4,7 @@ import {
   useFormContext,
   useWatch,
 } from "react-hook-form";
-import type { InvoiceFormValues, LineItemFormData } from "@/types/invoice";
+import type { InvoiceFormValues, LineItemResponse } from "@/types/invoice";
 import Input from "@/components/ui/Input";
 import { Plus, X } from "lucide-react";
 import { useCurrencySign } from "@/hooks/useCurrencySign";
@@ -34,7 +34,7 @@ const LineItemsTable = () => {
   const currencySign = useCurrencySign(currency);
 
   useEffect(() => {
-    lineItems.forEach((item: LineItemFormData, index: number) => {
+    lineItems.forEach((item: LineItemResponse, index: number) => {
       const computed = calculateLineAmount(
         item.quantity ?? 0,
         item.rate ?? 0,
@@ -48,7 +48,7 @@ const LineItemsTable = () => {
     });
   }, [lineItems, setValue]);
 
-  const defaultLineItem = (): LineItemFormData => ({
+  const defaultLineItem = (): LineItemResponse => ({
     id: `temp_${crypto.randomUUID()}`,
     description: "",
     quantity: 1,
