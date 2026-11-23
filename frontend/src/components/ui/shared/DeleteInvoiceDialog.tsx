@@ -56,7 +56,7 @@ const DeleteInvoiceDialog = ({
                 <Spinner /> Deleting...
               </>
             ) : (
-              "Delete client"
+              "Delete invoice"
             )}
           </AlertDialogAction>
         </AlertDialogFooter>
