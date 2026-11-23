@@ -1,20 +1,17 @@
 import type { ClientResponse } from "@/types/invoice";
 import { UserPlus, Users } from "lucide-react";
-import type { NavigateFunction } from "react-router-dom";
 import { Button } from "../ui/Button";
 
 type ClientListProps = {
   isClientsLoading: boolean;
   clients: ClientResponse[];
-  navigate: NavigateFunction;
   setMode: React.Dispatch<React.SetStateAction<"Create" | "Edit" | null>>;
 };
 
 const ClientList = ({
   isClientsLoading,
   clients,
-  navigate,
-  setMode
+  setMode,
 }: ClientListProps) => {
   return (
     <>
@@ -51,7 +48,6 @@ const ClientList = ({
               <div
                 key={client.id}
                 className="flex flex-col gap-5 px-6 py-3 hover:bg-muted/50 cursor-pointer transition-colors border border-border rounded-xl shadow-sm"
-                onClick={() => navigate(`/clients/${client.id}`)}
               >
                 <div className="flex items-center gap-3">
                   <div className="size-9 rounded-full bg-teal flex items-center justify-center shrink-0">
