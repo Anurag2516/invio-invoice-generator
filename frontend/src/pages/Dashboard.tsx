@@ -104,7 +104,6 @@ const Dashboard = () => {
               <ClientList
                 isClientsLoading={isClientsLoading}
                 clients={clients}
-                navigate={navigate}
                 setMode={setMode}
               />
             </div>
