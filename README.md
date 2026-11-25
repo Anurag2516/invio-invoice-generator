@@ -1,4 +1,4 @@
-# Invio - Invoice Generator
+# Invio - Invoice Management App
 
 A full-stack invoice management app. Create invoices with a live preview, manage clients, autosave drafts, and export polished PDFs.
 
